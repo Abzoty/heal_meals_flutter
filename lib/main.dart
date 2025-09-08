@@ -14,7 +14,7 @@ class MyApp extends StatelessWidget {
       title: 'Heal Meals',
 
       debugShowCheckedModeBanner: false,
-      initialRoute: AppRoutes.start,
+      initialRoute: AppRoutes.profile,
       onGenerateRoute: AppRoutes.generateRoute,
     );
   }

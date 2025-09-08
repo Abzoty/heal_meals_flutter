@@ -61,7 +61,7 @@ class DiscoverFilterPanel extends StatelessWidget {
                               label: Text(val),
                               onSelected: (s) => onChipTapped(title, val, s),
                               selectedColor: const Color(
-                                0xFF25582B,
+                                0xFF1B512D,
                               ).withValues(alpha: 0.25),
                             );
                           }).toList(),

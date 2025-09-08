@@ -131,7 +131,7 @@ class RecipePage extends StatelessWidget {
                     margin: const EdgeInsets.only(bottom: 16),
                     padding: const EdgeInsets.all(12),
                     decoration: BoxDecoration(
-                      color: Color(0xFF698238),
+                      color: Color(0xFF1B512D),
                       borderRadius: BorderRadius.circular(12),
                     ),
                     child: Column(

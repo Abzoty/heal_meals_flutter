@@ -23,7 +23,7 @@ class RecipeCard extends StatelessWidget {
         width: 370, // keep width fixed if you want, but remove height
         padding: const EdgeInsets.all(12),
         decoration: BoxDecoration(
-          color: const Color(0xFF6A8E3D), // green background
+          color: const Color(0xFF1B512D), // green background
           borderRadius: BorderRadius.circular(20),
         ),
         child: Row(

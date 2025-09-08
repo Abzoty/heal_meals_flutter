@@ -65,7 +65,7 @@ class SearchContainer extends StatelessWidget {
                 style: TextStyle(color: Colors.white, fontSize: 16),
               ),
               style: ElevatedButton.styleFrom(
-                backgroundColor: Color(0xFF2F3A14),
+                backgroundColor: Color(0xFF1B512D),
                 padding: const EdgeInsets.symmetric(vertical: 12),
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(20),

@@ -16,7 +16,7 @@ class DiscoverFilterButton extends StatelessWidget {
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(18),
           ),
-          backgroundColor: const Color(0xFF25582B),
+          backgroundColor: const Color(0xFF1B512D),
           padding: const EdgeInsets.symmetric(horizontal: 18, vertical: 10),
         ),
       ),

@@ -43,7 +43,7 @@ class HomePage extends StatelessWidget {
                   Spacer(),
                   Padding(
                     padding: EdgeInsets.only(right: 20.0, top: 30.0),
-                    child: Icon(Icons.account_circle, size: 60, color: Color(0xFF698238)),
+                    child: Icon(Icons.account_circle, size: 60, color: Color(0xFF1B512D)),
                   ),
                 ],
               ),

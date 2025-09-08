@@ -29,7 +29,7 @@ class CustomNavBar extends StatelessWidget {
     return Container(
       height: 67,
       decoration: const BoxDecoration(
-        color: Color(0xFF4B5D2A), // dark green background
+        color: Color(0xFF1B512D), // dark green background
       ),
       child: Padding(
         padding: const EdgeInsets.symmetric(vertical: 6, horizontal: 6),
@@ -56,10 +56,7 @@ class CustomNavBar extends StatelessWidget {
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
                   children: [
-                    Icon(
-                      item.icon,
-                      color: isSelected ? Colors.white : Colors.black87,
-                    ),
+                    Icon(item.icon, color: Colors.white),
                     if (isSelected)
                       Text(
                         item.label,

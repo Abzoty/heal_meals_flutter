@@ -24,7 +24,7 @@ class FilterButtonsRow extends StatelessWidget {
         padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
         margin: const EdgeInsets.only(right: 8),
         decoration: BoxDecoration(
-          color: active ? Colors.green[700] : Colors.transparent,
+          color: active ? Color(0xFF1B512D) : Colors.transparent,
           borderRadius: BorderRadius.circular(8),
         ),
         child: Row(

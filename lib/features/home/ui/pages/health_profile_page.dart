@@ -173,8 +173,8 @@ class _HealthProfilePageState extends State<HealthProfilePage> {
 
   // Design colors
   final Color _bgPink = const Color(0xFFF6EDEE);
-  final Color _accentGreen = const Color(0xFF6B8632);
-  final Color _accentGreenDark = const Color(0xFF2F3A14);
+  final Color _accentGreen = const Color(0xFF1B512D);
+  final Color _accentGreenDark = const Color(0xFF1B512D);
 
   @override
   Widget build(BuildContext context) {

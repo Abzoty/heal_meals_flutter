@@ -1,28 +1,50 @@
 import 'package:flutter/material.dart';
 import 'package:heal_meals/core/routing/routes.dart';
+import 'package:heal_meals/features/home/data/models/profile_model.dart';
 import 'package:heal_meals/features/home/ui/widgets/custom_nav_bar.dart';
+import 'package:heal_meals/features/home/logic/API/profile_repository.dart';
+import 'package:heal_meals/features/home/ui/widgets/info_filed.dart';
 
-
-class ProfilePage extends StatelessWidget {
+class ProfilePage extends StatefulWidget {
   static const routeName = '/profile';
   const ProfilePage({super.key});
 
-  // Example user data (replace with real user info from your backend or state)
-  final Map<String, String> userInfo = const {
-    "Name": "John Doe",
-    "Email": "john.doe@example.com",
-    "Phone": "+1 555 123 4567",
-    "Address": "123 Green Street",
-    "State": "California",
-    "City": "Los Angeles",
-    "Gender": "Male",
-    "Age": "29",
-  };
+  @override
+  State<ProfilePage> createState() => _ProfilePageState();
+}
+
+class _ProfilePageState extends State<ProfilePage> {
+  final ProfileRepository _repository = ProfileRepository();
+
+  Profile? _profile;
+  bool _isLoading = true;
+  String? _error;
+
+  @override
+  void initState() {
+    super.initState();
+    _fetchProfile();
+  }
+
+  Future<void> _fetchProfile() async {
+    try {
+      final data = await _repository.getProfile();
+      setState(() {
+        _profile = data;
+        _isLoading = false;
+      });
+    } catch (e) {
+      setState(() {
+        _error = e.toString();
+        _isLoading = false;
+      });
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color(0xFFF9EDED),
+      backgroundColor: const Color(0xFFF9EDED),
       body: SafeArea(
         child: SingleChildScrollView(
           padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 16),
@@ -35,7 +57,7 @@ class ProfilePage extends StatelessWidget {
               Container(
                 padding: const EdgeInsets.all(20),
                 decoration: const BoxDecoration(
-                  color: Color(0xFF4B5D2A), // Green circle
+                  color: Color(0xFF1B512D),
                   shape: BoxShape.circle,
                 ),
                 child: const Icon(
@@ -47,11 +69,24 @@ class ProfilePage extends StatelessWidget {
 
               const SizedBox(height: 24),
 
-              // User Information Display
-              ...userInfo.entries.map(
-                (entry) =>
-                    _buildInfoField(label: entry.key, value: entry.value),
-              ),
+              // Loading, Error, or Data
+              if (_isLoading)
+                const CircularProgressIndicator()
+              else if (_error != null)
+                Text(
+                  "Error: $_error",
+                  style: const TextStyle(color: Colors.red),
+                )
+              else if (_profile != null) ...[
+                InfoField(label: "Name", value: _profile!.name),
+                InfoField(label: "Email", value: _profile!.email),
+                InfoField(label: "Role", value: _profile!.role),
+                InfoField(label: "Gender", value: _profile!.gender),
+                InfoField(label: "Date of Birth", value: _profile!.dateOfBirth),
+                InfoField(label: "Address", value: _profile!.address),
+                InfoField(label: "Phone", value: _profile!.phone),
+                InfoField(label: "Health ID", value: _profile!.healthId),
+              ],
 
               const SizedBox(height: 20),
 
@@ -60,7 +95,7 @@ class ProfilePage extends StatelessWidget {
                 width: double.infinity,
                 child: ElevatedButton(
                   style: ElevatedButton.styleFrom(
-                    backgroundColor: const Color(0xFF4B5D2A), // Dark green
+                    backgroundColor: const Color(0xFF1B512D),
                     padding: const EdgeInsets.symmetric(vertical: 14),
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(30),
@@ -80,44 +115,6 @@ class ProfilePage extends StatelessWidget {
         ),
       ),
       bottomNavigationBar: const CustomNavBar(currentPage: 'profile'),
-    );
-  }
-
-  Widget _buildInfoField({required String label, required String value}) {
-    return Padding(
-      padding: const EdgeInsets.only(bottom: 12),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(
-            label,
-            style: const TextStyle(
-              fontWeight: FontWeight.w600,
-              fontSize: 14,
-              color: Colors.black54,
-            ),
-          ),
-          const SizedBox(height: 4),
-          Container(
-            width: double.infinity,
-            padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 12),
-            decoration: BoxDecoration(
-              color: const Color(0xFFF5EDED), // Slightly lighter pink
-              borderRadius: BorderRadius.circular(12),
-              border: const Border(
-                bottom: BorderSide(
-                  width: 0.5,
-                  color: Colors.grey,
-                ),
-              ),
-            ),
-            child: Text(
-              value,
-              style: const TextStyle(fontSize: 14, color: Colors.black87),
-            ),
-          ),
-        ],
-      ),
     );
   }
 }
