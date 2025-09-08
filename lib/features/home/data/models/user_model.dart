@@ -1,4 +1,4 @@
-class Profile {
+class User {
   //final int id;
   final String name;
   final String email;
@@ -9,7 +9,7 @@ class Profile {
   final String healthId;
   final String phone;
 
-  Profile({
+  User({
     //required this.id,
     required this.name,
     required this.email,
@@ -21,9 +21,9 @@ class Profile {
     required this.phone,
   });
 
-  /// Factory constructor to create a Profile from JSON
-  factory Profile.fromJson(Map<String, dynamic> json) {
-    return Profile(
+  /// Factory constructor to create a User from JSON
+  factory User.fromJson(Map<String, dynamic> json) {
+    return User(
       //id: json['id'],
       name: json['name'],
       email: json['email'],
@@ -36,7 +36,7 @@ class Profile {
     );
   }
 
-  /// Convert Profile object back to JSON (useful if updating profile)
+  /// Convert User object back to JSON (useful if updating User)
   Map<String, dynamic> toJson() {
     return {
       //"id": id,
