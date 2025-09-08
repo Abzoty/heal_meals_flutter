@@ -75,7 +75,7 @@ class DonationPage extends StatelessWidget {
                       // TODO: Handle donation Submit logic here
                     },
                     style: ElevatedButton.styleFrom(
-                      backgroundColor: Color(0xFF6E8640),
+                      backgroundColor: Color(0xFF1B512D),
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(30),
                       ),

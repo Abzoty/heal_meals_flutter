@@ -2,12 +2,12 @@ import 'package:flutter/material.dart';
 
 class DiscoverSearchBar extends StatelessWidget {
   final TextEditingController controller;
-  final void Function(String)? onSubmitted;
+  final VoidCallback onSearch;
 
   const DiscoverSearchBar({
     super.key,
     required this.controller,
-    this.onSubmitted,
+    required this.onSearch,
   });
 
   @override
@@ -23,14 +23,19 @@ class DiscoverSearchBar extends StatelessWidget {
         ),
         child: TextField(
           controller: controller,
-          decoration: const InputDecoration(
-            suffixIcon: Icon(Icons.search),
+          textInputAction:
+              TextInputAction.search, // ✅ makes keyboard show "search"
+          decoration: InputDecoration(
+            suffixIcon: IconButton(
+              icon: const Icon(Icons.search),
+              onPressed: onSearch, // ✅ search icon
+            ),
             border: InputBorder.none,
             hintText: 'Search recipes',
-            hintStyle: TextStyle(color: Colors.grey),
-            contentPadding: EdgeInsets.symmetric(vertical: 14),
+            hintStyle: const TextStyle(color: Colors.grey),
+            contentPadding: const EdgeInsets.symmetric(vertical: 14),
           ),
-          onSubmitted: onSubmitted,
+          onSubmitted: (_) => onSearch(), // ✅ keyboard search button
         ),
       ),
     );

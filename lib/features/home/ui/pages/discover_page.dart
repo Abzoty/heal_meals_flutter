@@ -5,7 +5,6 @@ import 'package:heal_meals/features/home/ui/widgets/filter_panel.dart';
 import 'package:heal_meals/features/home/ui/widgets/results_section.dart';
 import 'package:heal_meals/features/home/ui/widgets/search_bar.dart';
 
-
 class DiscoverPage extends StatefulWidget {
   static const routeName = '/discover';
   const DiscoverPage({super.key});
@@ -66,7 +65,6 @@ class _DiscoverPageState extends State<DiscoverPage>
   });
 
   @override
-  // initializing the selected filters to empty
   void initState() {
     super.initState();
     for (var group in _filterDefinitions) {
@@ -75,12 +73,10 @@ class _DiscoverPageState extends State<DiscoverPage>
     }
   }
 
-  // toggle the filter panel boolean
   void _toggleFilterOpen() {
     setState(() => _filtersOpen = !_filtersOpen);
   }
 
-  // update the selected filters, and only one option from "sort by" & "duration" can be selected
   void _onChipTapped(String group, String value, bool selected) {
     setState(() {
       if (group == 'Sort By' || group == 'Duration') {
@@ -97,6 +93,12 @@ class _DiscoverPageState extends State<DiscoverPage>
     });
   }
 
+  /// 🔑 This is where you'll later put your GET request
+  void _performSearch() {
+    print("Search");
+    // TODO: Replace with GET request using _searchController.text and _selectedFilters
+  }
+
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
@@ -110,9 +112,7 @@ class _DiscoverPageState extends State<DiscoverPage>
                 const SizedBox(height: 22),
                 DiscoverSearchBar(
                   controller: _searchController,
-                  onSubmitted: (q) {
-                    // TODO: wire search logic
-                  },
+                  onSearch: _performSearch,
                 ),
                 const SizedBox(height: 6),
                 DiscoverFilterButton(onPressed: _toggleFilterOpen),
@@ -138,4 +138,3 @@ class _DiscoverPageState extends State<DiscoverPage>
     super.dispose();
   }
 }
-

@@ -17,7 +17,7 @@ class StartScreen extends StatelessWidget {
               Color(0xFF3DB766),
               Color(0xFF2D995D),
               Color(0xFF1C7C54),
-              Color(0xFF1B512D),  
+              Color(0xFF1B512D),
             ],
           ),
         ),
@@ -26,9 +26,10 @@ class StartScreen extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Image.asset(
-                "assets/images/heal_meals.png",
-                width: 400,
-                height: 400,
+                "assets/images/heal_meals_logo.png",
+                width: 350,
+                height: 350,
+                color: Colors.white,
               ),
               Text(
                 "Heal Meals",
@@ -63,7 +64,8 @@ class StartScreen extends StatelessWidget {
                       borderRadius: BorderRadius.circular(25),
                     ),
                     animationDuration: const Duration(milliseconds: 200),
-                    elevation: 1,
+                    elevation: 5,
+                    shadowColor: Colors.white10,
                   ),
                   child: Text(
                     "Get Started",
