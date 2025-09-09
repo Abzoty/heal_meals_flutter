@@ -61,6 +61,7 @@ class _DiscoverPageState extends State<DiscoverPage>
       'imageUrl': 'assets/images/food.jpg',
       'title': 'Grilled Chicken Salad',
       'description': 'A quick description about the recipe, and other text.',
+      'stars': '9',
     };
   });
 

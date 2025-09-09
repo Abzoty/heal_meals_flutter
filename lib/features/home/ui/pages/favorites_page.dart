@@ -45,6 +45,7 @@ class FavoritesPage extends StatelessWidget {
                     title: 'Recipe $index',
                     description: 'This is a description for recipe $index',
                     imageUrl: 'assets/images/food.jpg',
+                    stars: 12,
                   ),
                 ),
               ),

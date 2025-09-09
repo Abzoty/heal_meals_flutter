@@ -4,9 +4,9 @@ import 'package:heal_meals/core/routing/routes.dart';
 class TopPicksSection extends StatelessWidget {
   // Dummy list of images and titles
   final List<Map<String, String>> topPicks = [
-    {"image": "assets/images/food.jpg", "title": "Recipe Title"},
-    {"image": "assets/images/food.jpg", "title": "Recipe Title"},
-    {"image": "assets/images/food.jpg", "title": "Recipe Title"},
+    {"image": "assets/images/food.jpg", "title": "Chicken soup", "stars": "13"},
+    {"image": "assets/images/food.jpg", "title": "Meat balls", "stars": "9"},
+    {"image": "assets/images/food.jpg", "title": "Pasta", "stars": "33"},
   ];
 
   TopPicksSection({super.key});
@@ -71,17 +71,36 @@ class TopPicksSection extends StatelessWidget {
                         ),
                       ),
 
-                      // Recipe title text
+                      // Recipe title text and stars
                       Positioned(
                         left: 12,
                         bottom: 12,
-                        child: Text(
-                          topPicks[index]["title"]!,
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontWeight: FontWeight.bold,
-                            fontSize: 16,
-                          ),
+                        child: Row(
+                          children: [
+                            Text(
+                              topPicks[index]["title"]!,
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontWeight: FontWeight.bold,
+                                fontSize: 16,
+                              ),
+                            ),
+                            SizedBox(width: 4),
+                            Icon(
+                              Icons.star,
+                              color: Colors.yellow,
+                              size: 16,
+                            ),
+                            SizedBox(width: 2),
+                            Text(
+                              topPicks[index]["stars"]!,
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontWeight: FontWeight.bold,
+                                fontSize: 16,
+                              ),
+                            ),
+                          ],
                         ),
                       ),
                     ],

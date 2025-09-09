@@ -36,6 +36,7 @@ class DiscoverResultsSection extends StatelessWidget {
                 imageUrl: item['imageUrl'] ?? '',
                 title: item['title']!,
                 description: item['description']!,
+                stars: item['stars'] != null ? int.parse(item['stars']!) : 0,
               ),
             );
           },

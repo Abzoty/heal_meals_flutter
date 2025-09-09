@@ -5,12 +5,15 @@ class RecipeCard extends StatelessWidget {
   final String imageUrl;
   final String title;
   final String description;
+  final int stars;
+
 
   const RecipeCard({
     super.key,
     required this.imageUrl,
     required this.title,
     required this.description,
+    required this.stars,
   });
 
   @override
@@ -35,7 +38,7 @@ class RecipeCard extends StatelessWidget {
               child: Image.asset(
                 imageUrl,
                 width: 150,
-                height: 120,
+                height: 150,
                 fit: BoxFit.cover,
               ),
             ),

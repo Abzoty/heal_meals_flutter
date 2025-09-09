@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:heal_meals/core/routing/routes.dart';
 import 'package:heal_meals/features/home/data/models/user_model.dart';
 import 'package:heal_meals/features/home/ui/widgets/custom_nav_bar.dart';
-import 'package:heal_meals/features/home/logic/API/user_repository.dart';
+import 'package:heal_meals/features/home/logic/Repositories/user_repository.dart';
 import 'package:heal_meals/features/home/ui/widgets/info_filed.dart';
 
 class ProfilePage extends StatefulWidget {

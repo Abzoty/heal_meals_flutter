@@ -57,6 +57,7 @@ class HomePage extends StatelessWidget {
                   imageUrl: 'assets/images/food.jpg',
                   title: 'Grilled Chicken Salad',
                   description: 'A healthy mix of grilled chicken and fresh veggies.',
+                  stars: 14,
                 ),
               ),
           ],

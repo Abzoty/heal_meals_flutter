@@ -20,6 +20,10 @@ class RecipePage extends StatelessWidget {
       "Rice",
     ];
 
+    final TimeOfDay prepTime = const TimeOfDay(hour: 0, minute: 15);
+    final String description =
+        "A quick nutritious recipe that will satisfy your cravings!";
+    final int stars = 26;
     // Dummy steps list
     final List<Map<String, String>> steps = [
       {
@@ -68,13 +72,14 @@ class RecipePage extends StatelessWidget {
               const SizedBox(height: 12),
 
               // Recipe Image
-              ClipRRect(
-                borderRadius: BorderRadius.circular(12),
-                child: Image.asset(
-                  "assets/images/food.jpg",
-                  height: 200,
-                  width: double.infinity,
-                  fit: BoxFit.cover,
+              Container(
+                height: 200,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(10),
+                  image: const DecorationImage(
+                    image: AssetImage("assets/images/food.jpg"),
+                    fit: BoxFit.cover,
+                  ),
                 ),
               ),
               const SizedBox(height: 16),
@@ -83,6 +88,44 @@ class RecipePage extends StatelessWidget {
               DiscoverMoreButton(),
               const SizedBox(height: 20),
 
+              // Prep Time Section
+              Row(
+                children: [
+                  const Text(
+                    "Prep Time:",
+                    style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                  ),
+                  const SizedBox(width: 8),
+                  Text(
+                    prepTime.hour == 0
+                        ? "${prepTime.minute} mins"
+                        : "${prepTime.hour}:${prepTime.minute} hour${prepTime.hour > 1 ? 's' : ''}",
+                    style: const TextStyle(fontSize: 18),
+                  ),
+                  Icon(Icons.hourglass_bottom, color: Colors.black54, size: 20),
+                  Spacer(),
+                  Text(
+                    stars.toString(),
+                    style: const TextStyle(fontSize: 18),
+                    textAlign: TextAlign.right,
+                  ),
+                  const Icon(Icons.star, color: Colors.yellow, size: 24),
+                ],
+              ),
+
+              const SizedBox(height: 10),
+
+              // Description Section
+              Container(
+                decoration: BoxDecoration(
+                  color: Colors.grey[300],
+                  borderRadius: BorderRadius.circular(10),
+                ),
+                padding: const EdgeInsets.all(10),
+                child: Text(description, style: const TextStyle(fontSize: 16)),
+              ),
+
+              const SizedBox(height: 10),
               // Ingredients Section
               const Text(
                 "Ingredients:",
@@ -129,7 +172,7 @@ class RecipePage extends StatelessWidget {
                   var step = entry.value;
                   return Container(
                     margin: const EdgeInsets.only(bottom: 16),
-                    padding: const EdgeInsets.all(12),
+                    padding: const EdgeInsets.all(10),
                     decoration: BoxDecoration(
                       color: Color(0xFF1B512D),
                       borderRadius: BorderRadius.circular(12),
@@ -153,7 +196,10 @@ class RecipePage extends StatelessWidget {
                           ),
                         ),
                         const SizedBox(height: 4),
-                        Text(step["text"]!, style: const TextStyle(color: Colors.white),),
+                        Text(
+                          step["text"]!,
+                          style: const TextStyle(color: Colors.white),
+                        ),
                       ],
                     ),
                   );

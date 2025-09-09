@@ -1,6 +1,6 @@
 import 'package:heal_meals/features/home/data/models/user_model.dart';
-import '/../../../core/network/api_client.dart';
-import '/../../../core/network/endpoints.dart';
+import '../../../../core/API/api_client.dart';
+import '../../../../core/API/endpoints.dart';
 
 
 class UserRepository {

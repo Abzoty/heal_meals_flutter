@@ -29,8 +29,15 @@ class CustomNavBar extends StatelessWidget {
     return Container(
       height: 67,
       decoration: const BoxDecoration(
+        borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
         color: Color(0xFF1B512D), // dark green background
+        gradient: LinearGradient(
+          colors: [Color(0xFF2D995D), Color(0xFF1C7C54), Color(0xFF1B512D)],
+          begin: Alignment.topLeft,
+          end: Alignment.bottomRight,
+        ),
       ),
+
       child: Padding(
         padding: const EdgeInsets.symmetric(vertical: 6, horizontal: 6),
         child: Row(
