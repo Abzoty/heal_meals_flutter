@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:heal_meals/core/routing/routes.dart';
 import 'package:heal_meals/features/home/ui/widgets/build_text_field.dart';
 import 'package:heal_meals/features/home/ui/widgets/custom_auth_button.dart';
@@ -14,10 +15,10 @@ class SignupPage extends StatelessWidget {
     return GestureDetector(
       onTap: () => FocusScope.of(context).unfocus(),
       child: Scaffold(
-        backgroundColor: Color(0xFFF9EDED),
+        backgroundColor: const Color(0xFFF9EDED),
         body: SafeArea(
           child: SingleChildScrollView(
-            padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 40),
+            padding: EdgeInsets.symmetric(horizontal: 24.w, vertical: 40.h),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
@@ -27,21 +28,21 @@ class SignupPage extends StatelessWidget {
                     children: [
                       Image.asset(
                         "assets/images/heal_meals_logo.png",
-                        width: 150,
-                        height: 150,
+                        width: 150.w,
+                        height: 150.h,
                       ),
-                      const SizedBox(height: 20),
-                      const Text(
+                      SizedBox(height: 20.h),
+                      Text(
                         "Sign up",
                         style: TextStyle(
-                          fontSize: 28,
+                          fontSize: 28.sp,
                           fontWeight: FontWeight.bold,
                         ),
                       ),
                     ],
                   ),
                 ),
-                const SizedBox(height: 40),
+                SizedBox(height: 40.h),
 
                 // Form fields
                 BuildTextField(hintText: "Name"),
@@ -52,7 +53,7 @@ class SignupPage extends StatelessWidget {
                 BuildTextField(hintText: "Gender"),
                 BuildTextField(hintText: "Age"),
 
-                const SizedBox(height: 30),
+                SizedBox(height: 30.h),
 
                 // Sign up button
                 CustomAuthButton(
@@ -63,16 +64,16 @@ class SignupPage extends StatelessWidget {
                   buttonText: 'Sign up',
                 ),
 
-                const SizedBox(height: 20),
+                SizedBox(height: 20.h),
 
                 // Sign in link
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    const Text(
+                    Text(
                       "Have an account? ",
                       style: TextStyle(
-                        fontSize: 16,
+                        fontSize: 16.sp,
                         fontWeight: FontWeight.bold,
                       ),
                     ),
@@ -84,7 +85,7 @@ class SignupPage extends StatelessWidget {
                         onPressed: () {
                           Navigator.pushNamed(context, AppRoutes.signin);
                         },
-                        child: const Text(
+                        child: Text(
                           "Sign in",
                           style: TextStyle(
                             color: Colors.blue,
@@ -103,3 +104,4 @@ class SignupPage extends StatelessWidget {
     );
   }
 }
+

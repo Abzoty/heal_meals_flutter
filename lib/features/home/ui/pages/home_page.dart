@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:heal_meals/features/home/ui/widgets/custom_nav_bar.dart';
 import 'package:heal_meals/features/home/ui/widgets/recipe_card.dart';
 import 'package:heal_meals/features/home/ui/widgets/top_pics.dart';
@@ -15,11 +16,11 @@ class HomePage extends StatelessWidget {
         child: Column(
           children: [
             SizedBox(
-              height: 120,
+              height: 120.h,
               child: Row(
                 children: [
                   Padding(
-                    padding: const EdgeInsets.only(left: 16.0, right: 16.0, top: 45.0),
+                    padding: EdgeInsets.only(left: 16.w, right: 16.w, top: 45.h),
                     child: Align(
                       alignment: Alignment.centerLeft,
                       child: Column(
@@ -28,13 +29,13 @@ class HomePage extends StatelessWidget {
                           Text(
                             'Hello, User!',
                             style: TextStyle(
-                              fontSize: 24,
+                              fontSize: 24.sp,
                               fontWeight: FontWeight.bold,
                             ),
                           ),
                           Text(
                             'What will you have today?',
-                            style: TextStyle(fontSize: 16, color: Colors.grey[600]),
+                            style: TextStyle(fontSize: 16.sp, color: Colors.grey[600]),
                           ),
                         ],
                       ),
@@ -42,17 +43,21 @@ class HomePage extends StatelessWidget {
                   ),
                   Spacer(),
                   Padding(
-                    padding: EdgeInsets.only(right: 20.0, top: 30.0),
-                    child: Icon(Icons.account_circle, size: 60, color: Color(0xFF1B512D)),
+                    padding: EdgeInsets.only(right: 20.w, top: 30.h),
+                    child: Icon(
+                      Icons.account_circle,
+                      size: 60.r,
+                      color: Color(0xFF1B512D),
+                    ),
                   ),
                 ],
               ),
             ),
             TopPicksSection(),
-            SizedBox(height: 20),
+            SizedBox(height: 20.h),
             for (int i = 0; i < 5; i++)
               Padding(
-                padding: const EdgeInsets.only(left: 10.0, right: 10.0, bottom: 10.0),
+                padding: EdgeInsets.only(left: 10.w, right: 10.w, bottom: 10.h),
                 child: RecipeCard(
                   imageUrl: 'assets/images/food.jpg',
                   title: 'Grilled Chicken Salad',
@@ -67,3 +72,4 @@ class HomePage extends StatelessWidget {
     );
   }
 }
+

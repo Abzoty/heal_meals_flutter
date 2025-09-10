@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:heal_meals/features/home/ui/widgets/custom_nav_bar.dart';
 import 'package:heal_meals/features/home/ui/widgets/filter_button.dart';
 import 'package:heal_meals/features/home/ui/widgets/filter_panel.dart';
@@ -110,12 +111,12 @@ class _DiscoverPageState extends State<DiscoverPage>
           child: SingleChildScrollView(
             child: Column(
               children: [
-                const SizedBox(height: 22),
+                SizedBox(height: 22.h),
                 DiscoverSearchBar(
                   controller: _searchController,
                   onSearch: _performSearch,
                 ),
-                const SizedBox(height: 6),
+                SizedBox(height: 6.h),
                 DiscoverFilterButton(onPressed: _toggleFilterOpen),
                 DiscoverFilterPanel(
                   filtersOpen: _filtersOpen,

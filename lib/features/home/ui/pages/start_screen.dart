@@ -1,4 +1,5 @@
 import "package:flutter/material.dart";
+import "package:flutter_screenutil/flutter_screenutil.dart";
 import "package:heal_meals/core/routing/routes.dart";
 
 class StartScreen extends StatelessWidget {
@@ -27,15 +28,15 @@ class StartScreen extends StatelessWidget {
             children: [
               Image.asset(
                 "assets/images/heal_meals_logo.png",
-                width: 350,
-                height: 350,
+                width: 350.w,
+                height: 350.h,
                 color: Colors.white,
               ),
               Text(
                 "Heal Meals",
                 style: TextStyle(
                   fontWeight: FontWeight.bold,
-                  fontSize: 48,
+                  fontSize: 48.sp,
                   color: Colors.white,
                 ),
                 textAlign: TextAlign.center,
@@ -44,15 +45,15 @@ class StartScreen extends StatelessWidget {
                 "Eat Well, Live Better",
                 style: TextStyle(
                   fontWeight: FontWeight.bold,
-                  fontSize: 32,
+                  fontSize: 32.sp,
                   color: Colors.white,
                 ),
                 textAlign: TextAlign.center,
               ),
-              SizedBox(height: 80),
+              SizedBox(height: 80.h),
               SizedBox(
-                height: 50,
-                width: 300,
+                height: 50.h,
+                width: 300.w,
                 child: ElevatedButton(
                   onPressed: () {
                     // Navigate to the sign-up screen
@@ -61,7 +62,7 @@ class StartScreen extends StatelessWidget {
                   style: ElevatedButton.styleFrom(
                     backgroundColor: const Color(0xFF1B512D),
                     shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(25),
+                      borderRadius: BorderRadius.circular(25.r),
                     ),
                     animationDuration: const Duration(milliseconds: 200),
                     elevation: 5,
@@ -71,7 +72,7 @@ class StartScreen extends StatelessWidget {
                     "Get Started",
                     style: TextStyle(
                       fontWeight: FontWeight.bold,
-                      fontSize: 24,
+                      fontSize: 24.sp,
                       color: Colors.white,
                     ),
                   ),
@@ -84,3 +85,4 @@ class StartScreen extends StatelessWidget {
     );
   }
 }
+

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../widgets/search_container.dart';
 import '../widgets/filter_buttons_row.dart';
 import '../widgets/added_item_tile.dart';
@@ -194,7 +195,10 @@ class _HealthProfilePageState extends State<HealthProfilePage> {
           ),
           title: const Text(
             'Health Profile',
-            style: TextStyle(color: Colors.black87, fontWeight: FontWeight.w600),
+            style: TextStyle(
+              color: Colors.black87,
+              fontWeight: FontWeight.w600,
+            ),
           ),
         ),
         body: SingleChildScrollView(
@@ -214,14 +218,14 @@ class _HealthProfilePageState extends State<HealthProfilePage> {
                 visible: _showSuggestions,
                 suggestions: _suggestions,
                 onTapSuggestion: _applySuggestion,
-                maxHeight: 200,
+                maxHeight: 200.h,
               ),
 
-              const SizedBox(height: 14),
+              SizedBox(height: 14.h),
 
               // Filter buttons row
               Padding(
-                padding: const EdgeInsets.only(left: 10, right: 8),
+                padding: EdgeInsets.only(left: 10.w, right: 8.w),
                 child: FilterButtonsRow(
                   current: _filter,
                   onChanged: (mode) {
@@ -231,7 +235,7 @@ class _HealthProfilePageState extends State<HealthProfilePage> {
                 ),
               ),
 
-              const SizedBox(height: 12),
+              SizedBox(height: 12.h),
 
               // Items list
               // List inside a scrollable page

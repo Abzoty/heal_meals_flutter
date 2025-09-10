@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:heal_meals/core/routing/routes.dart';
 
 class RecipeCard extends StatelessWidget {
@@ -6,7 +7,6 @@ class RecipeCard extends StatelessWidget {
   final String title;
   final String description;
   final int stars;
-
 
   const RecipeCard({
     super.key,
@@ -23,43 +23,43 @@ class RecipeCard extends StatelessWidget {
         Navigator.pushNamed(context, AppRoutes.recipe);
       },
       child: Container(
-        width: 370, // keep width fixed if you want, but remove height
-        padding: const EdgeInsets.all(12),
+        width: 370.w, // keep width fixed if you want, but remove height
+        padding: EdgeInsets.all(12.h),
         decoration: BoxDecoration(
           color: const Color(0xFF1B512D), // green background
-          borderRadius: BorderRadius.circular(20),
+          borderRadius: BorderRadius.circular(20.r),
         ),
         child: Row(
           crossAxisAlignment:
               CrossAxisAlignment.start, // align top for multi-line text
           children: [
             ClipRRect(
-              borderRadius: BorderRadius.circular(12),
+              borderRadius: BorderRadius.circular(12.r),
               child: Image.asset(
                 imageUrl,
-                width: 150,
-                height: 150,
+                width: 150.w,
+                height: 150.h,
                 fit: BoxFit.cover,
               ),
             ),
-            const SizedBox(width: 16),
+            SizedBox(width: 16.w),
             Expanded(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
                     title,
-                    style: const TextStyle(
-                      fontSize: 18,
+                    style: TextStyle(
+                      fontSize: 18.sp,
                       fontWeight: FontWeight.bold,
                       color: Colors.white,
                     ),
                   ),
-                  const SizedBox(height: 6),
+                  SizedBox(height: 6.h),
                   Text(
                     description,
-                    style: const TextStyle(
-                      fontSize: 16,
+                    style: TextStyle(
+                      fontSize: 16.sp,
                       fontWeight: FontWeight.normal,
                       color: Colors.white,
                     ),

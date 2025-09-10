@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class DiscoverFilterPanel extends StatelessWidget {
   final bool filtersOpen;
@@ -21,12 +22,12 @@ class DiscoverFilterPanel extends StatelessWidget {
       curve: Curves.easeInOut,
       child: filtersOpen
           ? Container(
-              margin: const EdgeInsets.symmetric(horizontal: 12, vertical: 12),
-              padding: const EdgeInsets.all(12),
+              margin: EdgeInsets.symmetric(horizontal: 12.w, vertical: 12.h),
+              padding: EdgeInsets.all(12.w),
               decoration: BoxDecoration(
                 color: Colors.white70,
                 border: Border.all(color: Colors.grey),
-                borderRadius: BorderRadius.circular(18),
+                borderRadius: BorderRadius.circular(18.r),
                 boxShadow: const [
                   BoxShadow(color: Colors.black12, blurRadius: 8),
                 ],
@@ -37,21 +38,21 @@ class DiscoverFilterPanel extends StatelessWidget {
                   final title = group.keys.first;
                   final values = group.values.first;
                   return Padding(
-                    padding: const EdgeInsets.symmetric(vertical: 8),
+                    padding: EdgeInsets.symmetric(vertical: 8.h),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
                           title,
-                          style: const TextStyle(
+                          style: TextStyle(
                             fontWeight: FontWeight.w700,
-                            fontSize: 16,
+                            fontSize: 16.sp,
                           ),
                         ),
-                        const SizedBox(height: 8),
+                        SizedBox(height: 8.h),
                         Wrap(
-                          spacing: 8,
-                          runSpacing: 6,
+                          spacing: 8.w,
+                          runSpacing: 6.h,
                           children: values.map((val) {
                             final selected = selectedFilters[title]!.contains(
                               val,
@@ -76,3 +77,4 @@ class DiscoverFilterPanel extends StatelessWidget {
     );
   }
 }
+

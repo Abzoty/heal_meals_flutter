@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class BuildTextField extends StatelessWidget {
   final String hintText;
@@ -13,12 +14,12 @@ class BuildTextField extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 10),
+      padding: EdgeInsets.symmetric(vertical: 10.h),
       child: TextField(
         obscureText: isPassword,
         decoration: InputDecoration(
           labelText: hintText,
-          border: const UnderlineInputBorder(),
+          border: UnderlineInputBorder(borderSide: BorderSide(width: 2.w)),
         ),
       ),
     );
@@ -42,7 +43,7 @@ class BuildDoubleTextField extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 10),
+      padding: EdgeInsets.symmetric(vertical: 10.h),
       child: Row(
         children: [
           Expanded(
@@ -50,17 +51,21 @@ class BuildDoubleTextField extends StatelessWidget {
               obscureText: isPassword1,
               decoration: InputDecoration(
                 labelText: hintText1,
-                border: const UnderlineInputBorder(),
+                border: UnderlineInputBorder(
+                  borderSide: BorderSide(width: 2.w),
+                ),
               ),
             ),
           ),
-          const SizedBox(width: 12),
+          SizedBox(width: 12.w),
           Expanded(
             child: TextField(
               obscureText: isPassword2,
               decoration: InputDecoration(
                 labelText: hintText2,
-                border: const UnderlineInputBorder(),
+                border: UnderlineInputBorder(
+                  borderSide: BorderSide(width: 2.w),
+                ),
               ),
             ),
           ),
@@ -99,7 +104,7 @@ class BuildTripleTextField extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 10),
+      padding: EdgeInsets.symmetric(vertical: 10.h),
       child: Row(
         children: [
           Expanded(
@@ -108,29 +113,35 @@ class BuildTripleTextField extends StatelessWidget {
               obscureText: isPassword1,
               decoration: InputDecoration(
                 labelText: hintText1,
-                border: const UnderlineInputBorder(),
+                border: UnderlineInputBorder(
+                  borderSide: BorderSide(width: 2.w),
+                ),
               ),
             ),
           ),
-          const SizedBox(width: 12),
+          SizedBox(width: 12.w),
           Expanded(
             flex: flex2,
             child: TextField(
               obscureText: isPassword2,
               decoration: InputDecoration(
                 labelText: hintText2,
-                border: const UnderlineInputBorder(),
+                border: UnderlineInputBorder(
+                  borderSide: BorderSide(width: 2.w),
+                ),
               ),
             ),
           ),
-          const SizedBox(width: 12),
+          SizedBox(width: 12.w),
           Expanded(
             flex: flex3,
             child: TextField(
               obscureText: isPassword3,
               decoration: InputDecoration(
                 labelText: hintText3,
-                border: const UnderlineInputBorder(),
+                border: UnderlineInputBorder(
+                  borderSide: BorderSide(width: 2.w),
+                ),
               ),
             ),
           ),
@@ -139,4 +150,3 @@ class BuildTripleTextField extends StatelessWidget {
     );
   }
 }
-

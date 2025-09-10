@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:heal_meals/core/routing/routes.dart';
 
 class TopPicksSection extends StatelessWidget {
@@ -18,19 +19,19 @@ class TopPicksSection extends StatelessWidget {
       children: [
         // Title
         Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8),
+          padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 8.h),
           child: Padding(
             padding: const EdgeInsets.all(16),
             child: Text(
               "Top Picks",
-              style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+              style: TextStyle(fontSize: 20.sp, fontWeight: FontWeight.bold),
             ),
           ),
         ),
 
         // Horizontal List of Cards
         SizedBox(
-          height: 180,
+          height: 180.h,
           child: ListView.builder(
             scrollDirection: Axis.horizontal,
             itemCount: topPicks.length,
@@ -40,13 +41,13 @@ class TopPicksSection extends StatelessWidget {
                   Navigator.pushNamed(context, AppRoutes.recipe);
                 },
                 child: Container(
-                  width: 300,
+                  width: 300.w,
                   margin: EdgeInsets.only(
-                    left: 16,
-                    right: index == topPicks.length - 1 ? 16 : 0,
+                    left: 16.w,
+                    right: index == topPicks.length - 1 ? 16.w : 0,
                   ),
                   decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(16),
+                    borderRadius: BorderRadius.circular(16.r),
                     image: DecorationImage(
                       image: AssetImage(topPicks[index]["image"]!),
                       fit: BoxFit.cover,
@@ -58,7 +59,7 @@ class TopPicksSection extends StatelessWidget {
                       Positioned.fill(
                         child: Container(
                           decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(16),
+                            borderRadius: BorderRadius.circular(16.r),
                             gradient: LinearGradient(
                               begin: Alignment.bottomCenter,
                               end: Alignment.topCenter,
@@ -73,8 +74,8 @@ class TopPicksSection extends StatelessWidget {
 
                       // Recipe title text and stars
                       Positioned(
-                        left: 12,
-                        bottom: 12,
+                        left: 12.w,
+                        bottom: 12.h,
                         child: Row(
                           children: [
                             Text(
@@ -82,22 +83,22 @@ class TopPicksSection extends StatelessWidget {
                               style: TextStyle(
                                 color: Colors.white,
                                 fontWeight: FontWeight.bold,
-                                fontSize: 16,
+                                fontSize: 16.sp,
                               ),
                             ),
-                            SizedBox(width: 4),
+                            SizedBox(width: 4.w),
                             Icon(
                               Icons.star,
                               color: Colors.yellow,
-                              size: 16,
+                              size: 16.r,
                             ),
-                            SizedBox(width: 2),
+                            SizedBox(width: 2.w),
                             Text(
                               topPicks[index]["stars"]!,
                               style: TextStyle(
                                 color: Colors.white,
                                 fontWeight: FontWeight.bold,
-                                fontSize: 16,
+                                fontSize: 16.sp,
                               ),
                             ),
                           ],
@@ -114,3 +115,4 @@ class TopPicksSection extends StatelessWidget {
     );
   }
 }
+

@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class CustomNavBar extends StatelessWidget {
-  final String currentPage; // Pass the name of the current page
-
+  final String currentPage;
   const CustomNavBar({super.key, required this.currentPage});
 
   final List<_NavItem> _items = const [
@@ -18,59 +18,48 @@ class CustomNavBar extends StatelessWidget {
   ];
 
   void _onItemTapped(BuildContext context, String route) {
-    if (ModalRoute.of(context)?.settings.name == route) {
-      return; // Avoid reloading same page
-    }
+    if (ModalRoute.of(context)?.settings.name == route) return;
     Navigator.pushReplacementNamed(context, route);
   }
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 67,
+      height: 67.h,
       decoration: const BoxDecoration(
         borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
-        color: Color(0xFF1B512D), // dark green background
         gradient: LinearGradient(
           colors: [Color(0xFF2D995D), Color(0xFF1C7C54), Color(0xFF1B512D)],
           begin: Alignment.topLeft,
           end: Alignment.bottomRight,
         ),
       ),
-
       child: Padding(
-        padding: const EdgeInsets.symmetric(vertical: 6, horizontal: 6),
+        padding: EdgeInsets.symmetric(vertical: 6.h, horizontal: 6.w),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: _items.map((item) {
-            // Highlight only if the currentPage matches one of the 5 labels
             final isSelected =
                 item.label.toLowerCase() == currentPage.toLowerCase();
 
             return GestureDetector(
               onTap: () => _onItemTapped(context, item.route),
               child: Container(
-                padding: const EdgeInsets.symmetric(
-                  vertical: 6,
-                  horizontal: 12,
-                ),
+                padding: EdgeInsets.symmetric(vertical: 6.h, horizontal: 12.w),
                 decoration: BoxDecoration(
                   color: isSelected
-                      ? Colors.white.withValues(alpha: 0.25)
+                      ? Colors.white.withOpacity(0.25)
                       : Colors.transparent,
-                  borderRadius: BorderRadius.circular(12),
+                  borderRadius: BorderRadius.circular(12.r),
                 ),
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
                   children: [
-                    Icon(item.icon, color: Colors.white),
+                    Icon(item.icon, color: Colors.white, size: 22.sp),
                     if (isSelected)
                       Text(
                         item.label,
-                        style: const TextStyle(
-                          fontSize: 12,
-                          color: Colors.white,
-                        ),
+                        style: TextStyle(fontSize: 12.sp, color: Colors.white),
                       ),
                   ],
                 ),

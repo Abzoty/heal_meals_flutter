@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'core/routing/routes.dart';
 
 void main() {
@@ -10,12 +11,18 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Heal Meals',
-
-      debugShowCheckedModeBanner: false,
-      initialRoute: AppRoutes.start,
-      onGenerateRoute: AppRoutes.generateRoute,
+    return ScreenUtilInit(
+      designSize: const Size(412, 844), // base size (adjust to your Figma/UI)
+      minTextAdapt: true,
+      splitScreenMode: true,
+      builder: (context, child) {
+        return MaterialApp(
+          title: 'Heal Meals',
+          debugShowCheckedModeBanner: false,
+          initialRoute: AppRoutes.recipe,
+          onGenerateRoute: AppRoutes.generateRoute,
+        );
+      },
     );
   }
 }

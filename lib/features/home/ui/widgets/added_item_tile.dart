@@ -1,39 +1,61 @@
 import 'package:flutter/material.dart';
+import "package:flutter_screenutil/flutter_screenutil.dart";
 
 class AddedItemTile extends StatelessWidget {
   final String name;
   final VoidCallback onRemove;
   final Color accentGreen;
 
-  const AddedItemTile({super.key, required this.name, required this.onRemove, required this.accentGreen});
+  const AddedItemTile({
+    super.key,
+    required this.name,
+    required this.onRemove,
+    required this.accentGreen,
+  });
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 4),
+      padding: EdgeInsets.symmetric(horizontal: 14.w, vertical: 4.h),
       child: Row(
         children: [
           Expanded(
             child: Container(
-              height: 40,
-              padding: const EdgeInsets.symmetric(vertical: 4, horizontal: 12),
-              decoration: BoxDecoration(color: accentGreen, borderRadius: BorderRadius.circular(16)),
+              height: 40.h,
+              padding: EdgeInsets.symmetric(vertical: 4.h, horizontal: 12.w),
+              decoration: BoxDecoration(
+                color: accentGreen,
+                borderRadius: BorderRadius.circular(16.r),
+              ),
               child: Padding(
-                padding: const EdgeInsets.only(left: 16.0, top: 4.0, bottom: 4.0),
-                child: Text(name, style: const TextStyle(color: Colors.white, fontSize: 16, fontWeight: FontWeight.w500)),
+                padding: EdgeInsets.only(left: 16.w, top: 4.h, bottom: 4.h),
+                child: Text(
+                  name,
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 16.sp,
+                    fontWeight: FontWeight.w500,
+                  ),
+                ),
               ),
             ),
           ),
-          const SizedBox(width: 8),
+          SizedBox(width: 8.w),
           InkWell(
             onTap: onRemove,
-            borderRadius: BorderRadius.circular(12),
+            borderRadius: BorderRadius.circular(12.r),
             child: Container(
-              padding: const EdgeInsets.all(10),
+              padding: EdgeInsets.all(10.h),
               decoration: BoxDecoration(
                 color: Colors.white,
-                borderRadius: BorderRadius.circular(12),
-                boxShadow: [BoxShadow(color: Colors.black.withValues(alpha: 0.06), blurRadius: 4, offset: const Offset(0, 2))],
+                borderRadius: BorderRadius.circular(12.r),
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.black.withValues(alpha: 0.06),
+                    blurRadius: 4.r,
+                    offset: Offset(0, 2.h),
+                  ),
+                ],
               ),
               child: Icon(Icons.delete, color: Colors.grey[800]),
             ),

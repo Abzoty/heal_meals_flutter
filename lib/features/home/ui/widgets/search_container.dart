@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class SearchContainer extends StatelessWidget {
   final TextEditingController controller;
@@ -17,15 +18,15 @@ class SearchContainer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.all(12),
+      padding: EdgeInsets.all(12.w),
       decoration: BoxDecoration(
         color: Colors.white,
-        borderRadius: BorderRadius.circular(14),
+        borderRadius: BorderRadius.circular(14.r),
         boxShadow: [
           BoxShadow(
             color: Colors.black.withValues(alpha: 0.06),
-            blurRadius: 6,
-            offset: const Offset(0, 4),
+            blurRadius: 6.r,
+            offset: Offset(0, 4.h),
           ),
         ],
       ),
@@ -35,10 +36,10 @@ class SearchContainer extends StatelessWidget {
             children: [
               Expanded(
                 child: Container(
-                  padding: const EdgeInsets.symmetric(horizontal: 12),
+                  padding: EdgeInsets.symmetric(horizontal: 12.w),
                   decoration: BoxDecoration(
                     color: const Color(0xFFF1F1F1),
-                    borderRadius: BorderRadius.circular(24),
+                    borderRadius: BorderRadius.circular(24.r),
                   ),
                   child: TextField(
                     controller: controller,
@@ -54,7 +55,7 @@ class SearchContainer extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: 10),
+          SizedBox(height: 10.h),
           SizedBox(
             width: double.infinity,
             child: ElevatedButton.icon(
@@ -66,9 +67,9 @@ class SearchContainer extends StatelessWidget {
               ),
               style: ElevatedButton.styleFrom(
                 backgroundColor: Color(0xFF1B512D),
-                padding: const EdgeInsets.symmetric(vertical: 12),
+                padding: EdgeInsets.symmetric(vertical: 12.h),
                 shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(20),
+                  borderRadius: BorderRadius.circular(20.r),
                 ),
               ),
             ),
@@ -78,3 +79,4 @@ class SearchContainer extends StatelessWidget {
     );
   }
 }
+

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import "../pages/health_profile_page.dart" show FilterMode; // import the enum
 
 class FilterButtonsRow extends StatelessWidget {
@@ -21,22 +22,22 @@ class FilterButtonsRow extends StatelessWidget {
     return GestureDetector(
       onTap: () => onChanged(mode),
       child: Container(
-        padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
-        margin: const EdgeInsets.only(right: 8),
+        padding: EdgeInsets.symmetric(horizontal: 10.w, vertical: 6.h),
+        margin: EdgeInsets.only(right: 8.w),
         decoration: BoxDecoration(
           color: active ? Color(0xFF1B512D) : Colors.transparent,
-          borderRadius: BorderRadius.circular(8),
+          borderRadius: BorderRadius.circular(8.r),
         ),
         child: Row(
           children: [
-            Icon(icon, size: 18, color: active ? Colors.white : Colors.black87),
-            const SizedBox(width: 6),
+            Icon(icon, size: 18.sp, color: active ? Colors.white : Colors.black87),
+            SizedBox(width: 6.w),
             Text(
               label,
               style: TextStyle(
                 color: active ? Colors.white : Colors.black87,
                 fontWeight: FontWeight.w600,
-                fontSize: 16,
+                fontSize: 16.sp,
               ),
             ),
           ],
@@ -73,3 +74,4 @@ class FilterButtonsRow extends StatelessWidget {
     );
   }
 }
+

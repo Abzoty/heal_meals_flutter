@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:heal_meals/core/routing/routes.dart';
 import 'package:heal_meals/features/home/data/models/user_model.dart';
 import 'package:heal_meals/features/home/ui/widgets/custom_nav_bar.dart';
@@ -47,27 +48,27 @@ class _ProfilePageState extends State<ProfilePage> {
       backgroundColor: const Color(0xFFF9EDED),
       body: SafeArea(
         child: SingleChildScrollView(
-          padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 16),
+          padding: EdgeInsets.symmetric(horizontal: 24.w, vertical: 16.h),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              const SizedBox(height: 16),
+              SizedBox(height: 16.h),
 
               // Profile Icon
               Container(
-                padding: const EdgeInsets.all(20),
+                padding: EdgeInsets.all(20.r),
                 decoration: const BoxDecoration(
                   color: Color(0xFF1B512D),
                   shape: BoxShape.circle,
                 ),
-                child: const Icon(
+                child: Icon(
                   Icons.account_circle,
-                  size: 80,
+                  size: 80.r,
                   color: Colors.white,
                 ),
               ),
 
-              const SizedBox(height: 24),
+              SizedBox(height: 24.h),
 
               // Loading, Error, or Data
               if (_isLoading)
@@ -88,7 +89,7 @@ class _ProfilePageState extends State<ProfilePage> {
                 InfoField(label: "Health ID", value: _profile!.healthId),
               ],
 
-              const SizedBox(height: 20),
+              SizedBox(height: 20.h),
 
               // Button
               SizedBox(
@@ -96,17 +97,17 @@ class _ProfilePageState extends State<ProfilePage> {
                 child: ElevatedButton(
                   style: ElevatedButton.styleFrom(
                     backgroundColor: const Color(0xFF1B512D),
-                    padding: const EdgeInsets.symmetric(vertical: 14),
+                    padding: EdgeInsets.symmetric(vertical: 14.h),
                     shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(30),
+                      borderRadius: BorderRadius.circular(30.r),
                     ),
                   ),
                   onPressed: () {
                     Navigator.pushNamed(context, AppRoutes.healthProfile);
                   },
-                  child: const Text(
+                  child: Text(
                     "Health Profile",
-                    style: TextStyle(fontSize: 16, color: Colors.white),
+                    style: TextStyle(fontSize: 16.sp, color: Colors.white),
                   ),
                 ),
               ),

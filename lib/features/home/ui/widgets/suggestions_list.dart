@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class SuggestionsList extends StatelessWidget {
   final bool visible;
@@ -19,14 +20,14 @@ class SuggestionsList extends StatelessWidget {
     if (!visible) return const SizedBox.shrink();
 
     return Container(
-      margin: const EdgeInsets.only(top: 10),
-      padding: const EdgeInsets.all(8),
+      margin: EdgeInsets.only(top: 10.h),
+      padding: EdgeInsets.all(8.r),
       decoration: BoxDecoration(
         color: Colors.white,
-        borderRadius: BorderRadius.circular(10),
+        borderRadius: BorderRadius.circular(10.r),
       ),
       child: ConstrainedBox(
-        constraints: BoxConstraints(maxHeight: maxHeight),
+        constraints: BoxConstraints(maxHeight: maxHeight.h),
         child: ListView.builder(
           shrinkWrap: true,
           itemCount: suggestions.length,
@@ -36,18 +37,21 @@ class SuggestionsList extends StatelessWidget {
               onTap: () => onTapSuggestion(s),
               child: Container(
                 width: double.infinity,
-                padding: const EdgeInsets.symmetric(
-                  vertical: 10,
-                  horizontal: 12,
+                padding: EdgeInsets.symmetric(
+                  vertical: 10.r,
+                  horizontal: 12.r,
                 ),
-                margin: const EdgeInsets.only(bottom: 6),
+                margin: EdgeInsets.only(bottom: 6.r),
                 decoration: BoxDecoration(
                   color: Colors.green[50],
-                  borderRadius: BorderRadius.circular(20),
+                  borderRadius: BorderRadius.circular(20.r),
                 ),
                 child: Text(
                   s,
-                  style: const TextStyle(fontWeight: FontWeight.w600),
+                  style: TextStyle(
+                    fontWeight: FontWeight.w600,
+                    fontSize: 16.sp,
+                  ),
                 ),
               ),
             );
@@ -57,3 +61,4 @@ class SuggestionsList extends StatelessWidget {
     );
   }
 }
+

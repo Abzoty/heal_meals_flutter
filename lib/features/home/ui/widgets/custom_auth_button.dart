@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class CustomAuthButton extends StatelessWidget {
   final String buttonText;
@@ -7,7 +8,7 @@ class CustomAuthButton extends StatelessWidget {
   const CustomAuthButton({
     super.key,
     required this.buttonText,
-    required this.onPressed
+    required this.onPressed,
   });
 
   @override
@@ -19,13 +20,16 @@ class CustomAuthButton extends StatelessWidget {
         style: ElevatedButton.styleFrom(
           backgroundColor: Color(0xFF1B512D),
           shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(30),
+            borderRadius: BorderRadius.circular(30.r),
           ),
-          padding: const EdgeInsets.symmetric(vertical: 8),
+          padding: EdgeInsets.symmetric(vertical: 8.h),
         ),
         child: Text(
           buttonText,
-          style: const TextStyle(fontSize: 18, color: Color.fromARGB(255, 255, 255, 255)),
+          style: TextStyle(
+            fontSize: 18.sp,
+            color: Color.fromARGB(255, 255, 255, 255),
+          ),
         ),
       ),
     );

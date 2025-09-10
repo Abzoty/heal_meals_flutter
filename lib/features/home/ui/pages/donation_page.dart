@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:heal_meals/features/home/ui/widgets/custom_nav_bar.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:heal_meals/features/home/ui/widgets/build_text_field.dart';
+import 'package:heal_meals/features/home/ui/widgets/custom_nav_bar.dart';
 
 class DonationPage extends StatelessWidget {
   static const String routeName = '/donation';
@@ -15,7 +16,7 @@ class DonationPage extends StatelessWidget {
         backgroundColor: Color(0xFFF9EDED),
         body: SafeArea(
           child: SingleChildScrollView(
-            padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 40),
+            padding: EdgeInsets.symmetric(horizontal: 24.w, vertical: 40.h),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
@@ -25,14 +26,14 @@ class DonationPage extends StatelessWidget {
                     children: [
                       Image.asset(
                         "assets/images/donation.png",
-                        width: 216,
-                        height: 216,
+                        width: 216.w,
+                        height: 216.h,
                       ),
-                      const SizedBox(height: 8),
+                      SizedBox(height: 8.h),
                     ],
                   ),
                 ),
-                const SizedBox(height: 8),
+                SizedBox(height: 8.h),
 
                 // Form fields
                 BuildTextField(hintText: 'Full Name'),
@@ -40,18 +41,18 @@ class DonationPage extends StatelessWidget {
                 BuildTextField(hintText: 'Email'),
                 BuildTextField(hintText: 'Password', isPassword: true),
                 BuildTextField(hintText: 'Message'),
-                const SizedBox(height: 30),
-                const Center(
+                SizedBox(height: 30.h),
+                Center(
                   child: Text(
                     "Credit Card Information",
                     style: TextStyle(
                       color: Color(0XFF787575),
-                      fontSize: 18,
+                      fontSize: 18.sp,
                       fontWeight: FontWeight.bold,
                     ),
                   ),
                 ),
-                const SizedBox(height: 20),
+                SizedBox(height: 20.h),
                 BuildDoubleTextField(
                   hintText1: "First Name",
                   hintText2: "Last Name",
@@ -65,7 +66,7 @@ class DonationPage extends StatelessWidget {
                   flex3: 2,
                 ),
 
-                const SizedBox(height: 30),
+                SizedBox(height: 30.h),
 
                 // Sign up button
                 SizedBox(
@@ -77,14 +78,14 @@ class DonationPage extends StatelessWidget {
                     style: ElevatedButton.styleFrom(
                       backgroundColor: Color(0xFF1B512D),
                       shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(30),
+                        borderRadius: BorderRadius.circular(30.r),
                       ),
-                      padding: const EdgeInsets.symmetric(vertical: 8),
+                      padding: EdgeInsets.symmetric(vertical: 8.h),
                     ),
                     child: Text(
                       'Submit',
-                      style: const TextStyle(
-                        fontSize: 18,
+                      style: TextStyle(
+                        fontSize: 18.sp,
                         color: Color.fromARGB(255, 255, 255, 255),
                       ),
                     ),
