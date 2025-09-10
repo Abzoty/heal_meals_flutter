@@ -38,7 +38,7 @@ class FavoritesPage extends StatelessWidget {
               children: List.generate(
                 5,
                 (index) => Padding(
-                  padding: EdgeInsets.symmetric(vertical: 4.h, horizontal: 8.w),
+                  padding: EdgeInsets.symmetric(vertical: 4.h),
                   child: RecipeCard(
                     title: 'Recipe $index',
                     description: 'This is a description for recipe $index',

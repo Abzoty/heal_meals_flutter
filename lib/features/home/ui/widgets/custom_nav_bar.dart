@@ -3,6 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class CustomNavBar extends StatelessWidget {
   final String currentPage;
+
   const CustomNavBar({super.key, required this.currentPage});
 
   final List<_NavItem> _items = const [
@@ -25,7 +26,7 @@ class CustomNavBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 67.h,
+      height: 64.h,
       decoration: const BoxDecoration(
         borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
         gradient: LinearGradient(
@@ -34,39 +35,42 @@ class CustomNavBar extends StatelessWidget {
           end: Alignment.bottomRight,
         ),
       ),
-      child: Padding(
-        padding: EdgeInsets.symmetric(vertical: 6.h, horizontal: 6.w),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceAround,
-          children: _items.map((item) {
-            final isSelected =
-                item.label.toLowerCase() == currentPage.toLowerCase();
+      child: Row(
+        children: _items.map((item) {
+          final isSelected =
+              item.label.toLowerCase() == currentPage.toLowerCase();
 
-            return GestureDetector(
+          return Expanded(
+            child: GestureDetector(
               onTap: () => _onItemTapped(context, item.route),
               child: Container(
-                padding: EdgeInsets.symmetric(vertical: 6.h, horizontal: 12.w),
                 decoration: BoxDecoration(
                   color: isSelected
-                      ? Colors.white.withOpacity(0.25)
-                      : Colors.transparent,
+                      ? Colors.white.withValues(alpha: 0.25)
+                      : null,
                   borderRadius: BorderRadius.circular(12.r),
                 ),
                 child: Column(
-                  mainAxisSize: MainAxisSize.min,
+                  mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Icon(item.icon, color: Colors.white, size: 22.sp),
-                    if (isSelected)
+                    Icon(
+                      item.icon,
+                      color: Colors.white,
+                      size: isSelected ? 22.sp : 26.sp,
+                    ),
+                    if (isSelected) ...[
+                      SizedBox(height: 2.h),
                       Text(
                         item.label,
                         style: TextStyle(fontSize: 12.sp, color: Colors.white),
                       ),
+                    ],
                   ],
                 ),
               ),
-            );
-          }).toList(),
-        ),
+            ),
+          );
+        }).toList(),
       ),
     );
   }
@@ -76,6 +80,7 @@ class _NavItem {
   final IconData icon;
   final String label;
   final String route;
+
   const _NavItem({
     required this.icon,
     required this.label,
