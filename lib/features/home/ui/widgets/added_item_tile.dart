@@ -21,7 +21,6 @@ class AddedItemTile extends StatelessWidget {
         children: [
           Expanded(
             child: Container(
-              height: 40.h,
               padding: EdgeInsets.symmetric(vertical: 4.h, horizontal: 12.w),
               decoration: BoxDecoration(
                 color: accentGreen,
@@ -49,14 +48,8 @@ class AddedItemTile extends StatelessWidget {
               decoration: BoxDecoration(
                 color: Colors.white,
                 borderRadius: BorderRadius.circular(12.r),
-                boxShadow: [
-                  BoxShadow(
-                    color: Colors.black.withValues(alpha: 0.06),
-                    blurRadius: 4.r,
-                    offset: Offset(0, 2.h),
-                  ),
-                ],
               ),
+              alignment: Alignment.center,
               child: Icon(Icons.delete, color: Colors.grey[800]),
             ),
           ),

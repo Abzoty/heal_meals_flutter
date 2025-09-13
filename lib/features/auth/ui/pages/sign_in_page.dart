@@ -1,21 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:heal_meals/core/routing/routes.dart';
+import 'package:heal_meals/features/auth/ui/widgets/custom_auth_button.dart';
 import 'package:heal_meals/features/home/ui/widgets/build_text_field.dart';
-import 'package:heal_meals/features/home/ui/widgets/custom_auth_button.dart';
 
+class LogInPage extends StatelessWidget {
+  static const routeName = '/signin';
 
-class SignupPage extends StatelessWidget {
-  static const routeName = '/signup';
-
-  const SignupPage({super.key});
+  const LogInPage({super.key});
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () => FocusScope.of(context).unfocus(),
+      onTap: () => FocusManager.instance.primaryFocus?.unfocus(),
       child: Scaffold(
-        backgroundColor: const Color(0xFFF9EDED),
+        backgroundColor: Color(0xFFF9EDED),
         body: SafeArea(
           child: SingleChildScrollView(
             padding: EdgeInsets.symmetric(horizontal: 24.w, vertical: 40.h),
@@ -33,7 +32,7 @@ class SignupPage extends StatelessWidget {
                       ),
                       SizedBox(height: 20.h),
                       Text(
-                        "Sign up",
+                        "Sign in",
                         style: TextStyle(
                           fontSize: 28.sp,
                           fontWeight: FontWeight.bold,
@@ -45,23 +44,17 @@ class SignupPage extends StatelessWidget {
                 SizedBox(height: 40.h),
 
                 // Form fields
-                BuildTextField(hintText: "Name"),
                 BuildTextField(hintText: "Email"),
                 BuildTextField(hintText: "Password", isPassword: true),
-                BuildTextField(hintText: "Confirm Password", isPassword: true),
-                BuildTextField(hintText: "Phone"),
-                BuildTextField(hintText: "Gender"),
-                BuildTextField(hintText: "Age"),
-
                 SizedBox(height: 30.h),
 
                 // Sign up button
                 CustomAuthButton(
                   onPressed: () {
                     // TODO: Implement sign up logic
-                    Navigator.pushNamed(context, AppRoutes.signin);
+                    Navigator.pushNamed(context, AppRoutes.home);
                   },
-                  buttonText: 'Sign up',
+                  buttonText: 'Sign In',
                 ),
 
                 SizedBox(height: 20.h),
@@ -71,22 +64,19 @@ class SignupPage extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Text(
-                      "Have an account? ",
-                      style: TextStyle(
-                        fontSize: 16.sp,
-                        fontWeight: FontWeight.bold,
-                      ),
+                      "Don't have an account? ",
+                      style: TextStyle(fontSize: 16.sp, fontWeight: FontWeight.bold),
                     ),
                     GestureDetector(
                       onTap: () {
-                        Navigator.pushNamed(context, AppRoutes.signin);
+                        Navigator.pushNamed(context, AppRoutes.signup);
                       },
                       child: TextButton(
                         onPressed: () {
-                          Navigator.pushNamed(context, AppRoutes.signin);
+                          Navigator.pushNamed(context, AppRoutes.signup);
                         },
                         child: Text(
-                          "Sign in",
+                          "Sign up",
                           style: TextStyle(
                             color: Colors.blue,
                             fontWeight: FontWeight.bold,

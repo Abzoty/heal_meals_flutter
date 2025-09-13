@@ -19,7 +19,7 @@ class TopPicksSection extends StatelessWidget {
       children: [
         // Title
         Padding(
-          padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 8.h),
+          padding: EdgeInsets.symmetric(horizontal: 8.w, vertical: 4.h),
           child: Padding(
             padding: const EdgeInsets.all(16),
             child: Text(

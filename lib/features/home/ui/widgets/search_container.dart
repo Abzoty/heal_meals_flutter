@@ -44,8 +44,16 @@ class SearchContainer extends StatelessWidget {
                   child: TextField(
                     controller: controller,
                     focusNode: focusNode,
-                    decoration: const InputDecoration(
+                    style: TextStyle(
+                      fontSize: 16.sp,
+                      color: Colors.black87,
+                    ),
+                    decoration: InputDecoration(
                       hintText: 'Search...',
+                      hintStyle: TextStyle(
+                        fontSize: 16.sp,
+                        color: Colors.grey[500],
+                      ),
                       border: InputBorder.none,
                     ),
                     textInputAction: TextInputAction.done,
@@ -61,9 +69,9 @@ class SearchContainer extends StatelessWidget {
             child: ElevatedButton.icon(
               onPressed: onAddPressed,
               icon: const Icon(Icons.add, color: Colors.white, size: 24),
-              label: const Text(
+              label: Text(
                 'Add',
-                style: TextStyle(color: Colors.white, fontSize: 16),
+                style: TextStyle(color: Colors.white, fontSize: 16.sp),
               ),
               style: ElevatedButton.styleFrom(
                 backgroundColor: Color(0xFF1B512D),
@@ -79,4 +87,3 @@ class SearchContainer extends StatelessWidget {
     );
   }
 }
-

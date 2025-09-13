@@ -17,7 +17,7 @@ class HealthProfilePage extends StatefulWidget {
 enum FilterMode { all, allergies, diseases }
 
 class _HealthProfilePageState extends State<HealthProfilePage> {
-  // Built-in lists
+  // Built-in lists of valid entries
   final List<String> allergies = [
     'Pollen',
     'Dust',
@@ -29,7 +29,6 @@ class _HealthProfilePageState extends State<HealthProfilePage> {
   ];
 
   final List<String> diseases = [
-    //Close keyboard on press of any buttons or empty space
     'Asthma',
     'Diabetes',
     'Hypertension',
@@ -39,15 +38,15 @@ class _HealthProfilePageState extends State<HealthProfilePage> {
     'Arthritis',
   ];
 
-  // Combined for suggestion matching
+  // Combined allergies and diseases in one list for suggestion matching
   late final List<String> _allItems;
 
   // State
   final TextEditingController _controller = TextEditingController();
   final FocusNode _focusNode = FocusNode();
-  final List<_AddedItem> _added = [];
+  final List<_AddedItem> _added = []; // List of added items
   FilterMode _filter = FilterMode.all;
-  List<String> _suggestions = [];
+  List<String> _suggestions = []; // List of current suggested items
   bool _showSuggestions = false;
 
   @override
@@ -55,9 +54,6 @@ class _HealthProfilePageState extends State<HealthProfilePage> {
     super.initState();
     _allItems = [...allergies, ...diseases];
     _controller.addListener(_onTextChanged);
-    _focusNode.addListener(() {
-      // keep suggestions visible until text cleared or explicit collapse behavior desired
-    });
   }
 
   void _onTextChanged() {
@@ -82,17 +78,20 @@ class _HealthProfilePageState extends State<HealthProfilePage> {
 
     setState(() {
       _suggestions = matches;
+      // set showSuggestions to true if list is not empty
       _showSuggestions = matches.isNotEmpty;
     });
   }
 
   void _applySuggestion(String suggestion) {
     setState(() {
+      // fill in the text field and move the cursor to the end
       _controller.text = suggestion;
       _controller.selection = TextSelection.fromPosition(
         TextPosition(offset: suggestion.length),
       );
       _showSuggestions = false;
+      // keep the focus to the text field
       FocusScope.of(context).requestFocus(_focusNode);
     });
   }
@@ -133,13 +132,14 @@ class _HealthProfilePageState extends State<HealthProfilePage> {
     final normalized = _allItems.firstWhere(
       (i) => i.toLowerCase() == text.toLowerCase(),
     );
+    // check if item is already added
     if (_added.any((a) => a.name.toLowerCase() == normalized.toLowerCase())) {
       ScaffoldMessenger.of(
         context,
       ).showSnackBar(const SnackBar(content: Text('Already added.')));
       return;
     }
-
+    // add item
     setState(() {
       _added.add(_AddedItem(name: normalized, type: _getItemType(normalized)));
       _controller.clear();
@@ -193,12 +193,9 @@ class _HealthProfilePageState extends State<HealthProfilePage> {
             icon: const Icon(Icons.arrow_back, color: Colors.black87),
             onPressed: () => Navigator.of(context).pop(),
           ),
-          title: const Text(
+          title: Text(
             'Health Profile',
-            style: TextStyle(
-              color: Colors.black87,
-              fontWeight: FontWeight.w600,
-            ),
+            style: TextStyle(color: Colors.black87, fontSize: 16.sp),
           ),
         ),
         body: SingleChildScrollView(

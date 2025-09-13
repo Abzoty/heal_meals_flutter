@@ -7,7 +7,7 @@ class UserRepository {
   final ApiClient _apiClient = ApiClient();
 
   Future<User> getUser() async {
-    final json = await _apiClient.get(Endpoints.user);
+    final json = await _apiClient.get(Endpoints.getUser);
     return User.fromJson(json);
   }
 }

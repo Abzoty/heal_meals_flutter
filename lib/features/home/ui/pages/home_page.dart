@@ -16,41 +16,49 @@ class HomePage extends StatelessWidget {
         child: Column(
           children: [
             SizedBox(
-              height: 120.h,
-              child: Row(
-                children: [
-                  Padding(
-                    padding: EdgeInsets.only(left: 16.w, right: 16.w, top: 45.h),
-                    child: Align(
-                      alignment: Alignment.centerLeft,
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            'Hello, User!',
-                            style: TextStyle(
-                              fontSize: 24.sp,
-                              fontWeight: FontWeight.bold,
-                            ),
+              width: double.infinity,
+              child: Padding(
+                padding: EdgeInsets.only(
+                  left: 16.w,
+                  right: 16.w,
+                  top: 45.h,
+                  bottom: 8.h,
+                ),
+                child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          'Hello, User!',
+                          style: TextStyle(
+                            fontSize: 24.sp,
+                            fontWeight: FontWeight.bold,
                           ),
-                          Text(
-                            'What will you have today?',
-                            style: TextStyle(fontSize: 16.sp, color: Colors.grey[600]),
+                        ),
+                        SizedBox(height: 4.h),
+                        Text(
+                          'What will you have today?',
+                          style: TextStyle(
+                            fontSize: 16.sp,
+                            color: Colors.grey[600],
                           ),
-                        ],
+                          overflow: TextOverflow.ellipsis, // prevent overflow
+                        ),
+                      ],
+                    ),
+                    Spacer(),
+                    Padding(
+                      padding: EdgeInsets.only(top: 5.h),
+                      child: Icon(
+                        Icons.account_circle,
+                        size: 60.r,
+                        color: Color(0xFF1B512D),
                       ),
                     ),
-                  ),
-                  Spacer(),
-                  Padding(
-                    padding: EdgeInsets.only(right: 20.w, top: 30.h),
-                    child: Icon(
-                      Icons.account_circle,
-                      size: 60.r,
-                      color: Color(0xFF1B512D),
-                    ),
-                  ),
-                ],
+                  ],
+                ),
               ),
             ),
             TopPicksSection(),
