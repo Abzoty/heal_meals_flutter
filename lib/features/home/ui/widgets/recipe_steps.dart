@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-
 class RecipeSteps extends StatelessWidget {
   const RecipeSteps({super.key, required this.steps});
 
@@ -14,8 +13,9 @@ class RecipeSteps extends StatelessWidget {
         int index = entry.key + 1;
         var step = entry.value;
         return Container(
+          width: double.infinity,
           margin: EdgeInsets.only(bottom: 16.h),
-          padding: EdgeInsets.all(10.w),
+          padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 12.h),
           decoration: BoxDecoration(
             color: const Color(0xFF1B512D),
             borderRadius: BorderRadius.circular(12.r),
@@ -23,16 +23,6 @@ class RecipeSteps extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              ClipRRect(
-                borderRadius: BorderRadius.circular(8.r),
-                child: Image.asset(
-                  step["image"]!,
-                  height: 150.h,
-                  width: double.infinity,
-                  fit: BoxFit.cover,
-                ),
-              ),
-              SizedBox(height: 8.h),
               Text(
                 "Step $index",
                 style: TextStyle(
@@ -41,7 +31,7 @@ class RecipeSteps extends StatelessWidget {
                   fontWeight: FontWeight.bold,
                 ),
               ),
-              SizedBox(height: 4.h),
+              SizedBox(height: 6.h),
               Text(
                 step["text"]!,
                 style: TextStyle(color: Colors.white, fontSize: 14.sp),
