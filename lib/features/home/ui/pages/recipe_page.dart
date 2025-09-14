@@ -11,7 +11,9 @@ import 'package:heal_meals/features/home/ui/widgets/recipe_steps.dart';
 
 class RecipePage extends StatelessWidget {
   static const routeName = '/recipe';
-  const RecipePage({super.key});
+  final String recipeId; // 👈 accept ID
+
+  const RecipePage({super.key, this.recipeId = ''});
 
   @override
   Widget build(BuildContext context) {
@@ -21,7 +23,7 @@ class RecipePage extends StatelessWidget {
       bottomNavigationBar: const CustomNavBar(currentPage: 'recipe'),
       body: SafeArea(
         child: FutureBuilder<Recipe>(
-          future: recipeRepository.getSpecificRecipe(), // API call
+          future: recipeRepository.getSpecificRecipe(recipeId), // 👈 use ID
           builder: (context, snapshot) {
             if (snapshot.connectionState == ConnectionState.waiting) {
               return const Center(child: CircularProgressIndicator());
@@ -75,19 +77,17 @@ class RecipePage extends StatelessWidget {
                     decoration: BoxDecoration(
                       color: Colors.grey,
                       borderRadius: BorderRadius.circular(10.r),
-                      image: DecorationImage(
-                                image: AssetImage("assets/images/food.jpg"),
-                                fit: BoxFit.cover,
+                      image: const DecorationImage(
+                        image: AssetImage("assets/images/food.jpg"),
+                        fit: BoxFit.cover,
                       ),
                     ),
                   ),
                   SizedBox(height: 16.h),
 
-                  // Discover More Button
                   const DiscoverMoreButton(),
                   SizedBox(height: 20.h),
 
-                  // Prep Time + Stars
                   RecipePrepTimeAndStars(
                     prepTime: TimeOfDay(
                       hour: recipe.prepTime.hour,
@@ -97,11 +97,9 @@ class RecipePage extends StatelessWidget {
                   ),
                   SizedBox(height: 10.h),
 
-                  // Description
                   RecipeDescription(description: recipe.description),
                   SizedBox(height: 10.h),
 
-                  // Ingredients
                   Text(
                     "Ingredients:",
                     style: TextStyle(
@@ -111,12 +109,9 @@ class RecipePage extends StatelessWidget {
                   ),
                   SizedBox(height: 10.h),
 
-                  RecipeIngredients(
-                    ingredients: recipe.recipeIngredients
-                  ),
+                  RecipeIngredients(ingredients: recipe.recipeIngredients),
                   SizedBox(height: 20.h),
 
-                  // Steps
                   Text(
                     "Steps:",
                     style: TextStyle(

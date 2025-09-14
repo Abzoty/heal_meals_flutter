@@ -3,7 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:heal_meals/features/home/ui/widgets/recipe_card.dart';
 
 class DiscoverResultsSection extends StatelessWidget {
-  final List<Map<String, String>> recipes;
+  final List<Map<String, dynamic>> recipes;
 
   const DiscoverResultsSection({super.key, required this.recipes});
 
@@ -34,6 +34,7 @@ class DiscoverResultsSection extends StatelessWidget {
             return Padding(
               padding: EdgeInsets.all(4.w),
               child: RecipeCard(
+                id: item['id']!,
                 imageUrl: item['imageUrl'] ?? '',
                 title: item['title']!,
                 description: item['description']!,

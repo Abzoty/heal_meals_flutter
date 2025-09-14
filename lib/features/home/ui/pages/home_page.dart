@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:heal_meals/features/home/logic/Repositories/recipe_repository.dart';
 import 'package:heal_meals/features/home/ui/widgets/custom_nav_bar.dart';
 import 'package:heal_meals/features/home/ui/widgets/recipe_card.dart';
 import 'package:heal_meals/features/home/ui/widgets/top_pics.dart';
+import 'package:heal_meals/features/home/data/models/recipe_model.dart';
 
 class HomePage extends StatelessWidget {
   static const routeName = '/home';
@@ -10,11 +12,14 @@ class HomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final RecipeRepository recipeRepo = RecipeRepository();
+
     return Scaffold(
-      backgroundColor: Color(0xFFF9EDED),
+      backgroundColor: const Color(0xFFF9EDED),
       body: SingleChildScrollView(
         child: Column(
           children: [
+            // 👤 Header
             SizedBox(
               width: double.infinity,
               child: Padding(
@@ -44,40 +49,66 @@ class HomePage extends StatelessWidget {
                             fontSize: 16.sp,
                             color: Colors.grey[600],
                           ),
-                          overflow: TextOverflow.ellipsis, // prevent overflow
+                          overflow: TextOverflow.ellipsis,
                         ),
                       ],
                     ),
-                    Spacer(),
+                    const Spacer(),
                     Padding(
                       padding: EdgeInsets.only(top: 5.h),
                       child: Icon(
                         Icons.account_circle,
                         size: 60.r,
-                        color: Color(0xFF1B512D),
+                        color: const Color(0xFF1B512D),
                       ),
                     ),
                   ],
                 ),
               ),
             ),
+
+            // 🍽️ Top Picks Section
             TopPicksSection(),
+
             SizedBox(height: 20.h),
-            for (int i = 0; i < 5; i++)
-              Padding(
-                padding: EdgeInsets.only(left: 10.w, right: 10.w, bottom: 10.h),
-                child: RecipeCard(
-                  imageUrl: 'assets/images/food.jpg',
-                  title: 'Grilled Chicken Salad',
-                  description: 'A healthy mix of grilled chicken and fresh veggies.',
-                  stars: 14,
-                ),
-              ),
+
+            // 📡 Fetch recipes dynamically
+            FutureBuilder<List<Recipe>>(
+              future: recipeRepo.getAllRecipes(),
+              builder: (context, snapshot) {
+                if (snapshot.connectionState == ConnectionState.waiting) {
+                  return const CircularProgressIndicator();
+                } else if (snapshot.hasError) {
+                  return Text("Error: ${snapshot.error}");
+                } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
+                  return const Text("No recipes found.");
+                }
+
+                final recipes = snapshot.data!;
+                return Column(
+                  children: recipes.map((recipe) {
+                    return Padding(
+                      padding: EdgeInsets.symmetric(
+                        horizontal: 10.w,
+                        vertical: 5.h,
+                      ),
+                      child: RecipeCard(
+                        id: recipe.recipeId,
+                        imageUrl:
+                            'assets/images/food.jpg', // 🔹 Replace if API returns image
+                        title: recipe.title,
+                        description: recipe.description,
+                        stars: recipe.stars,
+                      ),
+                    );
+                  }).toList(),
+                );
+              },
+            ),
           ],
         ),
       ),
-      bottomNavigationBar: const CustomNavBar(currentPage: 'home')
+      bottomNavigationBar: const CustomNavBar(currentPage: 'home'),
     );
   }
 }
-

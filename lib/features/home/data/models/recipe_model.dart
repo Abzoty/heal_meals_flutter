@@ -1,4 +1,5 @@
 class Recipe {
+  final String recipeId;
   final String title;
   final String description;
   final DateTime prepTime;
@@ -7,6 +8,7 @@ class Recipe {
   final List<RecipeIngredient> recipeIngredients;
 
   Recipe({
+    required this.recipeId,
     required this.title,
     required this.description,
     required this.prepTime,
@@ -17,6 +19,7 @@ class Recipe {
 
   factory Recipe.fromJson(Map<String, dynamic> json) {
     return Recipe(
+      recipeId: json['recipe_id'] ?? '',
       title: json['title'] ?? '',
       description: json['description'] ?? '',
       prepTime: DateTime.tryParse(json['prepTime'] ?? '') ?? DateTime.now(),
@@ -32,6 +35,7 @@ class Recipe {
 
   Map<String, dynamic> toJson() {
     return {
+      "recipe_id": recipeId,
       "title": title,
       "description": description,
       "prepTime": prepTime.toIso8601String(),

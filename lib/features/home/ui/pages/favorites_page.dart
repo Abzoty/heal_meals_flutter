@@ -40,8 +40,10 @@ class FavoritesPage extends StatelessWidget {
                 (index) => Padding(
                   padding: EdgeInsets.symmetric(vertical: 4.h),
                   child: RecipeCard(
-                    title: 'Recipe $index',
-                    description: 'This is a description for recipe $index',
+                    title: 'Recipe ${index + 1}',
+                    id: "1",
+                    description:
+                        'This is a description for recipe ${index + 1}',
                     imageUrl: 'assets/images/food.jpg',
                     stars: 12,
                   ),

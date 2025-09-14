@@ -1,13 +1,28 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:heal_meals/core/routing/routes.dart';
+import 'package:heal_meals/features/home/ui/pages/recipe_page.dart';
 
 class TopPicksSection extends StatelessWidget {
   // Dummy list of images and titles
-  final List<Map<String, String>> topPicks = [
-    {"image": "assets/images/food.jpg", "title": "Chicken soup", "stars": "13"},
-    {"image": "assets/images/food.jpg", "title": "Meat balls", "stars": "9"},
-    {"image": "assets/images/food.jpg", "title": "Pasta", "stars": "33"},
+  final List<Map<String, dynamic>> topPicks = [
+    {
+      "image": "assets/images/food.jpg",
+      "title": "Chicken soup",
+      "stars": 13,
+      "id": "1",
+    },
+    {
+      "image": "assets/images/food.jpg",
+      "title": "Meat balls",
+      "stars": 9,
+      "id": "1",
+    },
+    {
+      "image": "assets/images/food.jpg",
+      "title": "Pasta",
+      "stars": 33,
+      "id": "1",
+    },
   ];
 
   TopPicksSection({super.key});
@@ -38,7 +53,14 @@ class TopPicksSection extends StatelessWidget {
             itemBuilder: (context, index) {
               return GestureDetector(
                 onTap: () {
-                  Navigator.pushNamed(context, AppRoutes.recipe);
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (_) => RecipePage(
+                        recipeId: topPicks[index]["id"],
+                      ), // 👈 pass id
+                    ),
+                  );
                 },
                 child: Container(
                   width: 300.w,
@@ -87,14 +109,10 @@ class TopPicksSection extends StatelessWidget {
                               ),
                             ),
                             SizedBox(width: 4.w),
-                            Icon(
-                              Icons.star,
-                              color: Colors.yellow,
-                              size: 16.r,
-                            ),
+                            Icon(Icons.star, color: Colors.yellow, size: 16.r),
                             SizedBox(width: 2.w),
                             Text(
-                              topPicks[index]["stars"]!,
+                              topPicks[index]["stars"].toString(),
                               style: TextStyle(
                                 color: Colors.white,
                                 fontWeight: FontWeight.bold,
@@ -115,4 +133,3 @@ class TopPicksSection extends StatelessWidget {
     );
   }
 }
-

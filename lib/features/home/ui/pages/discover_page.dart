@@ -63,6 +63,7 @@ class _DiscoverPageState extends State<DiscoverPage>
       'title': 'Grilled Chicken Salad',
       'description': 'A quick description about the recipe, and other text.',
       'stars': '9',
+      "id": "1"
     };
   });
 
