@@ -29,7 +29,7 @@ class _ProfilePageState extends State<ProfilePage> {
 
   Future<void> _fetchProfile() async {
     try {
-      final data = await _repository.getUser();
+      final data = await _repository.getUser("1");
       setState(() {
         _profile = data;
         _isLoading = false;
@@ -86,7 +86,7 @@ class _ProfilePageState extends State<ProfilePage> {
                 InfoField(label: "Date of Birth", value: _profile!.dob),
                 InfoField(label: "Address", value: _profile!.address),
                 InfoField(label: "Phone", value: _profile!.phone),
-                InfoField(label: "Health ID", value: _profile!.healthId),
+                //InfoField(label: "Health ID", value: _profile!.healthId),
               ],
 
               SizedBox(height: 20.h),

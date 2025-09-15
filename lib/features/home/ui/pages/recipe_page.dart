@@ -123,13 +123,6 @@ class RecipePage extends StatelessWidget {
 
                   RecipeSteps(
                     steps: recipe.steps
-                        .map(
-                          (e) => {
-                            "image": "assets/images/step1.jpeg",
-                            "text": e,
-                          },
-                        )
-                        .toList(),
                   ),
                 ],
               ),

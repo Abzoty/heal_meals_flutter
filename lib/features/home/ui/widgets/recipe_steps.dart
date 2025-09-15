@@ -4,7 +4,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 class RecipeSteps extends StatelessWidget {
   const RecipeSteps({super.key, required this.steps});
 
-  final List<Map<String, String>> steps;
+  final List<String> steps;
 
   @override
   Widget build(BuildContext context) {
@@ -33,7 +33,7 @@ class RecipeSteps extends StatelessWidget {
               ),
               SizedBox(height: 6.h),
               Text(
-                step["text"]!,
+                step,
                 style: TextStyle(color: Colors.white, fontSize: 14.sp),
               ),
             ],
