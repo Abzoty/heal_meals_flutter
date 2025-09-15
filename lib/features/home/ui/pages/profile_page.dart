@@ -83,7 +83,7 @@ class _ProfilePageState extends State<ProfilePage> {
                 InfoField(label: "Email", value: _profile!.email),
                 InfoField(label: "Role", value: _profile!.role),
                 InfoField(label: "Gender", value: _profile!.gender),
-                InfoField(label: "Date of Birth", value: _profile!.dateOfBirth),
+                InfoField(label: "Date of Birth", value: _profile!.dob),
                 InfoField(label: "Address", value: _profile!.address),
                 InfoField(label: "Phone", value: _profile!.phone),
                 InfoField(label: "Health ID", value: _profile!.healthId),

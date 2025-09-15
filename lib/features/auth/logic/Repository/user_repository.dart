@@ -4,7 +4,7 @@ import 'package:heal_meals/core/API/endpoints.dart';
 class UserRepository {
   final ApiClient _apiClient = ApiClient();
 
-  Future<bool> login(String email, String password) async {
+  Future<bool> signin(String email, String password) async {
     final response = await _apiClient.post(Endpoints.signIn, {
       "email": email,
       "password": password,
@@ -23,7 +23,7 @@ class UserRepository {
     String password,
     String role,
     String gender,
-    String dateOfBirth,
+    String dob,
     String address,
     String healthId,
     String phone,
@@ -34,7 +34,7 @@ class UserRepository {
       "password": password,
       "role": role,
       "gender": gender,
-      "dateOfBirth": dateOfBirth,
+      "dob": dob,
       "address": address,
       "healthId": healthId,
       "phone": phone,

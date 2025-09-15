@@ -6,7 +6,6 @@ import 'package:heal_meals/features/home/ui/pages/health_profile_page.dart';
 import 'package:heal_meals/features/home/ui/pages/home_page.dart';
 import 'package:heal_meals/features/auth/ui/pages/sign_up_page.dart';
 import 'package:heal_meals/features/auth/ui/pages/sign_in_page.dart';
-import 'package:heal_meals/features/home/ui/pages/recipe_page.dart';
 import 'package:heal_meals/features/home/ui/pages/start_screen.dart';
 import 'package:heal_meals/features/home/ui/widgets/testing_page.dart';
 import 'package:heal_meals/features/home/ui/pages/profile_page.dart'; 
@@ -21,7 +20,6 @@ class AppRoutes {
   static const String profile = '/profile';
   static const String favorites = '/favorites';
   static const String donation = '/donation';
-  static const String recipe = '/recipe';
   static const String discover = '/discover';
   static const String healthProfile = '/healthProfile';
 
@@ -44,8 +42,6 @@ class AppRoutes {
         return MaterialPageRoute(builder: (_) => const FavoritesPage());
       case donation:
         return MaterialPageRoute(builder: (_) => const DonationPage());
-      case recipe:
-        return MaterialPageRoute(builder: (_) => const RecipePage());
       case discover:
         return MaterialPageRoute(builder: (_) => const DiscoverPage());
       case healthProfile:

@@ -4,7 +4,7 @@ class User {
   final String email;
   final String role;
   final String gender;
-  final String dateOfBirth;
+  final String dob;
   final String address;
   final String healthId;
   final String phone;
@@ -15,7 +15,7 @@ class User {
     required this.email,
     required this.role,
     required this.gender,
-    required this.dateOfBirth,
+    required this.dob,
     required this.address,
     required this.healthId,
     required this.phone,
@@ -29,7 +29,7 @@ class User {
       email: json['email'],
       role: json['role'],
       gender: json['gender'],
-      dateOfBirth: json['dateOfBirth'],
+      dob: json['dob'],
       address: json['address'],
       healthId: json['healthId'],
       phone: json['phone'],
@@ -44,7 +44,7 @@ class User {
       "email": email,
       "role": role,
       "gender": gender,
-      "dateOfBirth": dateOfBirth,
+      "dob": dob,
       "address": address,
       "healthId": healthId,
       "phone": phone,

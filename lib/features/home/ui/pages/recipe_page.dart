@@ -13,7 +13,7 @@ class RecipePage extends StatelessWidget {
   static const routeName = '/recipe';
   final String recipeId; // 👈 accept ID
 
-  const RecipePage({super.key, this.recipeId = ''});
+  const RecipePage({super.key, required this.recipeId});
 
   @override
   Widget build(BuildContext context) {
