@@ -1,17 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:heal_meals/features/home/data/models/recipe_model.dart';
+
 
 class RecipeIngredients extends StatelessWidget {
-  const RecipeIngredients({super.key, required this.ingredients});
-  final List<RecipeIngredient> ingredients;
+  const RecipeIngredients({super.key, required List<dynamic> ingredients});
+  //const RecipeIngredients({super.key, required this.ingredients});
+  //final List<RecipeIngredient> ingredients;
 
   @override
   Widget build(BuildContext context) {
     return GridView.builder(
       shrinkWrap: true,
       physics: const NeverScrollableScrollPhysics(),
-      itemCount: ingredients.length,
+      //itemCount: ingredients.length,
+      itemCount: 5,
       gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
         crossAxisCount: 3,
         crossAxisSpacing: 8.w,
@@ -30,7 +32,8 @@ class RecipeIngredients extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Text(
-                '${ingredients[index].quantity.toInt()} ${ingredients[index].unit}',
+                //'${ingredients[index].quantity.toInt()} ${ingredients[index].unit}',
+                '${index + 1}',
                 style: TextStyle(
                   fontSize: 16.sp,
                   fontWeight: FontWeight.w400,
@@ -39,7 +42,8 @@ class RecipeIngredients extends StatelessWidget {
                 ),
               ),
               Text(
-                'of ${ingredients[index].name}',
+                //'of ${ingredients[index].name}',
+                'of ${index + 1}',
                 style: TextStyle(
                   fontSize: 16.sp,
                   color: Colors.white,

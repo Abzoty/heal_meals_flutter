@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:heal_meals/features/home/logic/Repositories/recipe_repository.dart';
 import 'package:heal_meals/features/home/ui/widgets/custom_nav_bar.dart';
-import 'package:heal_meals/features/home/ui/widgets/recipe_card.dart';
+//import 'package:heal_meals/features/home/ui/widgets/recipe_card.dart';
 import 'package:heal_meals/features/home/ui/widgets/top_pics.dart';
-import 'package:heal_meals/features/home/data/models/recipe_model.dart';
 
 class HomePage extends StatelessWidget {
   static const routeName = '/home';
@@ -12,7 +10,7 @@ class HomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final RecipeRepository recipeRepo = RecipeRepository();
+    //final RecipeRepository recipeRepo = RecipeRepository();
 
     return Scaffold(
       backgroundColor: const Color(0xFFF9EDED),
@@ -73,38 +71,38 @@ class HomePage extends StatelessWidget {
             SizedBox(height: 20.h),
 
             // 📡 Fetch recipes dynamically
-            FutureBuilder<List<Recipe>>(
-              future: recipeRepo.getAllRecipes(),
-              builder: (context, snapshot) {
-                if (snapshot.connectionState == ConnectionState.waiting) {
-                  return const CircularProgressIndicator();
-                } else if (snapshot.hasError) {
-                  return Text("Error: ${snapshot.error}");
-                } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
-                  return const Text("No recipes found.");
-                }
+            // FutureBuilder<List<Recipe>>(
+            //   future: recipeRepo.getAllRecipes(),
+            //   builder: (context, snapshot) {
+            //     if (snapshot.connectionState == ConnectionState.waiting) {
+            //       return const CircularProgressIndicator();
+            //     } else if (snapshot.hasError) {
+            //       return Text("Error: ${snapshot.error}");
+            //     } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
+            //       return const Text("No recipes found.");
+            //     }
 
-                final recipes = snapshot.data!;
-                return Column(
-                  children: recipes.map((recipe) {
-                    return Padding(
-                      padding: EdgeInsets.symmetric(
-                        horizontal: 10.w,
-                        vertical: 5.h,
-                      ),
-                      child: RecipeCard(
-                        id: recipe.recipeId,
-                        imageUrl:
-                            'assets/images/food.jpg', // 🔹 Replace if API returns image
-                        title: recipe.title,
-                        description: recipe.description,
-                        stars: recipe.stars,
-                      ),
-                    );
-                  }).toList(),
-                );
-              },
-            ),
+            //     final recipes = snapshot.data!;
+            //     return Column(
+            //       children: recipes.map((recipe) {
+            //         return Padding(
+            //           padding: EdgeInsets.symmetric(
+            //             horizontal: 10.w,
+            //             vertical: 5.h,
+            //           ),
+            //           child: RecipeCard(
+            //             id: recipe.recipeId,
+            //             imageUrl:
+            //                 'assets/images/food.jpg', // 🔹 Replace if API returns image
+            //             title: recipe.title,
+            //             description: recipe.description,
+            //             stars: recipe.stars,
+            //           ),
+            //         );
+            //       }).toList(),
+            //     );
+            //   },
+            // ),
           ],
         ),
       ),

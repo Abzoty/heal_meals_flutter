@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:heal_meals/core/routing/routes.dart';
-import 'package:heal_meals/features/home/data/models/user_model.dart';
 import 'package:heal_meals/features/home/ui/widgets/custom_nav_bar.dart';
-import 'package:heal_meals/features/home/logic/Repositories/user_repository.dart';
-import 'package:heal_meals/features/home/ui/widgets/info_filed.dart';
+//import 'package:heal_meals/features/home/ui/widgets/info_filed.dart';
 
 class ProfilePage extends StatefulWidget {
   static const routeName = '/profile';
@@ -15,32 +13,32 @@ class ProfilePage extends StatefulWidget {
 }
 
 class _ProfilePageState extends State<ProfilePage> {
-  final UserRepository _repository = UserRepository();
+  //final UserRepository _repository = UserRepository();
 
-  User? _profile;
-  bool _isLoading = true;
+  //User? _profile;
+  final bool _isLoading = true;
   String? _error;
 
   @override
   void initState() {
     super.initState();
-    _fetchProfile();
+    //fetchProfile();
   }
 
-  Future<void> _fetchProfile() async {
-    try {
-      final data = await _repository.getUser("1");
-      setState(() {
-        _profile = data;
-        _isLoading = false;
-      });
-    } catch (e) {
-      setState(() {
-        _error = e.toString();
-        _isLoading = false;
-      });
-    }
-  }
+  // Future<void> _fetchProfile() async {
+  //   try {
+  //     final data = await _repository.getUser("1");
+  //     setState(() {
+  //       _profile = data;
+  //       _isLoading = false;
+  //     });
+  //   } catch (e) {
+  //     setState(() {
+  //       _error = e.toString();
+  //       _isLoading = false;
+  //     });
+  //   }
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -78,16 +76,17 @@ class _ProfilePageState extends State<ProfilePage> {
                   "Error: $_error",
                   style: const TextStyle(color: Colors.red),
                 )
-              else if (_profile != null) ...[
-                InfoField(label: "Name", value: _profile!.name),
-                InfoField(label: "Email", value: _profile!.email),
-                InfoField(label: "Role", value: _profile!.role),
-                InfoField(label: "Gender", value: _profile!.gender),
-                InfoField(label: "Date of Birth", value: _profile!.dob),
-                InfoField(label: "Address", value: _profile!.address),
-                InfoField(label: "Phone", value: _profile!.phone),
-                //InfoField(label: "Health ID", value: _profile!.healthId),
-              ],
+              // else if (_profile != null) ...[
+              //   InfoField(label: "Name", value: _profile!.name),
+              //   InfoField(label: "Email", value: _profile!.email),
+              //   InfoField(label: "Role", value: _profile!.role),
+              //   InfoField(label: "Gender", value: _profile!.gender),
+              //   InfoField(label: "Date of Birth", value: _profile!.dob),
+              //   InfoField(label: "Address", value: _profile!.address),
+              //   InfoField(label: "Phone", value: _profile!.phone),
+              //   //InfoField(label: "Health ID", value: _profile!.healthId),
+              // ]
+              ,
 
               SizedBox(height: 20.h),
 
