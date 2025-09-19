@@ -47,4 +47,8 @@ abstract class ApiServices {
   //delete user condition
   @DELETE(ApiConstants.deleteUserCondition)
   Future<dynamic> deleteUserCondition(@Path("id") String userId);
+
+  //make a donation
+  @POST(ApiConstants.makeDonation)
+  Future<dynamic> makeDonation(@Body() Map<String, dynamic> body);
 }

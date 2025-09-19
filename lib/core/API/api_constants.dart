@@ -15,4 +15,6 @@ class ApiConstants {
   static const String getAllUserConditions = '/api/user-conditions';
   static const String addUserCondition = '/api/user-conditions/{user_id}/{condition_id}';
   static const String deleteUserCondition = '/api/user-conditions/{id}';
+  //donations
+  static const String makeDonation = '/api/donations';
 }
