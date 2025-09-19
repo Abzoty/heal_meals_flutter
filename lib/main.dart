@@ -19,7 +19,7 @@ class MyApp extends StatelessWidget {
         return MaterialApp(
           title: 'Heal Meals',
           debugShowCheckedModeBanner: false,
-          initialRoute: AppRoutes.home,
+          initialRoute: AppRoutes.start,
           onGenerateRoute: AppRoutes.generateRoute,
         );
       },

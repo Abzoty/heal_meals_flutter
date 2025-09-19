@@ -36,10 +36,10 @@ class DonationPage extends StatelessWidget {
                 SizedBox(height: 8.h),
 
                 // Form fields
-                BuildTextField(hintText: 'Full Name'),
+                BuildDoubleTextField(hintText1: 'First Name', hintText2: 'Second Name'),
                 BuildTextField(hintText: 'Phone Number'),
                 BuildTextField(hintText: 'Email'),
-                BuildTextField(hintText: 'Password', isPassword: true),
+                BuildTextField(hintText: 'Amount'),
                 BuildTextField(hintText: 'Message'),
                 SizedBox(height: 30.h),
                 Center(
@@ -51,11 +51,6 @@ class DonationPage extends StatelessWidget {
                       fontWeight: FontWeight.bold,
                     ),
                   ),
-                ),
-                SizedBox(height: 20.h),
-                BuildDoubleTextField(
-                  hintText1: "First Name",
-                  hintText2: "Last Name",
                 ),
                 const BuildTripleTextField(
                   hintText1: "Card Number",
