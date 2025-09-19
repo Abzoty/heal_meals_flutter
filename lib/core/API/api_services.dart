@@ -1,4 +1,5 @@
 import 'package:dio/dio.dart';
+import 'package:heal_meals/features/home/data/models/condition_model.dart';
 import 'package:heal_meals/features/home/data/models/recipe_list_model.dart';
 import 'package:heal_meals/features/home/data/models/recipe_model.dart';
 import 'package:heal_meals/features/home/data/models/user_login_model.dart';
@@ -26,4 +27,24 @@ abstract class ApiServices {
   //get recipe by id
   @GET(ApiConstants.getRecipeById)
   Future<RecipeModel> getRecipeById(@Path("id") String id);
+
+  //get all condition
+  @GET(ApiConstants.getAllConditions)
+  Future<List<ConditionModel>> getAllConditions();
+
+  //get all user conditions 
+  @GET(ApiConstants.getAllUserConditions)
+  Future<List<ConditionModel>> getAllUserConditions();
+
+  //TODO
+  //get all user conditions (diseases)
+  //get all user conditions (allergies)
+
+  //add user condition
+  @POST(ApiConstants.addUserCondition)
+  Future<dynamic> addUserCondition(@Path("user_id") String userId, @Path("condition_id") String conditionId);
+
+  //delete user condition
+  @DELETE(ApiConstants.deleteUserCondition)
+  Future<dynamic> deleteUserCondition(@Path("id") String userId);
 }
