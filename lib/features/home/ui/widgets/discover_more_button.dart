@@ -25,7 +25,7 @@ class DiscoverMoreButton extends StatelessWidget {
           mainAxisSize: MainAxisSize.min,
           children: [
             Padding(
-              padding: const EdgeInsets.all(8.0),
+              padding: const EdgeInsets.all(4.0),
               child: Text(
                 "Discover More Recipes",
                 style: TextStyle(fontSize: 16.sp, color: Colors.white),

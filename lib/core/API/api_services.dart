@@ -26,7 +26,27 @@ abstract class ApiServices {
 
   //get recipe by id
   @GET(ApiConstants.getRecipeById)
-  Future<RecipeModel> getRecipeById(@Path("id") String id);
+  Future<RecipeModel> getRecipeById(@Path("recipe_id") String id);
+  
+  //get all favorite recipes
+  @GET(ApiConstants.getFavorites)
+  Future<List<RecipeListModel>> getAllFavorites();
+
+  //get top picks in recipes
+  @GET(ApiConstants.getTopPicks)
+  Future<List<RecipeListModel>> getTopPicks();
+
+  //get recommended recipes
+  @GET(ApiConstants.getRecommended)
+  Future<List<RecipeListModel>> getRecommended();
+
+  //add recipe to favorites
+  @POST(ApiConstants.addToFavorites)
+  Future<dynamic> addToFavorites(@Path("recipe_id") String recipeId);
+
+  //remove recipe from favorites
+  @DELETE(ApiConstants.removeFromFavorites)
+  Future<dynamic> removeFromFavorites(@Path("recipe_id") String recipeId);
 
   //get all condition
   @GET(ApiConstants.getAllConditions)
@@ -46,7 +66,7 @@ abstract class ApiServices {
 
   //delete user condition
   @DELETE(ApiConstants.deleteUserCondition)
-  Future<dynamic> deleteUserCondition(@Path("id") String userId);
+  Future<dynamic> deleteUserCondition(@Path("user_condition_id") String userId);
 
   //make a donation
   @POST(ApiConstants.makeDonation)

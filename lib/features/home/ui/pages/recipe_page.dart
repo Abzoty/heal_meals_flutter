@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:heal_meals/features/home/ui/widgets/book_mark_button.dart';
 import 'package:heal_meals/features/home/ui/widgets/custom_nav_bar.dart';
 import 'package:heal_meals/features/home/ui/widgets/discover_more_button.dart';
 import 'package:heal_meals/features/home/ui/widgets/recipe_description.dart';
@@ -9,7 +10,6 @@ import 'package:heal_meals/features/home/ui/widgets/recipe_steps.dart';
 
 class RecipePage extends StatelessWidget {
   static const routeName = '/recipe';
-  
 
   const RecipePage({super.key, required String recipeId});
 
@@ -31,6 +31,8 @@ class RecipePage extends StatelessWidget {
       'Fresh basil leaves',
     ];
 
+    final bool bookMarked = false;
+
     final List<String> recipeSteps = [
       'Boil pasta according to package instructions.',
       'Heat olive oil and sauté garlic until fragrant.',
@@ -48,15 +50,12 @@ class RecipePage extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               // Header
-              Stack(
-                alignment: Alignment.center,
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Align(
-                    alignment: Alignment.centerLeft,
-                    child: IconButton(
-                      icon: Icon(Icons.arrow_back, size: 24.sp),
-                      onPressed: () => Navigator.pop(context),
-                    ),
+                  IconButton(
+                    icon: Icon(Icons.arrow_back, size: 24.sp),
+                    onPressed: () => Navigator.pop(context),
                   ),
                   Text(
                     recipeTitle,
@@ -65,9 +64,10 @@ class RecipePage extends StatelessWidget {
                       fontWeight: FontWeight.bold,
                     ),
                   ),
+                  BookmarkButton(isBookmarked: bookMarked, recipeId: '0123'),
                 ],
               ),
-              SizedBox(height: 12.h),
+              SizedBox(height: 8.h),
 
               // Recipe Image (placeholder)
               Container(

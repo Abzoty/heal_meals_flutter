@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:heal_meals/core/API/api_services.dart';
+import 'package:heal_meals/features/home/data/models/recipe_list_model.dart';
 import 'package:heal_meals/features/home/ui/widgets/custom_nav_bar.dart';
+import 'package:heal_meals/features/home/ui/widgets/recipe_card.dart';
 //import 'package:heal_meals/features/home/ui/widgets/recipe_card.dart';
 import 'package:heal_meals/features/home/ui/widgets/top_pics.dart';
 
@@ -16,6 +19,7 @@ class HomePage extends StatelessWidget {
       backgroundColor: const Color(0xFFF9EDED),
       body: SingleChildScrollView(
         child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             // 👤 Header
             SizedBox(
@@ -68,11 +72,25 @@ class HomePage extends StatelessWidget {
             // 🍽️ Top Picks Section
             TopPicksSection(),
 
-            SizedBox(height: 20.h),
+            SizedBox(height: 8.h),
 
+            // 🍽️ Recommended Section
+            Padding(
+              padding: EdgeInsets.symmetric(horizontal: 8.w, vertical: 4.h),
+              child: Padding(
+                padding: const EdgeInsets.all(16),
+                child: Text(
+                  "Recommended",
+                  style: TextStyle(
+                    fontSize: 20.sp,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              ),
+            ),
             // 📡 Fetch recipes dynamically
-            // FutureBuilder<List<Recipe>>(
-            //   future: recipeRepo.getAllRecipes(),
+            // FutureBuilder<List<RecipeListModel>>(
+            //   future: ,
             //   builder: (context, snapshot) {
             //     if (snapshot.connectionState == ConnectionState.waiting) {
             //       return const CircularProgressIndicator();
