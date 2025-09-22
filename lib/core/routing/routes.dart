@@ -31,7 +31,7 @@ class AppRoutes {
       case signup:
         return MaterialPageRoute(builder: (_) => const SignupPage());
       case signin:
-        return MaterialPageRoute(builder: (_) => const LogInPage());
+        return MaterialPageRoute(builder: (_) => const SignInPage());
       case testing:
         return MaterialPageRoute(builder: (_) => const TestingPage());
       case home:

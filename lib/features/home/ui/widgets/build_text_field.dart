@@ -4,22 +4,32 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 class BuildTextField extends StatelessWidget {
   final String hintText;
   final bool isPassword;
+  final TextEditingController? controller;
+  final String? Function(String?)? validator;
+  final TextInputType? keyboardType;
 
   const BuildTextField({
     super.key,
     required this.hintText,
     this.isPassword = false,
+    this.controller,
+    this.validator,
+    this.keyboardType,
   });
 
   @override
   Widget build(BuildContext context) {
     return Padding(
       padding: EdgeInsets.symmetric(vertical: 10.h),
-      child: TextField(
+      child: TextFormField(
+        controller: controller,
         obscureText: isPassword,
+        validator: validator,
+        keyboardType: keyboardType,
         decoration: InputDecoration(
           labelText: hintText,
           border: UnderlineInputBorder(borderSide: BorderSide(width: 2.w)),
+          errorStyle: TextStyle(fontSize: 12.sp),
         ),
       ),
     );

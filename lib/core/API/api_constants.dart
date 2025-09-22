@@ -3,7 +3,9 @@ class ApiConstants {
   static const String token = 'token';
 
   // Endpoints
-  static const String baseUrl = 'https://e559c301-1020-41f9-bfbe-39a943840df6.mock.pstmn.io';
+  static const String webBaseUrl = 'http://localhost:8080';
+  static const String emulatorBaseUrl = 'http://10.0.2.2:8080';
+  static const String phoneBaseUrl = 'http://192.168.1.7:8080';
   //auth
   static const String register = '/api/auth/register';
   static const String login = '/api/auth/login';

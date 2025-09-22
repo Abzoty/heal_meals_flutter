@@ -12,7 +12,7 @@ part of 'api_services.dart';
 
 class _ApiServices implements ApiServices {
   _ApiServices(this._dio, {this.baseUrl, this.errorLogger}) {
-    baseUrl ??= 'https://e559c301-1020-41f9-bfbe-39a943840df6.mock.pstmn.io';
+    baseUrl ??= 'http://192.168.1.7:8080';
   }
 
   final Dio _dio;

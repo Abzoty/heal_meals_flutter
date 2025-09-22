@@ -2,13 +2,13 @@ import 'package:dio/dio.dart';
 import 'package:heal_meals/features/home/data/models/condition_model.dart';
 import 'package:heal_meals/features/home/data/models/recipe_list_model.dart';
 import 'package:heal_meals/features/home/data/models/recipe_model.dart';
-import 'package:heal_meals/features/home/data/models/user_login_model.dart';
-import 'package:heal_meals/features/home/data/models/user_register_model.dart';
+import 'package:heal_meals/features/auth/data/models/user_login_model.dart';
+import 'package:heal_meals/features/auth/data/models/user_register_model.dart';
 import 'package:retrofit/retrofit.dart';
 import 'package:heal_meals/core/API/api_constants.dart';
 part 'api_services.g.dart';
 
-@RestApi(baseUrl: ApiConstants.baseUrl)
+@RestApi(baseUrl: ApiConstants.phoneBaseUrl)
 abstract class ApiServices {
   factory ApiServices(Dio dio) => _ApiServices(dio);
 

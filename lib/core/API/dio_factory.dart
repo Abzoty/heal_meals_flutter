@@ -20,9 +20,10 @@ class DioFactory {
   }
 
   static void addDioHeaders() async {
+    final token = await SharedPrefHelper.getSecuredString('token');
     dio?.options.headers = {
       'Content-Type': 'application/json',
-      'Authorization': 'Bearer ${await SharedPrefHelper.getString('token')}',
+      if (token.isNotEmpty) 'Authorization': 'Bearer $token',
     };
   }
 
