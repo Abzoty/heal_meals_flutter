@@ -41,6 +41,12 @@ class BuildDoubleTextField extends StatelessWidget {
   final String hintText2;
   final bool isPassword1;
   final bool isPassword2;
+  final TextEditingController? controller1;
+  final TextEditingController? controller2;
+  final String? Function(String?)? validator1;
+  final String? Function(String?)? validator2;
+  final TextInputType? keyboardType1;
+  final TextInputType? keyboardType2;
 
   const BuildDoubleTextField({
     super.key,
@@ -48,6 +54,12 @@ class BuildDoubleTextField extends StatelessWidget {
     required this.hintText2,
     this.isPassword1 = false,
     this.isPassword2 = false,
+    this.controller1,
+    this.controller2,
+    this.validator1,
+    this.validator2,
+    this.keyboardType1,
+    this.keyboardType2,
   });
 
   @override
@@ -57,8 +69,11 @@ class BuildDoubleTextField extends StatelessWidget {
       child: Row(
         children: [
           Expanded(
-            child: TextField(
+            child: TextFormField(
+              controller: controller1,
               obscureText: isPassword1,
+              validator: validator1,
+              keyboardType: keyboardType1,
               decoration: InputDecoration(
                 labelText: hintText1,
                 border: UnderlineInputBorder(
@@ -69,8 +84,11 @@ class BuildDoubleTextField extends StatelessWidget {
           ),
           SizedBox(width: 12.w),
           Expanded(
-            child: TextField(
+            child: TextFormField(
+              controller: controller2,
               obscureText: isPassword2,
+              validator: validator2,
+              keyboardType: keyboardType2,
               decoration: InputDecoration(
                 labelText: hintText2,
                 border: UnderlineInputBorder(
@@ -92,6 +110,15 @@ class BuildTripleTextField extends StatelessWidget {
   final bool isPassword1;
   final bool isPassword2;
   final bool isPassword3;
+  final TextEditingController? controller1;
+  final TextEditingController? controller2;
+  final TextEditingController? controller3;
+  final String? Function(String?)? validator1;
+  final String? Function(String?)? validator2;
+  final String? Function(String?)? validator3;
+  final TextInputType? keyboardType1;
+  final TextInputType? keyboardType2;
+  final TextInputType? keyboardType3;
 
   /// Flex values control how much space each field takes (default = 1)
   final int flex1;
@@ -109,6 +136,15 @@ class BuildTripleTextField extends StatelessWidget {
     this.flex1 = 1,
     this.flex2 = 1,
     this.flex3 = 1,
+    this.controller1,
+    this.controller2,
+    this.controller3,
+    this.validator1,
+    this.validator2,
+    this.validator3,
+    this.keyboardType1,
+    this.keyboardType2,
+    this.keyboardType3,
   });
 
   @override
@@ -119,8 +155,11 @@ class BuildTripleTextField extends StatelessWidget {
         children: [
           Expanded(
             flex: flex1,
-            child: TextField(
+            child: TextFormField(
+              controller: controller1,
               obscureText: isPassword1,
+              validator: validator1,
+              keyboardType: keyboardType1,
               decoration: InputDecoration(
                 labelText: hintText1,
                 border: UnderlineInputBorder(
@@ -132,8 +171,11 @@ class BuildTripleTextField extends StatelessWidget {
           SizedBox(width: 12.w),
           Expanded(
             flex: flex2,
-            child: TextField(
+            child: TextFormField(
+              controller: controller2,
               obscureText: isPassword2,
+              validator: validator2,
+              keyboardType: keyboardType2,
               decoration: InputDecoration(
                 labelText: hintText2,
                 border: UnderlineInputBorder(
@@ -145,8 +187,11 @@ class BuildTripleTextField extends StatelessWidget {
           SizedBox(width: 12.w),
           Expanded(
             flex: flex3,
-            child: TextField(
+            child: TextFormField(
+              controller: controller3,
               obscureText: isPassword3,
+              validator: validator3,
+              keyboardType: keyboardType3,
               decoration: InputDecoration(
                 labelText: hintText3,
                 border: UnderlineInputBorder(

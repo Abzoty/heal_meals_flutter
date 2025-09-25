@@ -1,31 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:heal_meals/features/home/data/models/recipe_list_model.dart';
+import 'package:heal_meals/features/home/logic/cubit/recipe_cubit.dart';
 import 'package:heal_meals/features/home/ui/pages/recipe_page.dart';
 
-class TopPicksSection extends StatelessWidget {
-  // Dummy list of images and titles
-  final List<Map<String, dynamic>> topPicks = [
-    {
-      "image": "assets/images/food.jpg",
-      "title": "Chicken soup",
-      "stars": 13,
-      "id": "1",
-    },
-    {
-      "image": "assets/images/food.jpg",
-      "title": "Meat balls",
-      "stars": 9,
-      "id": "1",
-    },
-    {
-      "image": "assets/images/food.jpg",
-      "title": "Pasta",
-      "stars": 33,
-      "id": "1",
-    },
-  ];
+class TopPics extends StatelessWidget {
+  final List<RecipeListModel> recipes;
 
-  TopPicksSection({super.key});
+  const TopPics({
+    super.key,
+    required this.recipes,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -49,16 +35,19 @@ class TopPicksSection extends StatelessWidget {
           height: 180.h,
           child: ListView.builder(
             scrollDirection: Axis.horizontal,
-            itemCount: topPicks.length,
+            itemCount: recipes.length,
             itemBuilder: (context, index) {
               return GestureDetector(
                 onTap: () {
+                  final recipeCubit = context.read<RecipeCubit>();
+
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (_) => RecipePage(
-                        recipeId: topPicks[index]["id"],
-                      ), // 👈 pass id
+                      builder: (_) => BlocProvider.value(
+                        value: recipeCubit, // 👈 reuse the existing cubit
+                        child: RecipePage(recipeId: recipes[index].recipeId,),
+                      ),
                     ),
                   );
                 },
@@ -66,12 +55,12 @@ class TopPicksSection extends StatelessWidget {
                   width: 300.w,
                   margin: EdgeInsets.only(
                     left: 16.w,
-                    right: index == topPicks.length - 1 ? 16.w : 0,
+                    right: index == recipes.length - 1 ? 16.w : 0,
                   ),
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(16.r),
                     image: DecorationImage(
-                      image: AssetImage(topPicks[index]["image"]!),
+                      image: AssetImage('assets/images/food.jpg'),
                       fit: BoxFit.cover,
                     ),
                   ),
@@ -101,7 +90,7 @@ class TopPicksSection extends StatelessWidget {
                         child: Row(
                           children: [
                             Text(
-                              topPicks[index]["title"]!,
+                              recipes[index].title,
                               style: TextStyle(
                                 color: Colors.white,
                                 fontWeight: FontWeight.bold,
@@ -112,7 +101,7 @@ class TopPicksSection extends StatelessWidget {
                             Icon(Icons.star, color: Colors.yellow, size: 16.r),
                             SizedBox(width: 2.w),
                             Text(
-                              topPicks[index]["stars"].toString(),
+                              recipes[index].stars.toString(),
                               style: TextStyle(
                                 color: Colors.white,
                                 fontWeight: FontWeight.bold,

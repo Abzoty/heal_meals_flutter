@@ -1,65 +1,32 @@
-// features/auth/ui/pages/sign_up_page.dart (Refactored)
+// features/auth/ui/pages/sign_in_page.dart
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:heal_meals/core/routing/routes.dart';
-import 'package:heal_meals/features/auth/data/models/user_register_model.dart';
+import 'package:heal_meals/features/auth/data/models/user_login_model.dart';
+import 'package:heal_meals/features/auth/logic/cubit/auth_cubit.dart';
+import 'package:heal_meals/features/auth/logic/cubit/auth_state.dart';
 import 'package:heal_meals/features/home/ui/widgets/build_text_field.dart';
 import 'package:heal_meals/features/home/ui/widgets/custom_auth_button.dart';
-import 'package:heal_meals/features/auth/logic/auth_bloc.dart';
-import 'package:heal_meals/features/auth/logic/auth_event.dart';
-import 'package:heal_meals/features/auth/logic/auth_state.dart';
 
-class SignupPage extends StatefulWidget {
-  static const routeName = '/signup';
+class SignInPage extends StatelessWidget {
+  static const routeName = '/signin';
 
-  const SignupPage({super.key});
+  SignInPage({super.key});
 
-  @override
-  State<SignupPage> createState() => _SignupPageState();
-}
-
-class _SignupPageState extends State<SignupPage> {
   final _formKey = GlobalKey<FormState>();
-  final _nameController = TextEditingController();
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
-  final _roleController = TextEditingController();
-  final _confirmPasswordController = TextEditingController();
-  final _phoneController = TextEditingController();
-  final _genderController = TextEditingController();
-  final _dobController = TextEditingController();
-  final _addressController = TextEditingController();
 
-
-  @override
-  void dispose() {
-    _nameController.dispose();
-    _emailController.dispose();
-    _passwordController.dispose();
-    _confirmPasswordController.dispose();
-    _phoneController.dispose();
-    _genderController.dispose();
-    _dobController.dispose();
-    super.dispose();
-  }
-
-  void _handleSignUp() {
+  void _handleLogin(BuildContext context) {
     if (_formKey.currentState!.validate()) {
-      final userRegisterModel = UserRegisterModel(
-        name: _nameController.text.trim(),
+      final userLoginModel = UserLoginModel(
         email: _emailController.text.trim(),
         password: _passwordController.text,
-        role: 'user', // Default role, TODO: Add role selection
-        gender: _genderController.text.trim(),
-        dob: _dobController.text.trim(),
-        address: '', // TODO: Add address field 
-        phone: _phoneController.text.trim(),
       );
 
-      context.read<AuthBloc>().add(
-        SignUpRequested(userRegisterModel: userRegisterModel),
-      );
+      context.read<AuthCubit>().signIn(userLoginModel);
     }
   }
 
@@ -78,30 +45,14 @@ class _SignupPageState extends State<SignupPage> {
     if (value == null || value.isEmpty) {
       return 'Password is required';
     }
-    if (value.length < 6) {
-      return 'Password must be at least 6 characters';
-    }
     return null;
   }
 
-  String? _validateConfirmPassword(String? value) {
-    if (value == null || value.isEmpty) {
-      return 'Confirm password is required';
-    }
-    if (value != _passwordController.text) {
-      return 'Passwords do not match';
-    }
-    return null;
-  }
-
-  String? _validateRequired(String? value, String fieldName) {
-    if (value == null || value.isEmpty) {
-      return '$fieldName is required';
-    }
-    return null;
-  }
-
-  void _showSnackBar(String message, {bool isError = false}) {
+  void _showSnackBar(
+    BuildContext context,
+    String message, {
+    bool isError = false,
+  }) {
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
         content: Text(message),
@@ -113,13 +64,13 @@ class _SignupPageState extends State<SignupPage> {
 
   @override
   Widget build(BuildContext context) {
-    return BlocListener<AuthBloc, AuthState>(
+    return BlocListener<AuthCubit, AuthState>(
       listener: (context, state) {
-        if (state is AuthSignUpSuccess) {
-          _showSnackBar(state.message);
-          Navigator.pushReplacementNamed(context, AppRoutes.signin);
+        if (state is AuthSignInSuccess) {
+          _showSnackBar(context, "Login successful!");
+          Navigator.pushReplacementNamed(context, AppRoutes.home);
         } else if (state is AuthFailure) {
-          _showSnackBar(state.error, isError: true);
+          _showSnackBar(context, 'Sign in failed', isError: true);
         }
       },
       child: GestureDetector(
@@ -127,7 +78,7 @@ class _SignupPageState extends State<SignupPage> {
         child: Scaffold(
           backgroundColor: const Color(0xFFF9EDED),
           body: SafeArea(
-            child: BlocBuilder<AuthBloc, AuthState>(
+            child: BlocBuilder<AuthCubit, AuthState>(
               builder: (context, state) {
                 return Stack(
                   children: [
@@ -152,7 +103,7 @@ class _SignupPageState extends State<SignupPage> {
                                   ),
                                   SizedBox(height: 20.h),
                                   Text(
-                                    "Sign up",
+                                    "Sign in",
                                     style: TextStyle(
                                       fontSize: 28.sp,
                                       fontWeight: FontWeight.bold,
@@ -163,81 +114,42 @@ class _SignupPageState extends State<SignupPage> {
                             ),
                             SizedBox(height: 40.h),
 
-                            // Form fields
-                            BuildTextField(
-                              hintText: "Name",
-                              controller: _nameController,
-                              validator: (value) =>
-                                  _validateRequired(value, 'Name'),
-                            ),
+                            // Email field
                             BuildTextField(
                               hintText: "Email",
                               controller: _emailController,
                               keyboardType: TextInputType.emailAddress,
                               validator: _validateEmail,
                             ),
+
+                            // Password field
                             BuildTextField(
                               hintText: "Password",
                               controller: _passwordController,
                               isPassword: true,
                               validator: _validatePassword,
                             ),
-                            BuildTextField(
-                              hintText: "Confirm Password",
-                              controller: _confirmPasswordController,
-                              isPassword: true,
-                              validator: _validateConfirmPassword,
-                            ),
-                            BuildTextField(
-                              hintText: "Role",
-                              controller: _roleController,
-                            ),
-                            BuildTextField(
-                              hintText: "Phone",
-                              controller: _phoneController,
-                              keyboardType: TextInputType.phone,
-                              validator: (value) =>
-                                  _validateRequired(value, 'Phone'),
-                            ),
-                            BuildTextField(
-                              hintText: "Gender",
-                              controller: _genderController,
-                              validator: (value) =>
-                                  _validateRequired(value, 'Gender'),
-                            ),
-                            BuildTextField(
-                              hintText: "Address",
-                              controller: _addressController,
-                              validator: (value) =>
-                                  _validateRequired(value, 'Name'),
-                            ),
-                            BuildTextField(
-                              hintText: "Date of Birth (YYYY-MM-DD)",
-                              controller: _dobController,
-                              validator: (value) =>
-                                  _validateRequired(value, 'Date of Birth'),
-                            ),
 
                             SizedBox(height: 30.h),
 
-                            // Sign up button
+                            // Sign in button
                             CustomAuthButton(
                               onPressed: state is AuthLoading
                                   ? () {}
-                                  : _handleSignUp,
+                                  : () => _handleLogin(context),
                               buttonText: state is AuthLoading
-                                  ? 'Signing up...'
-                                  : 'Sign up',
+                                  ? 'Signing in...'
+                                  : 'Sign in',
                             ),
 
                             SizedBox(height: 20.h),
 
-                            // Sign in link
+                            // Sign up link
                             Row(
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
                                 Text(
-                                  "Have an account? ",
+                                  "Don't have an account? ",
                                   style: TextStyle(
                                     fontSize: 16.sp,
                                     fontWeight: FontWeight.bold,
@@ -247,11 +159,11 @@ class _SignupPageState extends State<SignupPage> {
                                   onPressed: () {
                                     Navigator.pushNamed(
                                       context,
-                                      AppRoutes.signin,
+                                      AppRoutes.signup,
                                     );
                                   },
                                   child: Text(
-                                    "Sign in",
+                                    "Sign up",
                                     style: TextStyle(
                                       color: Colors.blue,
                                       fontWeight: FontWeight.bold,

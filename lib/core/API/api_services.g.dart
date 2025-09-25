@@ -164,7 +164,7 @@ class _ApiServices implements ApiServices {
       Options(method: 'GET', headers: _headers, extra: _extra)
           .compose(
             _dio.options,
-            '/api/...',
+            '/api/recipes/top',
             queryParameters: queryParameters,
             data: _data,
           )
@@ -363,12 +363,12 @@ class _ApiServices implements ApiServices {
   }
 
   @override
-  Future<dynamic> makeDonation(Map<String, dynamic> body) async {
+  Future<dynamic> makeDonation(DonationModel body) async {
     final _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
     final _data = <String, dynamic>{};
-    _data.addAll(body);
+    _data.addAll(body.toJson());
     final _options = _setStreamType<dynamic>(
       Options(method: 'POST', headers: _headers, extra: _extra)
           .compose(

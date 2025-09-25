@@ -1,5 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:heal_meals/features/home/data/models/condition_model.dart';
+import 'package:heal_meals/features/home/data/models/donation_model.dart';
 import 'package:heal_meals/features/home/data/models/recipe_list_model.dart';
 import 'package:heal_meals/features/home/data/models/recipe_model.dart';
 import 'package:heal_meals/features/auth/data/models/user_login_model.dart';
@@ -70,5 +71,5 @@ abstract class ApiServices {
 
   //make a donation
   @POST(ApiConstants.makeDonation)
-  Future<dynamic> makeDonation(@Body() Map<String, dynamic> body);
+  Future<dynamic> makeDonation(@Body() DonationModel body);
 }

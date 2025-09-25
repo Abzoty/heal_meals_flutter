@@ -1,15 +1,20 @@
+import 'dart:convert';
+
 import 'package:heal_meals/core/API/api_result.dart';
 import 'package:heal_meals/core/API/api_services.dart';
 import 'package:heal_meals/core/di/dependency_injection.dart';
 import 'package:heal_meals/core/helper/shared_pref.dart';
 import 'package:heal_meals/core/API/api_constants.dart';
 import 'package:heal_meals/features/auth/data/models/user_login_model.dart';
+import 'package:heal_meals/features/auth/data/models/user_profile_model.dart';
 import 'package:heal_meals/features/auth/data/models/user_register_model.dart';
 
 class AuthRepository {
   final ApiServices _apiServices = getIt<ApiServices>();
 
-  Future<ApiResult<Map<String, dynamic>>> register(UserRegisterModel userRegisterModel) async {
+  Future<ApiResult<Map<String, dynamic>>> register(
+    UserRegisterModel userRegisterModel,
+  ) async {
     try {
       final response = await _apiServices.register(userRegisterModel);
       return ApiResult.success(response as Map<String, dynamic>);
@@ -18,7 +23,9 @@ class AuthRepository {
     }
   }
 
-  Future<ApiResult<Map<String, dynamic>>> login(UserLoginModel userLoginModel) async {
+  Future<ApiResult<Map<String, dynamic>>> login(
+    UserLoginModel userLoginModel,
+  ) async {
     try {
       final response = await _apiServices.login(userLoginModel);
       return ApiResult.success(response as Map<String, dynamic>);
@@ -31,9 +38,23 @@ class AuthRepository {
     await SharedPrefHelper.setSecuredString(ApiConstants.token, token);
   }
 
+  Future<void> saveUser(Map<String, dynamic> user) async {
+    final userString = jsonEncode(user); // Model → Map → String
+    await SharedPrefHelper.setData(ApiConstants.user, userString);
+  }
+
   Future<String> getToken() async {
     return await SharedPrefHelper.getSecuredString(ApiConstants.token);
   }
+
+  Future<UserProfileModel?> getUser() async {
+    final userString = await SharedPrefHelper.getString(ApiConstants.user);
+    if (userString.isEmpty) return null;
+
+    final Map<String, dynamic> userMap = jsonDecode(userString);
+    return UserProfileModel.fromJson(userMap);
+  }
+
 
   Future<void> logout() async {
     await SharedPrefHelper.clearAllSecuredData();

@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:heal_meals/features/home/logic/cubit/recipe_cubit.dart';
 import 'package:heal_meals/features/home/ui/widgets/book_mark_button.dart';
 import 'package:heal_meals/features/home/ui/widgets/custom_nav_bar.dart';
 import 'package:heal_meals/features/home/ui/widgets/discover_more_button.dart';
@@ -10,109 +12,131 @@ import 'package:heal_meals/features/home/ui/widgets/recipe_steps.dart';
 
 class RecipePage extends StatelessWidget {
   static const routeName = '/recipe';
+  final String recipeId;
 
-  const RecipePage({super.key, required String recipeId});
+  const RecipePage({super.key, required this.recipeId});
 
   @override
   Widget build(BuildContext context) {
-    // ---------- Built-in data ----------
-    const String recipeTitle = 'Classic Pasta';
-    const String recipeDescription =
-        'A simple, hearty pasta recipe with a rich tomato sauce and fresh herbs.';
-    final TimeOfDay recipePrepTime = const TimeOfDay(hour: 0, minute: 30);
-    const int recipeStars = 4;
-
-    final List<String> recipeIngredients = [
-      '200 g pasta',
-      '2 cups tomato sauce',
-      '1 tbsp olive oil',
-      '2 cloves garlic',
-      'Salt & pepper to taste',
-      'Fresh basil leaves',
-    ];
-
-    final bool bookMarked = false;
-
-    final List<String> recipeSteps = [
-      'Boil pasta according to package instructions.',
-      'Heat olive oil and sauté garlic until fragrant.',
-      'Add tomato sauce, salt, and pepper. Simmer for 10 minutes.',
-      'Combine pasta with sauce and top with fresh basil.',
-    ];
-    // -----------------------------------
+    // trigger fetch
+    context.read<RecipeCubit>().getRecipeById(recipeId);
 
     return Scaffold(
       bottomNavigationBar: const CustomNavBar(currentPage: 'recipe'),
       body: SafeArea(
-        child: SingleChildScrollView(
-          padding: EdgeInsets.all(16.w),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              // Header
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  IconButton(
-                    icon: Icon(Icons.arrow_back, size: 24.sp),
-                    onPressed: () => Navigator.pop(context),
-                  ),
-                  Text(
-                    recipeTitle,
-                    style: TextStyle(
-                      fontSize: 24.sp,
-                      fontWeight: FontWeight.bold,
+        child: BlocBuilder<RecipeCubit, RecipeState>(
+          buildWhen: (_, curr) =>
+              curr is RecipeLoading ||
+              curr is RecipeLoaded ||
+              curr is RecipeError,
+          builder: (context, state) {
+            if (state is RecipeLoading) {
+              return const Center(child: CircularProgressIndicator());
+            } else if (state is RecipeLoaded) {
+              final recipe = state.recipes; // from API
+
+              return SingleChildScrollView(
+                padding: EdgeInsets.all(16.w),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    // Header
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        IconButton(
+                          icon: Icon(Icons.arrow_back, size: 24.sp),
+                          onPressed: () => Navigator.pushReplacementNamed(context, '/home'),
+                        ),
+                        Expanded(
+                          child: Text(
+                            recipe.title ?? 'No Title',
+                            overflow: TextOverflow.ellipsis,
+                            style: TextStyle(
+                              fontSize: 24.sp,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                        ),
+                        BookmarkButton(recipeId: recipe.recipeId ?? ''),
+                      ],
                     ),
-                  ),
-                  BookmarkButton(isBookmarked: bookMarked, recipeId: '0123'),
-                ],
-              ),
-              SizedBox(height: 8.h),
+                    SizedBox(height: 8.h),
 
-              // Recipe Image (placeholder)
-              Container(
-                height: 200.h,
-                decoration: BoxDecoration(
-                  color: Colors.grey,
-                  borderRadius: BorderRadius.circular(10.r),
-                  image: const DecorationImage(
-                    image: AssetImage("assets/images/food.jpg"),
-                    fit: BoxFit.cover,
-                  ),
+                    // Recipe Image
+                    Container(
+                      height: 200.h,
+                      decoration: BoxDecoration(
+                        color: Colors.grey,
+                        borderRadius: BorderRadius.circular(10.r),
+                        image: const DecorationImage(
+                          image: AssetImage("assets/images/food.jpg"),
+                          fit: BoxFit.cover,
+                        ),
+                      ),
+                    ),
+                    SizedBox(height: 16.h),
+
+                    const DiscoverMoreButton(),
+                    SizedBox(height: 20.h),
+
+                    RecipePrepTimeAndStars(
+                      prepTime: recipe.prepTime ?? '0:00',
+                      stars: recipe.stars ?? 0,
+                    ),
+                    SizedBox(height: 10.h),
+
+                    RecipeDescription(
+                      description:
+                          recipe.description ?? 'No description available',
+                    ),
+                    SizedBox(height: 10.h),
+
+                    Text(
+                      "Ingredients:",
+                      style: TextStyle(
+                        fontSize: 18.sp,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    SizedBox(height: 10.h),
+
+                    RecipeIngredients(
+                      ingredients: recipe.recipeIngredients ?? [],
+                    ),
+                    SizedBox(height: 20.h),
+
+                    Text(
+                      "Steps:",
+                      style: TextStyle(
+                        fontSize: 18.sp,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    SizedBox(height: 10.h),
+
+                    RecipeSteps(steps: recipe.steps ?? []),
+                  ],
                 ),
-              ),
-              SizedBox(height: 16.h),
-
-              const DiscoverMoreButton(),
-              SizedBox(height: 20.h),
-
-              RecipePrepTimeAndStars(
-                prepTime: recipePrepTime,
-                stars: recipeStars,
-              ),
-              SizedBox(height: 10.h),
-
-              RecipeDescription(description: recipeDescription),
-              SizedBox(height: 10.h),
-
-              Text(
-                "Ingredients:",
-                style: TextStyle(fontSize: 18.sp, fontWeight: FontWeight.bold),
-              ),
-              SizedBox(height: 10.h),
-
-              RecipeIngredients(ingredients: recipeIngredients),
-              SizedBox(height: 20.h),
-
-              Text(
-                "Steps:",
-                style: TextStyle(fontSize: 18.sp, fontWeight: FontWeight.bold),
-              ),
-              SizedBox(height: 10.h),
-
-              RecipeSteps(steps: recipeSteps),
-            ],
-          ),
+              );
+            } else if (state is RecipeError) {
+              return Center(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text('Error: ${state.message}'),
+                    ElevatedButton(
+                      onPressed: () {
+                        context.read<RecipeCubit>().getRecipeById(recipeId);
+                      },
+                      child: Text('Retry'),
+                    ),
+                  ],
+                ),
+              );
+            }
+            return const SizedBox();
+          },
         ),
       ),
     );

@@ -1,6 +1,7 @@
 class ApiConstants {
   // Shared Preferences
   static const String token = 'token';
+  static const String user = 'user';
 
   // Endpoints
   static const String webBaseUrl = 'http://localhost:8080';
@@ -12,8 +13,8 @@ class ApiConstants {
   //recipes
   static const String getAllRecipes = '/api/recipes';
   static const String getRecipeById = '/api/recipes/{recipe_id}';
+  static const String getTopPicks = '/api/recipes/top';
   //TODO
-  static const String getTopPicks = '/api/...';
   static const String getRecommended = '/api/...';
   //favorites
   static const String getFavorites = '/api/favorites';
@@ -22,6 +23,9 @@ class ApiConstants {
   //conditions
   static const String getAllConditions = '/api/profile-conditions';
   static const String getAllUserConditions = '/api/user-conditions';
+  //TODO
+  static const String getUserAllergies = '/api/...';
+  static const String getUserDeceases = '/api/...';
   static const String addUserCondition = '/api/user-conditions/{user_id}/{condition_id}';
   static const String deleteUserCondition = '/api/user-conditions/{user_condition_id}';
   //donations
