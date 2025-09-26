@@ -1,10 +1,12 @@
 import 'package:dio/dio.dart';
 import 'package:heal_meals/features/home/data/models/condition_model.dart';
 import 'package:heal_meals/features/home/data/models/donation_model.dart';
+import 'package:heal_meals/features/home/data/models/notification_model.dart';
 import 'package:heal_meals/features/home/data/models/recipe_list_model.dart';
 import 'package:heal_meals/features/home/data/models/recipe_model.dart';
 import 'package:heal_meals/features/auth/data/models/user_login_model.dart';
 import 'package:heal_meals/features/auth/data/models/user_register_model.dart';
+import 'package:heal_meals/features/home/data/models/user_condition_model.dart';
 import 'package:retrofit/retrofit.dart';
 import 'package:heal_meals/core/API/api_constants.dart';
 part 'api_services.g.dart';
@@ -55,11 +57,7 @@ abstract class ApiServices {
 
   //get all user conditions 
   @GET(ApiConstants.getAllUserConditions)
-  Future<List<ConditionModel>> getAllUserConditions();
-
-  //TODO
-  //get all user conditions (diseases)
-  //get all user conditions (allergies)
+  Future<List<UserConditionModel>> getAllUserConditions();
 
   //add user condition
   @POST(ApiConstants.addUserCondition)
@@ -72,4 +70,14 @@ abstract class ApiServices {
   //make a donation
   @POST(ApiConstants.makeDonation)
   Future<dynamic> makeDonation(@Body() DonationModel body);
+
+  //get all notifications
+  @GET(ApiConstants.getAllNotifications)
+  Future<List<NotificationModel>> getAllNotifications(@Path("email") String email);
+  //get unread notifications
+  @GET(ApiConstants.getUnreadNotifications)
+  Future<List<NotificationModel>> getUnreadNotifications(@Path("email") String email);
+  //mark notification as read
+  @PUT(ApiConstants.markNotificationAsRead)
+  Future<dynamic> markNotificationAsRead(@Path("notification_id") String notificationId);
 }

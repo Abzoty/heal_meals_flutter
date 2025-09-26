@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:heal_meals/core/routing/routes.dart';
 import 'package:heal_meals/features/auth/data/models/user_profile_model.dart';
 import 'package:heal_meals/features/home/logic/cubit/recipe_cubit.dart';
 import 'package:heal_meals/features/home/ui/widgets/custom_nav_bar.dart';
@@ -96,7 +97,11 @@ class HomePage extends StatelessWidget {
                     Padding(
                       padding: EdgeInsets.only(top: 5.h),
                       child: IconButton(
-                        onPressed: () {},
+                        onPressed: () {
+                          Navigator.pushNamed(
+                              context, AppRoutes.notifications,
+                          );
+                        },
                         icon: const Icon(Icons.notifications_outlined),
                         color: Colors.black,
                         iconSize: 45.sp,

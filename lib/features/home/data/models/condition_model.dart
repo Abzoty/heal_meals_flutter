@@ -6,8 +6,9 @@ part 'condition_model.g.dart';
 class ConditionModel {
   final String conditionId;
   final String conditionName;
+  final String conditionType;
 
-  ConditionModel({required this.conditionId, required this.conditionName});
+  ConditionModel(this.conditionType, {required this.conditionId, required this.conditionName});
 
   factory ConditionModel.fromJson(Map<String, dynamic> json) =>
       _$ConditionModelFromJson(json);

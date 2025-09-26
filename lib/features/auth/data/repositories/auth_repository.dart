@@ -1,5 +1,4 @@
 import 'dart:convert';
-
 import 'package:heal_meals/core/API/api_result.dart';
 import 'package:heal_meals/core/API/api_services.dart';
 import 'package:heal_meals/core/di/dependency_injection.dart';

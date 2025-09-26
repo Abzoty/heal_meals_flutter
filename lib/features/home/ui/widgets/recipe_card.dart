@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:heal_meals/features/home/logic/cubit/recipe_cubit.dart';
-import 'package:heal_meals/features/home/ui/pages/recipe_page.dart'; // import page
+import 'package:heal_meals/features/home/ui/pages/recipe_page.dart';
 
 class RecipeCard extends StatelessWidget {
   final String id;

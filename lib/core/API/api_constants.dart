@@ -30,4 +30,9 @@ class ApiConstants {
   static const String deleteUserCondition = '/api/user-conditions/{user_condition_id}';
   //donations
   static const String makeDonation = '/api/donations';
+
+  //notifications
+  static const String getUnreadNotifications = '/api/notification/{email}/unread';
+  static const String getAllNotifications = '/api/notification/{email}';
+  static const String markNotificationAsRead = '/api/notification/{notification_id}/read';
 }

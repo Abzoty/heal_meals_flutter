@@ -8,6 +8,7 @@ part of 'condition_model.dart';
 
 ConditionModel _$ConditionModelFromJson(Map<String, dynamic> json) =>
     ConditionModel(
+      json['conditionType'] as String,
       conditionId: json['conditionId'] as String,
       conditionName: json['conditionName'] as String,
     );
@@ -16,4 +17,5 @@ Map<String, dynamic> _$ConditionModelToJson(ConditionModel instance) =>
     <String, dynamic>{
       'conditionId': instance.conditionId,
       'conditionName': instance.conditionName,
+      'conditionType': instance.conditionType,
     };
