@@ -40,12 +40,26 @@ class ReviewPage extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     SizedBox(height: 20.h),
-                    Text(
-                      "Recipe Review",
-                      style: TextStyle(
-                        fontSize: 20.sp,
-                        fontWeight: FontWeight.bold,
-                      ),
+                    Stack(
+                      alignment: Alignment.center,
+                      children: [
+                        // Back button
+                        Align(
+                          alignment: Alignment.centerLeft,
+                          child: IconButton(
+                            icon: Icon(Icons.arrow_back, size: 24.sp),
+                            onPressed: () => Navigator.pop(context),
+                          ),
+                        ),
+                        // Page title
+                        Text(
+                          "Recipe Review",
+                          style: TextStyle(
+                            fontSize: 20.sp,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ],
                     ),
                     SizedBox(height: 30.h),
 

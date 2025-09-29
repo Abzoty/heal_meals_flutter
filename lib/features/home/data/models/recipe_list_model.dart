@@ -4,6 +4,7 @@ part 'recipe_list_model.g.dart';
 
 @JsonSerializable()
 class RecipeListModel {
+  @JsonKey(name: 'recipe_id')
   final String recipeId;
   final String title;
   final String description;
