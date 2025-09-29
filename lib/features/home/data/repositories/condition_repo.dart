@@ -16,9 +16,9 @@ class ConditionRepo {
     }
   }
 
-  Future<ApiResult<List<UserConditionModel>>> getAllUserConditions() async {
+  Future<ApiResult<List<UserConditionModel>>> getAllUserConditions(String userId) async {
     try {
-      final response = await _apiServices.getAllUserConditions();
+      final response = await _apiServices.getAllUserConditions(userId);
       return ApiResult.success(response);
     } catch (e) {
       return ApiResult.error(e.toString());

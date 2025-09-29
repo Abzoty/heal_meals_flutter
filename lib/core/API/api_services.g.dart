@@ -290,7 +290,7 @@ class _ApiServices implements ApiServices {
   }
 
   @override
-  Future<List<UserConditionModel>> getAllUserConditions() async {
+  Future<List<UserConditionModel>> getAllUserConditions(String userId) async {
     final _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
@@ -299,7 +299,7 @@ class _ApiServices implements ApiServices {
       Options(method: 'GET', headers: _headers, extra: _extra)
           .compose(
             _dio.options,
-            '/api/user-conditions',
+            '/api/user-conditions/users/${userId}',
             queryParameters: queryParameters,
             data: _data,
           )

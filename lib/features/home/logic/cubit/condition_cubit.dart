@@ -22,9 +22,9 @@ class ConditionCubit extends Cubit<ConditionState> {
     );
   }
 
-  Future<void> getUserConditions() async {
+  Future<void> getUserConditions(String userId) async {
     emit(ConditionLoading());
-    final result = await _conditionRepo.getAllUserConditions();
+    final result = await _conditionRepo.getAllUserConditions(userId);
     result.when(
       success: (userConditions) => emit(ConditionUserLoaded(userConditions)),
       error: (e) => emit(ConditionError(e)),
@@ -35,16 +35,16 @@ class ConditionCubit extends Cubit<ConditionState> {
     emit(ConditionLoading());
     final result = await _conditionRepo.addUserCondition(userId, conditionId);
     result.when(
-      success: (_) => getUserConditions(),
+      success: (_) => getUserConditions(userId),
       error: (e) => emit(ConditionError(e)),
     );
   }
 
-  Future<void> deleteUserCondition(String userConditionId) async {
+  Future<void> deleteUserCondition(String userConditionId, String userId) async {
     emit(ConditionLoading());
     final result = await _conditionRepo.deleteUserCondition(userConditionId);
     result.when(
-      success: (_) => getUserConditions(),
+      success: (_) => getUserConditions(userId),
       error: (e) => emit(ConditionError(e)),
     );
   }

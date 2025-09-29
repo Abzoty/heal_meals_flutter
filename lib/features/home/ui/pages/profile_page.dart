@@ -23,6 +23,15 @@ class ProfilePage extends StatelessWidget {
     return UserProfileModel.fromJson(userMap);
   }
 
+  Future<String> _getUserId() async {
+    final prefs = await SharedPreferences.getInstance();
+    final userJson = prefs.getString('user');
+    if (userJson == null) return '';
+    final userMap = jsonDecode(userJson) as Map<String, dynamic>;
+    final user = UserProfileModel.fromJson(userMap);
+    return user.userId;
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -157,8 +166,14 @@ class ProfilePage extends StatelessWidget {
                       borderRadius: BorderRadius.circular(30.r),
                     ),
                   ),
-                  onPressed: () {
-                    Navigator.pushNamed(context, AppRoutes.healthProfile);
+                  onPressed: () async {
+                    final userId = await _getUserId();
+                    if (!context.mounted) return;
+                    Navigator.pushNamed(
+                      context,
+                      AppRoutes.healthProfile,
+                      arguments: userId,
+                    );
                   },
                   child: Text(
                     "Health Profile",

@@ -89,14 +89,16 @@ class AppRoutes {
         return MaterialPageRoute(builder: (_) => const DiscoverPage());
 
       case healthProfile:
+        final userId = settings.arguments as String;
         return MaterialPageRoute(
           builder: (_) => BlocProvider(
             create: (_) => getIt<ConditionCubit>()
               ..getAllConditions()
-              ..getUserConditions(),
-            child: const HealthProfilePage(),
+              ..getUserConditions(userId),
+            child: HealthProfilePage(userId: userId),
           ),
         );
+
 
       case notifications:
         return MaterialPageRoute(

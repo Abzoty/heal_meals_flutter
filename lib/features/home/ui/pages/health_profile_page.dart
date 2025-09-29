@@ -1,12 +1,8 @@
-import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:heal_meals/core/di/dependency_injection.dart';
-import 'package:heal_meals/features/auth/data/models/user_profile_model.dart';
 import 'package:heal_meals/features/home/data/repositories/condition_repo.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import '../widgets/search_container.dart';
 import '../widgets/filter_buttons_row.dart';
 import '../widgets/added_item_tile.dart';
@@ -18,7 +14,8 @@ import 'package:heal_meals/features/home/data/models/user_condition_model.dart';
 
 class HealthProfilePage extends StatefulWidget {
   static const routeName = '/healthProfile';
-  const HealthProfilePage({super.key});
+  final String userId;
+  const HealthProfilePage({super.key, required this.userId});
 
   @override
   State<HealthProfilePage> createState() => _HealthProfilePageState();
@@ -27,15 +24,16 @@ class HealthProfilePage extends StatefulWidget {
 // Wrapper widget that provides the cubit
 class HealthProfileWrapper extends StatelessWidget {
   static const routeName = '/healthProfile';
+  final String userId;
 
-  const HealthProfileWrapper({super.key});
+  const HealthProfileWrapper({super.key, required this.userId});
 
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
       create: (context) =>
           ConditionCubit(conditionRepo: getIt<ConditionRepo>()),
-      child: const HealthProfilePage(),
+      child: HealthProfilePage(userId: userId),
     );
   }
 }
@@ -57,15 +55,6 @@ class _HealthProfilePageState extends State<HealthProfilePage> {
   FilterMode _filter = FilterMode.all;
   List<ConditionModel> _suggestions = [];
   bool _showSuggestions = false;
-
-  Future<String> _getUserId() async {
-    final prefs = await SharedPreferences.getInstance();
-    final userJson = prefs.getString('user');
-    if (userJson == null) return '';
-    final userMap = jsonDecode(userJson) as Map<String, dynamic>;
-    final user = UserProfileModel.fromJson(userMap);
-    return user.userId;
-  }
 
   @override
   void initState() {
@@ -158,9 +147,9 @@ class _HealthProfilePageState extends State<HealthProfilePage> {
       return;
     }
 
-    // Add condition via Cubit
+    // ✅ use widget.userId instead of await _getUserId()
     context.read<ConditionCubit>().addUserCondition(
-      await _getUserId(),
+      widget.userId,
       condition.conditionId,
     );
 
@@ -172,7 +161,10 @@ class _HealthProfilePageState extends State<HealthProfilePage> {
   }
 
   void _removeUserCondition(String userConditionId) {
-    context.read<ConditionCubit>().deleteUserCondition(userConditionId);
+    context.read<ConditionCubit>().deleteUserCondition(
+      userConditionId,
+      widget.userId, // ✅ directly use widget.userId
+    );
   }
 
   void _showSnackBar(String message) {

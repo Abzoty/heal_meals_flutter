@@ -50,7 +50,7 @@ abstract class ApiServices {
   Future<List<ConditionModel>> getAllConditions();
   //get all user conditions
   @GET(ApiConstants.getAllUserConditions)
-  Future<List<UserConditionModel>> getAllUserConditions();
+  Future<List<UserConditionModel>> getAllUserConditions(@Path("user_id") String userId);
   //add user condition
   @POST(ApiConstants.addUserCondition)
   Future<dynamic> addUserCondition(
