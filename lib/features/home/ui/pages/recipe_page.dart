@@ -9,12 +9,13 @@ import 'package:heal_meals/features/home/ui/widgets/recipe_description.dart';
 import 'package:heal_meals/features/home/ui/widgets/recipe_ingredients.dart';
 import 'package:heal_meals/features/home/ui/widgets/recipe_prep_time_and_stars.dart';
 import 'package:heal_meals/features/home/ui/widgets/recipe_steps.dart';
+import 'package:heal_meals/features/home/ui/widgets/review_button.dart';
 
 class RecipePage extends StatelessWidget {
   static const routeName = '/recipe';
   final String recipeId;
 
-  const RecipePage({super.key, required this.recipeId});
+  const RecipePage({super.key, required this.recipeId,});
 
   @override
   Widget build(BuildContext context) {
@@ -46,7 +47,8 @@ class RecipePage extends StatelessWidget {
                       children: [
                         IconButton(
                           icon: Icon(Icons.arrow_back, size: 24.sp),
-                          onPressed: () => Navigator.pushReplacementNamed(context, '/home'),
+                          onPressed: () =>
+                              Navigator.pushReplacementNamed(context, '/home'),
                         ),
                         Expanded(
                           child: Text(
@@ -116,6 +118,10 @@ class RecipePage extends StatelessWidget {
                     SizedBox(height: 10.h),
 
                     RecipeSteps(steps: recipe.steps ?? []),
+
+                    SizedBox(height: 8.h),
+
+                    ReviewButton(recipeId: recipeId,),
                   ],
                 ),
               );

@@ -1,7 +1,7 @@
 import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:heal_meals/features/auth/data/models/user_profile_model.dart';
 import 'package:heal_meals/features/home/logic/cubit/notification_cubit.dart';
 import 'package:heal_meals/features/home/ui/widgets/notification_filter_buttons.dart';
@@ -29,12 +29,12 @@ class NotificationsPage extends StatelessWidget {
           children: [
             // Header
             Padding(
-              padding: const EdgeInsets.all(20.0),
+              padding: EdgeInsets.all(20.0.sp),
               child: Column(
-                children: const [
+                children: [
                   // Bell Icon
                   _NotificationHeader(),
-                  SizedBox(height: 20),
+                  SizedBox(height: 20.h),
                   // Filter Buttons
                   NotificationFilterButtons(),
                 ],
@@ -58,16 +58,16 @@ class NotificationsPage extends StatelessWidget {
                         : (state as NotificationUnreadLoaded).notifications;
 
                     if (notifications.isEmpty) {
-                      return const Center(
+                      return Center(
                         child: Text(
                           'No notifications found',
-                          style: TextStyle(fontSize: 16, color: Colors.grey),
+                          style: TextStyle(fontSize: 16.sp, color: Colors.grey),
                         ),
                       );
                     }
 
                     return ListView.builder(
-                      padding: const EdgeInsets.symmetric(horizontal: 20),
+                      padding: EdgeInsets.symmetric(horizontal: 20.h),
                       itemCount: notifications.length,
                       itemBuilder: (context, index) {
                         return NotificationWidget(
@@ -75,26 +75,26 @@ class NotificationsPage extends StatelessWidget {
                         );
                       },
                     );
-                  }  else if (state is NotificationError) {
+                  } else if (state is NotificationError) {
                     return Center(
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          const Icon(
+                          Icon(
                             Icons.error_outline,
-                            size: 48,
+                            size: 48.sp,
                             color: Colors.red,
                           ),
                           const SizedBox(height: 16),
                           Text(
                             'Error: ${state.message}',
-                            style: const TextStyle(
-                              fontSize: 16,
+                            style: TextStyle(
+                              fontSize: 16.sp,
                               color: Colors.red,
                             ),
                             textAlign: TextAlign.center,
                           ),
-                          const SizedBox(height: 16),
+                          SizedBox(height: 16.h),
                           ElevatedButton(
                             onPressed: () async {
                               context
@@ -129,31 +129,52 @@ class _NotificationHeader extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        Container(
-          width: 60,
-          height: 60,
-          decoration: BoxDecoration(
-            color: Colors.white,
-            borderRadius: BorderRadius.circular(15),
-            boxShadow: [
-              BoxShadow(
-                color: Colors.black.withValues(alpha: 0.1),
-                blurRadius: 10,
-                offset: const Offset(0, 2),
+        SizedBox(height: 16.h),
+
+        // top row with stack
+        Stack(
+          alignment: Alignment.center,
+          children: [
+            // back button aligned left
+            Align(
+              alignment: Alignment.centerLeft,
+              child: IconButton(
+                icon: Icon(Icons.arrow_back, size: 24.sp),
+                onPressed: () =>
+                    Navigator.pushReplacementNamed(context, '/home'),
               ),
-            ],
-          ),
-          child: const Icon(
-            Icons.notifications_outlined,
-            size: 30,
-            color: Colors.black,
-          ),
+            ),
+
+            // notification icon centered
+            Container(
+              width: 60.w,
+              height: 60.h,
+              decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.circular(15.r),
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.black.withValues(alpha: 0.1),
+                    blurRadius: 10.r,
+                    offset: Offset(0.w, 2.h),
+                  ),
+                ],
+              ),
+              child: Icon(
+                Icons.notifications_outlined,
+                size: 30.sp,
+                color: Colors.black,
+              ),
+            ),
+          ],
         ),
-        const SizedBox(height: 16),
-        const Text(
+
+        SizedBox(height: 16.h),
+
+        Text(
           'Notifications',
           style: TextStyle(
-            fontSize: 24,
+            fontSize: 24.sp,
             fontWeight: FontWeight.w600,
             color: Colors.black,
           ),

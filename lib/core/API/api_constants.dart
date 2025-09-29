@@ -23,16 +23,14 @@ class ApiConstants {
   //conditions
   static const String getAllConditions = '/api/profile-conditions';
   static const String getAllUserConditions = '/api/user-conditions';
-  //TODO
-  static const String getUserAllergies = '/api/...';
-  static const String getUserDeceases = '/api/...';
   static const String addUserCondition = '/api/user-conditions/{user_id}/{condition_id}';
   static const String deleteUserCondition = '/api/user-conditions/{user_condition_id}';
   //donations
   static const String makeDonation = '/api/donations';
-
   //notifications
   static const String getUnreadNotifications = '/api/notification/{email}/unread';
   static const String getAllNotifications = '/api/notification/{email}';
   static const String markNotificationAsRead = '/api/notification/{notification_id}/read';
+  //reviews
+  static const String makeReview = '/api/reviews';  
 }

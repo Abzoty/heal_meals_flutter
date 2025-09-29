@@ -8,10 +8,12 @@ import 'package:heal_meals/features/home/data/repositories/condition_repo.dart';
 import 'package:heal_meals/features/home/data/repositories/donation.repo.dart';
 import 'package:heal_meals/features/home/data/repositories/notification_repo.dart';
 import 'package:heal_meals/features/home/data/repositories/recipe_repo.dart';
+import 'package:heal_meals/features/home/data/repositories/review_repo.dart';
 import 'package:heal_meals/features/home/logic/cubit/condition_cubit.dart';
 import 'package:heal_meals/features/home/logic/cubit/donation_cubit.dart';
 import 'package:heal_meals/features/home/logic/cubit/notification_cubit.dart';
 import 'package:heal_meals/features/home/logic/cubit/recipe_cubit.dart';
+import 'package:heal_meals/features/home/logic/cubit/review_cubit.dart';
 
 final getIt = GetIt.instance;
 
@@ -25,6 +27,7 @@ Future<void> setupGetIt() async {
   getIt.registerLazySingleton<RecipeRepo>(() => RecipeRepo());
   getIt.registerLazySingleton<ConditionRepo>(() => ConditionRepo());
   getIt.registerLazySingleton<NotificationRepo>(() => NotificationRepo());
+  getIt.registerLazySingleton<ReviewRepo>(() => ReviewRepo());
 
   // BLoCs 
   getIt.registerFactory<AuthCubit>(
@@ -41,5 +44,8 @@ Future<void> setupGetIt() async {
   );
   getIt.registerFactory<NotificationCubit>(
     () => NotificationCubit(notificationRepo: getIt<NotificationRepo>()),
+  );
+  getIt.registerFactory<ReviewCubit>(
+    () => ReviewCubit(reviewRepo: getIt<ReviewRepo>()),
   );
 }

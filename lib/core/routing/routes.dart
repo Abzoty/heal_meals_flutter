@@ -9,6 +9,7 @@ import 'package:heal_meals/features/home/logic/cubit/condition_cubit.dart';
 import 'package:heal_meals/features/home/logic/cubit/donation_cubit.dart';
 import 'package:heal_meals/features/home/logic/cubit/notification_cubit.dart';
 import 'package:heal_meals/features/home/logic/cubit/recipe_cubit.dart';
+import 'package:heal_meals/features/home/logic/cubit/review_cubit.dart';
 import 'package:heal_meals/features/home/ui/pages/discover_page.dart';
 import 'package:heal_meals/features/home/ui/pages/donation_page.dart';
 import 'package:heal_meals/features/home/ui/pages/favorites_page.dart';
@@ -17,6 +18,7 @@ import 'package:heal_meals/features/home/ui/pages/home_page.dart';
 import 'package:heal_meals/features/auth/ui/pages/sign_up_page.dart';
 import 'package:heal_meals/features/auth/ui/pages/sign_in_page.dart';
 import 'package:heal_meals/features/home/ui/pages/notifications_page.dart';
+import 'package:heal_meals/features/home/ui/pages/review_page.dart';
 import 'package:heal_meals/features/home/ui/pages/start_screen.dart';
 import 'package:heal_meals/features/home/ui/widgets/testing_page.dart';
 import 'package:heal_meals/features/home/ui/pages/profile_page.dart';
@@ -34,6 +36,8 @@ class AppRoutes {
   static const String discover = '/discover';
   static const String healthProfile = '/healthProfile';
   static const String notifications = '/notifications';
+  static const String review = '/review';
+
 
   static Route<dynamic> generateRoute(RouteSettings settings) {
     switch (settings.name) {
@@ -115,6 +119,18 @@ class AppRoutes {
                 child: const NotificationsPage(),
               );
             },
+          ),
+        );
+
+        case review:
+        final args = settings.arguments as Map<String, dynamic>;
+        final recipeId = args['recipeId'] as String;
+        final userId = args['userId'] as String;
+
+        return MaterialPageRoute(
+          builder: (_) => BlocProvider(
+            create: (_) => getIt<ReviewCubit>(),
+            child: ReviewPage(recipeId: recipeId, userId: userId),
           ),
         );
 
