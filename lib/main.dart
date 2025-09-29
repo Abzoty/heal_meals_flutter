@@ -25,7 +25,7 @@ class MyApp extends StatelessWidget {
         return MaterialApp(
           title: 'Heal Meals',
           debugShowCheckedModeBanner: false,
-          initialRoute: AppRoutes.signin,
+          initialRoute: AppRoutes.home,
           onGenerateRoute: AppRoutes.generateRoute, 
         );
       },

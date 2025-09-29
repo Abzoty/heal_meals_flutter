@@ -6,6 +6,7 @@ import 'package:heal_meals/core/routing/routes.dart';
 import 'package:heal_meals/features/auth/data/models/user_profile_model.dart';
 import 'package:heal_meals/features/home/logic/cubit/recipe_cubit.dart';
 import 'package:heal_meals/features/home/ui/widgets/custom_nav_bar.dart';
+import 'package:heal_meals/features/home/ui/widgets/discover_more_button.dart';
 import 'package:heal_meals/features/home/ui/widgets/recipe_card.dart';
 import 'package:heal_meals/features/home/ui/widgets/top_pics.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -168,8 +169,10 @@ class HomePage extends StatelessWidget {
                   return Center(child: Text(state.message));
                 }
                 return const SizedBox();
+
               },
             ),
+            const DiscoverMoreButton(),
           ],
         ),
       ),

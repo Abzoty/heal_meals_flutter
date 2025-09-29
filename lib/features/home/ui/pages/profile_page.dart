@@ -168,28 +168,6 @@ class ProfilePage extends StatelessWidget {
               ),
 
               SizedBox(height: 16.h),
-
-              // Refresh Button
-              TextButton.icon(
-                onPressed: () {
-                  Navigator.pushReplacementNamed(
-                    context,
-                    ProfilePage.routeName,
-                  );
-                },
-                icon: Icon(
-                  Icons.refresh,
-                  color: const Color(0xFF1B512D),
-                  size: 20.sp,
-                ),
-                label: Text(
-                  "Refresh Profile",
-                  style: TextStyle(
-                    color: const Color(0xFF1B512D),
-                    fontSize: 14.sp,
-                  ),
-                ),
-              ),
             ],
           ),
         ),
