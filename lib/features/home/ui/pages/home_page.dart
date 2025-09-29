@@ -99,9 +99,7 @@ class HomePage extends StatelessWidget {
                       padding: EdgeInsets.only(top: 5.h),
                       child: IconButton(
                         onPressed: () {
-                          Navigator.pushNamed(
-                              context, AppRoutes.notifications,
-                          );
+                          Navigator.pushNamed(context, AppRoutes.notifications);
                         },
                         icon: const Icon(Icons.notifications_outlined),
                         color: Colors.black,
@@ -169,10 +167,10 @@ class HomePage extends StatelessWidget {
                   return Center(child: Text(state.message));
                 }
                 return const SizedBox();
-
               },
             ),
             const DiscoverMoreButton(),
+            SizedBox(height: 4.h),
           ],
         ),
       ),

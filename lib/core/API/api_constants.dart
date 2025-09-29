@@ -22,7 +22,7 @@ class ApiConstants {
   static const String removeFromFavorites = '/api/favorites/{recipe_id}';
   //conditions
   static const String getAllConditions = '/api/profile-conditions';
-  static const String getAllUserConditions = '/api/user-conditions';
+  static const String getAllUserConditions = '/api/user-conditions/users/{user_id}';
   static const String addUserCondition = '/api/user-conditions/{user_id}/{condition_id}';
   static const String deleteUserCondition = '/api/user-conditions/{user_condition_id}';
   //donations
