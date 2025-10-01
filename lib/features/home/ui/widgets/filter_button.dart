@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class DiscoverFilterButton extends StatelessWidget {
   final VoidCallback onPressed;
@@ -10,14 +11,17 @@ class DiscoverFilterButton extends StatelessWidget {
     return Center(
       child: ElevatedButton.icon(
         onPressed: onPressed,
-        icon: const Icon(Icons.filter_list, color: Colors.white),
-        label: const Text('Filters', style: TextStyle(color: Colors.white)),
+        icon: Icon(Icons.filter_list, color: Colors.white, size: 20.sp),
+        label: Text(
+          'Filters',
+          style: TextStyle(color: Colors.white, fontSize: 16.sp),
+        ),
         style: ElevatedButton.styleFrom(
           shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(18),
+            borderRadius: BorderRadius.circular(18.r),
           ),
-          backgroundColor: const Color(0xFF25582B),
-          padding: const EdgeInsets.symmetric(horizontal: 18, vertical: 10),
+          backgroundColor: const Color(0xFF1B512D),
+          padding: EdgeInsets.symmetric(horizontal: 18.w, vertical: 10.h),
         ),
       ),
     );

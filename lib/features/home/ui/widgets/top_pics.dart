@@ -1,15 +1,17 @@
 import 'package:flutter/material.dart';
-import 'package:heal_meals/core/routing/routes.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:heal_meals/features/home/data/models/recipe_list_model.dart';
+import 'package:heal_meals/features/home/logic/cubit/recipe_cubit.dart';
+import 'package:heal_meals/features/home/ui/pages/recipe_page.dart';
 
-class TopPicksSection extends StatelessWidget {
-  // Dummy list of images and titles
-  final List<Map<String, String>> topPicks = [
-    {"image": "assets/images/food.jpg", "title": "Recipe Title"},
-    {"image": "assets/images/food.jpg", "title": "Recipe Title"},
-    {"image": "assets/images/food.jpg", "title": "Recipe Title"},
-  ];
+class TopPics extends StatelessWidget {
+  final List<RecipeListModel> recipes;
 
-  TopPicksSection({super.key});
+  const TopPics({
+    super.key,
+    required this.recipes,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -18,37 +20,47 @@ class TopPicksSection extends StatelessWidget {
       children: [
         // Title
         Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8),
+          padding: EdgeInsets.symmetric(horizontal: 8.w, vertical: 4.h),
           child: Padding(
             padding: const EdgeInsets.all(16),
             child: Text(
               "Top Picks",
-              style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+              style: TextStyle(fontSize: 20.sp, fontWeight: FontWeight.bold),
             ),
           ),
         ),
 
         // Horizontal List of Cards
         SizedBox(
-          height: 180,
+          height: 180.h,
           child: ListView.builder(
             scrollDirection: Axis.horizontal,
-            itemCount: topPicks.length,
+            itemCount: recipes.length,
             itemBuilder: (context, index) {
               return GestureDetector(
                 onTap: () {
-                  Navigator.pushNamed(context, AppRoutes.recipe);
+                  final recipeCubit = context.read<RecipeCubit>();
+
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (_) => BlocProvider.value(
+                        value: recipeCubit, // 👈 reuse the existing cubit
+                        child: RecipePage(recipeId: recipes[index].recipeId,),
+                      ),
+                    ),
+                  );
                 },
                 child: Container(
-                  width: 300,
+                  width: 300.w,
                   margin: EdgeInsets.only(
-                    left: 16,
-                    right: index == topPicks.length - 1 ? 16 : 0,
+                    left: 16.w,
+                    right: index == recipes.length - 1 ? 16.w : 0,
                   ),
                   decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(16),
+                    borderRadius: BorderRadius.circular(16.r),
                     image: DecorationImage(
-                      image: AssetImage(topPicks[index]["image"]!),
+                      image: AssetImage('assets/images/food.jpg'),
                       fit: BoxFit.cover,
                     ),
                   ),
@@ -58,7 +70,7 @@ class TopPicksSection extends StatelessWidget {
                       Positioned.fill(
                         child: Container(
                           decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(16),
+                            borderRadius: BorderRadius.circular(16.r),
                             gradient: LinearGradient(
                               begin: Alignment.bottomCenter,
                               end: Alignment.topCenter,
@@ -71,17 +83,32 @@ class TopPicksSection extends StatelessWidget {
                         ),
                       ),
 
-                      // Recipe title text
+                      // Recipe title text and stars
                       Positioned(
-                        left: 12,
-                        bottom: 12,
-                        child: Text(
-                          topPicks[index]["title"]!,
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontWeight: FontWeight.bold,
-                            fontSize: 16,
-                          ),
+                        left: 12.w,
+                        bottom: 12.h,
+                        child: Row(
+                          children: [
+                            Text(
+                              recipes[index].title,
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontWeight: FontWeight.bold,
+                                fontSize: 16.sp,
+                              ),
+                            ),
+                            SizedBox(width: 4.w),
+                            Icon(Icons.star, color: Colors.yellow, size: 16.r),
+                            SizedBox(width: 2.w),
+                            Text(
+                              recipes[index].stars.toString(),
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontWeight: FontWeight.bold,
+                                fontSize: 16.sp,
+                              ),
+                            ),
+                          ],
                         ),
                       ),
                     ],

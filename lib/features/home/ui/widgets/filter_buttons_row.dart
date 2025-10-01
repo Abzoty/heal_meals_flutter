@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import "../pages/health_profile_page.dart" show FilterMode; // import the enum
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import '../pages/health_profile_page.dart';
 
 class FilterButtonsRow extends StatelessWidget {
   final FilterMode current;
@@ -11,65 +12,71 @@ class FilterButtonsRow extends StatelessWidget {
     required this.onChanged,
   });
 
-  Widget _buildFilterButton({
-    required IconData icon,
-    required String label,
-    required FilterMode mode,
-    required BuildContext context,
-  }) {
-    final active = current == mode;
-    return GestureDetector(
-      onTap: () => onChanged(mode),
-      child: Container(
-        padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
-        margin: const EdgeInsets.only(right: 8),
-        decoration: BoxDecoration(
-          color: active ? Colors.green[700] : Colors.transparent,
-          borderRadius: BorderRadius.circular(8),
-        ),
-        child: Row(
-          children: [
-            Icon(icon, size: 18, color: active ? Colors.white : Colors.black87),
-            const SizedBox(width: 6),
-            Text(
-              label,
-              style: TextStyle(
-                color: active ? Colors.white : Colors.black87,
-                fontWeight: FontWeight.w600,
-                fontSize: 16,
-              ),
-            ),
-          ],
-        ),
+  @override
+  Widget build(BuildContext context) {
+    return SizedBox(
+      width: double.infinity,
+      height: 80.h,
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          _FilterButton(
+            label: 'All',
+            isSelected: current == FilterMode.all,
+            onTap: () => onChanged(FilterMode.all),
+          ),
+
+          _FilterButton(
+            label: 'Allergies',
+            isSelected: current == FilterMode.allergies,
+            onTap: () => onChanged(FilterMode.allergies),
+          ),
+
+          _FilterButton(
+            label: 'Diseases',
+            isSelected: current == FilterMode.diseases,
+            onTap: () => onChanged(FilterMode.diseases),
+          ),
+        ],
       ),
     );
   }
+}
+
+class _FilterButton extends StatelessWidget {
+  final String label;
+  final bool isSelected;
+  final VoidCallback onTap;
+
+  const _FilterButton({
+    required this.label,
+    required this.isSelected,
+    required this.onTap,
+  });
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      crossAxisAlignment: CrossAxisAlignment.center,
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        _buildFilterButton(
-          icon: Icons.list,
-          label: 'All',
-          mode: FilterMode.all,
-          context: context,
+    return GestureDetector(
+      onTap: onTap,
+      child: Container(
+        padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 8.h),
+        decoration: BoxDecoration(
+          color: isSelected ? const Color(0xFF1B512D) : Colors.white,
+          borderRadius: BorderRadius.circular(20.r),
+          border: Border.all(
+            color: isSelected ? const Color(0xFF1B512D) : Colors.grey[300]!,
+            width: 1.5,
+          ),
         ),
-        _buildFilterButton(
-          icon: Icons.spa,
-          label: 'Allergies',
-          mode: FilterMode.allergies,
-          context: context,
+        child: Text(
+          label,
+          style: TextStyle(
+            color: isSelected ? Colors.white : Colors.grey[700],
+            fontSize: 18.sp,
+            fontWeight: isSelected ? FontWeight.w600 : FontWeight.w500,
+          ),
         ),
-        _buildFilterButton(
-          icon: Icons.local_hospital,
-          label: 'Diseases',
-          mode: FilterMode.diseases,
-          context: context,
-        ),
-      ],
+      ),
     );
   }
 }

@@ -1,65 +1,98 @@
 import 'package:flutter/material.dart';
-import 'package:heal_meals/core/routing/routes.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:heal_meals/features/home/logic/cubit/recipe_cubit.dart';
+import 'package:heal_meals/features/home/ui/pages/recipe_page.dart';
 
 class RecipeCard extends StatelessWidget {
+  final String id;
   final String imageUrl;
   final String title;
   final String description;
+  final int stars;
 
   const RecipeCard({
     super.key,
-    required this.imageUrl,
+    required this.id,
+    this.imageUrl = 'assets/images/food.jpg',
     required this.title,
     required this.description,
+    required this.stars,
   });
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        Navigator.pushNamed(context, AppRoutes.recipe);
+        final recipeCubit = context.read<RecipeCubit>();
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (_) => BlocProvider.value(
+              value: recipeCubit, // reuse the existing cubit
+              child: RecipePage(recipeId: id,),
+            ),
+          ),
+        );
       },
       child: Container(
-        width: 370, // keep width fixed if you want, but remove height
-        padding: const EdgeInsets.all(12),
+        width: 370.w,
+        padding: EdgeInsets.all(12.h),
         decoration: BoxDecoration(
-          color: const Color(0xFF6A8E3D), // green background
-          borderRadius: BorderRadius.circular(20),
+          color: const Color(0xFF1B512D),
+          borderRadius: BorderRadius.circular(20.r),
         ),
         child: Row(
-          crossAxisAlignment:
-              CrossAxisAlignment.start, // align top for multi-line text
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             ClipRRect(
-              borderRadius: BorderRadius.circular(12),
+              borderRadius: BorderRadius.circular(12.r),
               child: Image.asset(
                 imageUrl,
-                width: 150,
-                height: 120,
+                width: 150.w,
+                height: 150.h,
                 fit: BoxFit.cover,
               ),
             ),
-            const SizedBox(width: 16),
+            SizedBox(width: 16.w),
             Expanded(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
                     title,
-                    style: const TextStyle(
-                      fontSize: 18,
+                    style: TextStyle(
+                      fontSize: 18.sp,
                       fontWeight: FontWeight.bold,
                       color: Colors.white,
                     ),
                   ),
-                  const SizedBox(height: 6),
+                  SizedBox(height: 6.h),
                   Text(
                     description,
-                    style: const TextStyle(
-                      fontSize: 16,
+                    style: TextStyle(
+                      fontSize: 16.sp,
                       fontWeight: FontWeight.normal,
                       color: Colors.white,
                     ),
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: [
+                      Icon(
+                        Icons.star,
+                        size: 20.sp,
+                        color: Colors.yellow,
+                      ),
+                      Text(
+                        stars.toString(),
+                        style: TextStyle(
+                          fontSize: 16.sp,
+                          fontWeight: FontWeight.normal,
+                          color: Colors.white,
+                        ),
+                      ),
+                    ],
                   ),
                 ],
               ),

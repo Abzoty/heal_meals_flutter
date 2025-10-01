@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:heal_meals/features/home/ui/widgets/custom_nav_bar.dart';
 import 'package:heal_meals/features/home/ui/widgets/filter_button.dart';
 import 'package:heal_meals/features/home/ui/widgets/filter_panel.dart';
 import 'package:heal_meals/features/home/ui/widgets/results_section.dart';
 import 'package:heal_meals/features/home/ui/widgets/search_bar.dart';
-
 
 class DiscoverPage extends StatefulWidget {
   static const routeName = '/discover';
@@ -62,11 +62,12 @@ class _DiscoverPageState extends State<DiscoverPage>
       'imageUrl': 'assets/images/food.jpg',
       'title': 'Grilled Chicken Salad',
       'description': 'A quick description about the recipe, and other text.',
+      'stars': '9',
+      "id": "1"
     };
   });
 
   @override
-  // initializing the selected filters to empty
   void initState() {
     super.initState();
     for (var group in _filterDefinitions) {
@@ -75,12 +76,10 @@ class _DiscoverPageState extends State<DiscoverPage>
     }
   }
 
-  // toggle the filter panel boolean
   void _toggleFilterOpen() {
     setState(() => _filtersOpen = !_filtersOpen);
   }
 
-  // update the selected filters, and only one option from "sort by" & "duration" can be selected
   void _onChipTapped(String group, String value, bool selected) {
     setState(() {
       if (group == 'Sort By' || group == 'Duration') {
@@ -97,6 +96,12 @@ class _DiscoverPageState extends State<DiscoverPage>
     });
   }
 
+  /// 🔑 This is where you'll later put your GET request
+  void _performSearch() {
+    print("Search");
+    // TODO: Replace with GET request using _searchController.text and _selectedFilters
+  }
+
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
@@ -107,14 +112,12 @@ class _DiscoverPageState extends State<DiscoverPage>
           child: SingleChildScrollView(
             child: Column(
               children: [
-                const SizedBox(height: 22),
+                SizedBox(height: 22.h),
                 DiscoverSearchBar(
                   controller: _searchController,
-                  onSubmitted: (q) {
-                    // TODO: wire search logic
-                  },
+                  onSearch: _performSearch,
                 ),
-                const SizedBox(height: 6),
+                SizedBox(height: 6.h),
                 DiscoverFilterButton(onPressed: _toggleFilterOpen),
                 DiscoverFilterPanel(
                   filtersOpen: _filtersOpen,
@@ -138,4 +141,3 @@ class _DiscoverPageState extends State<DiscoverPage>
     super.dispose();
   }
 }
-

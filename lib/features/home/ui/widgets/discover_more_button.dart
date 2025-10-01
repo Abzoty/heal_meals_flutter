@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:heal_meals/core/routing/routes.dart';
 
 class DiscoverMoreButton extends StatelessWidget {
@@ -10,26 +11,28 @@ class DiscoverMoreButton extends StatelessWidget {
       child: ElevatedButton(
         style: ElevatedButton.styleFrom(
           backgroundColor: const Color(0xFFB22B28),
-          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
-          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
-          minimumSize: Size.zero, // 👈 makes button shrink to fit content
-          tapTargetSize:
-              MaterialTapTargetSize.shrinkWrap, // 👈 removes extra padding
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(20.r),
+          ),
+          padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 10.h),
+          minimumSize: Size.zero,
+          tapTargetSize: MaterialTapTargetSize.shrinkWrap,
         ),
         onPressed: () {
           Navigator.pushNamed(context, AppRoutes.discover);
         },
         child: Row(
-          mainAxisSize: MainAxisSize.min, // 👈 Row also shrink-wraps
-          crossAxisAlignment: CrossAxisAlignment.center,
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: const [
-            Text(
-              "Discover More Recipes",
-              style: TextStyle(fontSize: 16, color: Colors.white),
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Padding(
+              padding: const EdgeInsets.all(4.0),
+              child: Text(
+                "Discover More Recipes",
+                style: TextStyle(fontSize: 16.sp, color: Colors.white),
+              ),
             ),
-            SizedBox(width: 8),
-            Icon(Icons.explore, color: Colors.white, size: 22),
+            SizedBox(width: 8.w),
+            Icon(Icons.explore, color: Colors.white, size: 22.sp),
           ],
         ),
       ),

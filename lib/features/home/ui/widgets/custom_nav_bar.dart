@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class CustomNavBar extends StatelessWidget {
-  final String currentPage; // Pass the name of the current page
+  final String currentPage;
 
   const CustomNavBar({super.key, required this.currentPage});
 
@@ -18,62 +19,58 @@ class CustomNavBar extends StatelessWidget {
   ];
 
   void _onItemTapped(BuildContext context, String route) {
-    if (ModalRoute.of(context)?.settings.name == route) {
-      return; // Avoid reloading same page
-    }
+    if (ModalRoute.of(context)?.settings.name == route) return;
     Navigator.pushReplacementNamed(context, route);
   }
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 67,
+      height: 64.h,
       decoration: const BoxDecoration(
-        color: Color(0xFF4B5D2A), // dark green background
+        borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
+        gradient: LinearGradient(
+          colors: [Color(0xFF2D995D), Color(0xFF1C7C54), Color(0xFF1B512D)],
+          begin: Alignment.topLeft,
+          end: Alignment.bottomRight,
+        ),
       ),
-      child: Padding(
-        padding: const EdgeInsets.symmetric(vertical: 6, horizontal: 6),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceAround,
-          children: _items.map((item) {
-            // Highlight only if the currentPage matches one of the 5 labels
-            final isSelected =
-                item.label.toLowerCase() == currentPage.toLowerCase();
+      child: Row(
+        children: _items.map((item) {
+          final isSelected =
+              item.label.toLowerCase() == currentPage.toLowerCase();
 
-            return GestureDetector(
+          return Expanded(
+            child: GestureDetector(
               onTap: () => _onItemTapped(context, item.route),
               child: Container(
-                padding: const EdgeInsets.symmetric(
-                  vertical: 6,
-                  horizontal: 12,
-                ),
                 decoration: BoxDecoration(
                   color: isSelected
                       ? Colors.white.withValues(alpha: 0.25)
-                      : Colors.transparent,
-                  borderRadius: BorderRadius.circular(12),
+                      : null,
+                  borderRadius: BorderRadius.circular(12.r),
                 ),
                 child: Column(
-                  mainAxisSize: MainAxisSize.min,
+                  mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Icon(
                       item.icon,
-                      color: isSelected ? Colors.white : Colors.black87,
+                      color: Colors.white,
+                      size: isSelected ? 22.sp : 26.sp,
                     ),
-                    if (isSelected)
+                    if (isSelected) ...[
+                      SizedBox(height: 2.h),
                       Text(
                         item.label,
-                        style: const TextStyle(
-                          fontSize: 12,
-                          color: Colors.white,
-                        ),
+                        style: TextStyle(fontSize: 12.sp, color: Colors.white),
                       ),
+                    ],
                   ],
                 ),
               ),
-            );
-          }).toList(),
-        ),
+            ),
+          );
+        }).toList(),
       ),
     );
   }
@@ -83,6 +80,7 @@ class _NavItem {
   final IconData icon;
   final String label;
   final String route;
+
   const _NavItem({
     required this.icon,
     required this.label,

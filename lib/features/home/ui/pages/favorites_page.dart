@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:heal_meals/features/home/ui/widgets/custom_nav_bar.dart';
 import 'package:heal_meals/features/home/ui/widgets/recipe_card.dart';
 
@@ -14,18 +15,19 @@ class FavoritesPage extends StatelessWidget {
       body: SingleChildScrollView(
         child: Column(
           children: [
-            const SizedBox(height: 50),
+            SizedBox(height: 50.h),
             Padding(
-              padding: const EdgeInsets.only(bottom: 20.0),
+              padding: EdgeInsets.only(bottom: 20.h),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
-                children: const [
-                  Icon(Icons.bookmark, size: 60, color: Color(0XFF1B512D)),
-                  SizedBox(width: 8),
+                children: [
+                  Icon(Icons.bookmark, size: 60.r, color: const Color(0xFFB22B28),
+                  ),
+                  SizedBox(width: 8.r),
                   Text(
                     'Favorites',
                     style: TextStyle(
-                      fontSize: 32,
+                      fontSize: 32.sp,
                       fontWeight: FontWeight.bold,
                       color: Colors.black87,
                     ),
@@ -37,14 +39,14 @@ class FavoritesPage extends StatelessWidget {
               children: List.generate(
                 5,
                 (index) => Padding(
-                  padding: const EdgeInsets.symmetric(
-                    vertical: 4.0,
-                    horizontal: 8.0,
-                  ),
+                  padding: EdgeInsets.symmetric(vertical: 4.h),
                   child: RecipeCard(
-                    title: 'Recipe $index',
-                    description: 'This is a description for recipe $index',
+                    title: 'Recipe ${index + 1}',
+                    id: "1",
+                    description:
+                        'This is a description for recipe ${index + 1}',
                     imageUrl: 'assets/images/food.jpg',
+                    stars: 12,
                   ),
                 ),
               ),
