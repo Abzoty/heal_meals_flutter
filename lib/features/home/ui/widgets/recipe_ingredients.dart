@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:auto_size_text/auto_size_text.dart'; // Add this package to pubspec.yaml
 import 'package:heal_meals/features/home/data/models/recipe_model.dart';
 
 class RecipeIngredients extends StatelessWidget {
+  final List<RecipeIngredientModel> ingredients;
+
   const RecipeIngredients({super.key, required this.ingredients});
-  final List<RecipeIngredient> ingredients;
 
   @override
   Widget build(BuildContext context) {
@@ -16,12 +18,17 @@ class RecipeIngredients extends StatelessWidget {
         crossAxisCount: 3,
         crossAxisSpacing: 8.w,
         mainAxisSpacing: 8.h,
-        childAspectRatio: 1.8, // Reduced from 2.5 to give more height
+        childAspectRatio: 1.7,
       ),
       itemBuilder: (context, index) {
+        final ingredient = ingredients[index];
+        final quantity = ingredient.quantity?.toInt() ?? 0;
+        final unit = ingredient.unit ?? '';
+        final name = ingredient.name ?? 'Unknown';
+
         return Container(
           alignment: Alignment.center,
-          padding: EdgeInsets.symmetric(vertical: 4.h, horizontal: 4.w),
+          padding: EdgeInsets.symmetric(vertical: 6.h, horizontal: 8.w),
           decoration: BoxDecoration(
             color: const Color(0xFF2C7B46),
             borderRadius: BorderRadius.circular(20.r),
@@ -29,21 +36,35 @@ class RecipeIngredients extends StatelessWidget {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Text(
-                '${ingredients[index].quantity.toInt()} ${ingredients[index].unit}',
-                style: TextStyle(
-                  fontSize: 16.sp,
-                  fontWeight: FontWeight.w400,
-                  color: Colors.white,
-                  overflow: TextOverflow.ellipsis,
+              // Quantity and unit
+              Expanded(
+                flex: 2,
+                child: AutoSizeText(
+                  '$quantity $unit',
+                  style: TextStyle(
+                    fontSize: 14.sp,
+                    fontWeight: FontWeight.w500,
+                    color: Colors.white,
+                  ),
+                  textAlign: TextAlign.center,
+                  maxLines: 1,
+                  minFontSize: 10,
                 ),
               ),
-              Text(
-                'of ${ingredients[index].name}',
-                style: TextStyle(
-                  fontSize: 16.sp,
-                  color: Colors.white,
-                  fontWeight: FontWeight.w400,
+
+              // Ingredient name with auto-sizing
+              Expanded(
+                flex: 3,
+                child: AutoSizeText(
+                  'of $name',
+                  style: TextStyle(
+                    fontSize: 13.sp,
+                    color: Colors.white,
+                    fontWeight: FontWeight.w400,
+                  ),
+                  textAlign: TextAlign.center,
+                  maxLines: 2,
+                  minFontSize: 8, // Minimum readable size
                   overflow: TextOverflow.ellipsis,
                 ),
               ),

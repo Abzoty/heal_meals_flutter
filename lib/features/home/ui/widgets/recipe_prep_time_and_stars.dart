@@ -9,7 +9,7 @@ class RecipePrepTimeAndStars extends StatelessWidget {
     required this.stars,
   });
 
-  final TimeOfDay prepTime;
+  final String prepTime;
   final int stars;
 
   @override
@@ -22,9 +22,10 @@ class RecipePrepTimeAndStars extends StatelessWidget {
         ),
         SizedBox(width: 8.w),
         Text(
-          prepTime.hour == 0
-              ? "${prepTime.minute} mins"
-              : "${prepTime.hour}:${prepTime.minute} hour${prepTime.hour > 1 ? 's' : ''}",
+          prepTime,
+          // prepTime.hour == 0
+          //     ? "${prepTime.minute} mins"
+          //     : "${prepTime.hour}:${prepTime.minute} hour${prepTime.hour > 1 ? 's' : ''}",
           style: TextStyle(fontSize: 18.sp),
         ),
         Icon(Icons.hourglass_bottom, size: 20.sp, color: Colors.black54),

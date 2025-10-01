@@ -1,74 +1,55 @@
-class Recipe {
-  final String recipeId;
-  final String title;
-  final String description;
-  final DateTime prepTime;
-  final int stars;
-  final List<String> steps;
-  final List<RecipeIngredient> recipeIngredients;
+import 'package:json_annotation/json_annotation.dart';
 
-  Recipe({
-    required this.recipeId,
-    required this.title,
-    required this.description,
-    required this.prepTime,
-    required this.stars,
-    required this.steps,
-    required this.recipeIngredients,
+part 'recipe_model.g.dart';
+
+@JsonSerializable()
+class RecipeModel {
+  @JsonKey(name: 'recipe_id')
+  final String? recipeId;
+  final String? title;
+  final String? description;
+  final String? prepTime;
+  final int? stars;
+  final List<String>? steps;
+  final List<RecipeIngredientModel>? recipeIngredients;
+
+  RecipeModel({
+    this.recipeId,
+    this.title,
+    this.description,
+    this.prepTime,
+    this.stars,
+    this.steps,
+    this.recipeIngredients,
   });
 
-  factory Recipe.fromJson(Map<String, dynamic> json) {
-    return Recipe(
-      recipeId: json['recipe_id'] ?? '',
-      title: json['title'] ?? '',
-      description: json['description'] ?? '',
-      prepTime: DateTime.tryParse(json['prepTime'] ?? '') ?? DateTime.now(),
-      stars: json['stars'] ?? 0,
-      steps: List<String>.from(json['steps'] ?? []),
-      recipeIngredients:
-          (json['recipeIngredients'] as List<dynamic>?)
-              ?.map((e) => RecipeIngredient.fromJson(e))
-              .toList() ??
-          [],
-    );
-  }
-
-  Map<String, dynamic> toJson() {
-    return {
-      "recipe_id": recipeId,
-      "title": title,
-      "description": description,
-      "prepTime": prepTime.toIso8601String(),
-      "stars": stars,
-      "steps": steps,
-      "recipeIngredients": recipeIngredients.map((e) => e.toJson()).toList(),
-    };
-  }
+  factory RecipeModel.fromJson(Map<String, dynamic> json) =>
+      _$RecipeModelFromJson(json);
+  Map<String, dynamic> toJson() => _$RecipeModelToJson(this);
 }
 
-class RecipeIngredient {
-  final String ingredientId;
-  final String name;
-  final num quantity;
-  final String unit;
+@JsonSerializable()
+class RecipeIngredientModel {
+  @JsonKey(name: 'recipe_ingredientId')
+  final String? recipeIngredientId;
+  @JsonKey(name: 'recipe_id')
+  final String? recipeId;
+  @JsonKey(name: 'ingredient_id')
+  final String? ingredientId;
+  final String? name;
+  final double? quantity;
+  final String? unit;
 
-  RecipeIngredient({
-    required this.ingredientId,
-    required this.name,
-    required this.quantity,
-    required this.unit,
+  RecipeIngredientModel({
+    this.recipeIngredientId,
+    this.recipeId,
+    this.ingredientId,
+    this.name,
+    this.quantity,
+    this.unit,
   });
 
-  factory RecipeIngredient.fromJson(Map<String, dynamic> json) {
-    return RecipeIngredient(
-      ingredientId: json['ingredient_id'] ?? '',
-      name: json['name'] ?? '',
-      quantity: json['quantity'] ?? 0,
-      unit: json['unit'] ?? '',
-    );
-  }
-
-  Map<String, dynamic> toJson() {
-    return {"ingredient_id": ingredientId, "name": name, "quantity": quantity, "unit": unit};
-  }
+  factory RecipeIngredientModel.fromJson(Map<String, dynamic> json) =>
+      _$RecipeIngredientModelFromJson(json);
+  Map<String, dynamic> toJson() => _$RecipeIngredientModelToJson(this);
 }

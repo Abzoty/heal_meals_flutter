@@ -1,59 +1,75 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:heal_meals/core/di/dependency_injection.dart';
+import 'package:heal_meals/features/home/data/repositories/condition_repo.dart';
 import '../widgets/search_container.dart';
 import '../widgets/filter_buttons_row.dart';
 import '../widgets/added_item_tile.dart';
 import '../widgets/suggestions_list.dart';
 import 'package:heal_meals/features/home/ui/widgets/custom_nav_bar.dart';
+import 'package:heal_meals/features/home/logic/cubit/condition_cubit.dart';
+import 'package:heal_meals/features/home/data/models/condition_model.dart';
+import 'package:heal_meals/features/home/data/models/user_condition_model.dart';
 
 class HealthProfilePage extends StatefulWidget {
   static const routeName = '/healthProfile';
-  const HealthProfilePage({super.key});
+  final String userId;
+  const HealthProfilePage({super.key, required this.userId});
 
   @override
   State<HealthProfilePage> createState() => _HealthProfilePageState();
 }
 
+// Wrapper widget that provides the cubit
+class HealthProfileWrapper extends StatelessWidget {
+  static const routeName = '/healthProfile';
+  final String userId;
+
+  const HealthProfileWrapper({super.key, required this.userId});
+
+  @override
+  Widget build(BuildContext context) {
+    return BlocProvider(
+      create: (context) =>
+          ConditionCubit(conditionRepo: getIt<ConditionRepo>()),
+      child: HealthProfilePage(userId: userId),
+    );
+  }
+}
+
 enum FilterMode { all, allergies, diseases }
 
 class _HealthProfilePageState extends State<HealthProfilePage> {
-  // Built-in lists of valid entries
-  final List<String> allergies = [
-    'Pollen',
-    'Dust',
-    'Peanuts',
-    'Shellfish',
-    'Pet dander',
-    'Latex',
-    'Insect sting',
-  ];
-
-  final List<String> diseases = [
-    'Asthma',
-    'Diabetes',
-    'Hypertension',
-    'Thyroid disorder',
-    'Eczema',
-    'Migraine',
-    'Arthritis',
-  ];
-
-  // Combined allergies and diseases in one list for suggestion matching
-  late final List<String> _allItems;
+  // Lists populated from API
+  List<ConditionModel> _allConditions = [];
+  // ignore: unused_field
+  List<ConditionModel> _allergies = [];
+  // ignore: unused_field
+  List<ConditionModel> _diseases = [];
+  List<UserConditionModel> _userConditions = [];
 
   // State
   final TextEditingController _controller = TextEditingController();
   final FocusNode _focusNode = FocusNode();
-  final List<_AddedItem> _added = []; // List of added items
   FilterMode _filter = FilterMode.all;
-  List<String> _suggestions = []; // List of current suggested items
+  List<ConditionModel> _suggestions = [];
   bool _showSuggestions = false;
 
   @override
   void initState() {
     super.initState();
-    _allItems = [...allergies, ...diseases];
     _controller.addListener(_onTextChanged);
+  }
+
+  void _populateConditionLists(List<ConditionModel> conditions) {
+    _allConditions = conditions;
+    _allergies = conditions
+        .where((c) => c.conditionType.toLowerCase() == 'allergy')
+        .toList();
+    _diseases = conditions
+        .where((c) => c.conditionType.toLowerCase() == 'disease')
+        .toList();
   }
 
   void _onTextChanged() {
@@ -66,102 +82,129 @@ class _HealthProfilePageState extends State<HealthProfilePage> {
       return;
     }
 
-    final matches = _allItems
+    // Get condition IDs that are already added by the user
+    final addedConditionIds = _userConditions
+        .map((uc) => uc.userConditionId)
+        .toSet();
+
+    final matches = _allConditions
         .where(
-          (item) =>
-              item.toLowerCase().contains(text.toLowerCase()) &&
-              !_added
-                  .map((a) => a.name.toLowerCase())
-                  .contains(item.toLowerCase()),
+          (condition) =>
+              condition.conditionName.toLowerCase().contains(
+                text.toLowerCase(),
+              ) &&
+              !addedConditionIds.contains(condition.conditionId),
         )
         .toList();
 
     setState(() {
       _suggestions = matches;
-      // set showSuggestions to true if list is not empty
       _showSuggestions = matches.isNotEmpty;
     });
   }
 
-  void _applySuggestion(String suggestion) {
+  void _applySuggestion(ConditionModel condition) {
     setState(() {
-      // fill in the text field and move the cursor to the end
-      _controller.text = suggestion;
+      _controller.text = condition.conditionName;
       _controller.selection = TextSelection.fromPosition(
-        TextPosition(offset: suggestion.length),
+        TextPosition(offset: condition.conditionName.length),
       );
       _showSuggestions = false;
-      // keep the focus to the text field
       FocusScope.of(context).requestFocus(_focusNode);
     });
   }
 
-  bool _isBuiltIn(String text) {
-    return _allItems.any((item) => item.toLowerCase() == text.toLowerCase());
+  ConditionModel? _findConditionByName(String name) {
+    try {
+      return _allConditions.firstWhere(
+        (condition) =>
+            condition.conditionName.toLowerCase() == name.toLowerCase(),
+      );
+    } catch (e) {
+      return null;
+    }
   }
 
-  String _getItemType(String text) {
-    if (allergies.any((a) => a.toLowerCase() == text.toLowerCase())) {
-      return 'Allergy';
-    }
-    if (diseases.any((d) => d.toLowerCase() == text.toLowerCase())) {
-      return 'Disease';
-    }
-    return 'Unknown';
-  }
-
-  void _onAddPressed() {
+  Future<void> _onAddPressed() async {
     final text = _controller.text.trim();
     if (text.isEmpty) {
-      ScaffoldMessenger.of(
-        context,
-      ).showSnackBar(const SnackBar(content: Text('Enter an item to add.')));
+      _showSnackBar('Enter a condition to add.');
       return;
     }
 
-    if (!_isBuiltIn(text)) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-          content: Text('No such item exists.'),
-          duration: Duration(seconds: 1),
-        ),
-      );
+    final condition = _findConditionByName(text);
+    if (condition == null) {
+      _showSnackBar('No such condition exists.');
       return;
     }
 
-    final normalized = _allItems.firstWhere(
-      (i) => i.toLowerCase() == text.toLowerCase(),
+    // Check if already added
+    if (_userConditions.any((uc) => uc.conditionId == condition.conditionId)) {
+      _showSnackBar('Condition already added.');
+      return;
+    }
+
+    // ✅ use widget.userId instead of await _getUserId()
+    context.read<ConditionCubit>().addUserCondition(
+      widget.userId,
+      condition.conditionId,
     );
-    // check if item is already added
-    if (_added.any((a) => a.name.toLowerCase() == normalized.toLowerCase())) {
-      ScaffoldMessenger.of(
-        context,
-      ).showSnackBar(const SnackBar(content: Text('Already added.')));
-      return;
-    }
-    // add item
+
     setState(() {
-      _added.add(_AddedItem(name: normalized, type: _getItemType(normalized)));
       _controller.clear();
       _suggestions = [];
       _showSuggestions = false;
     });
   }
 
-  void _removeItem(_AddedItem item) {
-    setState(() {
-      _added.remove(item);
-    });
+  void _removeUserCondition(String userConditionId) {
+    context.read<ConditionCubit>().deleteUserCondition(
+      userConditionId,
+      widget.userId, // ✅ directly use widget.userId
+    );
   }
 
-  List<_AddedItem> get _visibleItems {
+  void _showSnackBar(String message) {
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(content: Text(message), duration: const Duration(seconds: 2)),
+    );
+  }
+
+  List<UserConditionModel> get _visibleUserConditions {
+    if (_userConditions.isEmpty) return [];
+
+    // Create a lookup map from conditionId -> ConditionModel
+    final allConditionsMap = {
+      for (var condition in _allConditions) condition.conditionId: condition,
+    };
+
     switch (_filter) {
       case FilterMode.all:
-        return _added;
+        return List<UserConditionModel>.from(
+          _userConditions,
+        ); // force materialization
+
       case FilterMode.allergies:
-        return _added.where((a) => a.type == 'Allergy').toList();
+        return _userConditions
+            .where(
+              (uc) =>
+                  (allConditionsMap[uc.conditionId]?.conditionType
+                          .toLowerCase() ??
+                      '') ==
+                  'allergy',
+            )
+            .toList(); // ensures eager evaluation
+
       case FilterMode.diseases:
-        return _added.where((a) => a.type == 'Disease').toList();
+        return _userConditions
+            .where(
+              (uc) =>
+                  (allConditionsMap[uc.conditionId]?.conditionType
+                          .toLowerCase() ??
+                      '') ==
+                  'disease',
+            )
+            .toList(); // ensures eager evaluation
     }
   }
 
@@ -195,72 +238,148 @@ class _HealthProfilePageState extends State<HealthProfilePage> {
           ),
           title: Text(
             'Health Profile',
-            style: TextStyle(color: Colors.black87, fontSize: 16.sp),
+            style: TextStyle(color: Colors.black87, fontSize: 28.sp),
           ),
         ),
-        body: SingleChildScrollView(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              // Search container (extracted widget)
-              SearchContainer(
-                controller: _controller,
-                focusNode: _focusNode,
-                onAddPressed: _onAddPressed,
-                accentGreenDark: _accentGreenDark,
+        body: BlocConsumer<ConditionCubit, ConditionState>(
+          listener: (context, state) {
+            if (state is ConditionError) {
+              _showSnackBar('Error: ${state.message}');
+            }
+
+            // ✅ Update state in listener, not in builder
+            if (state is ConditionAllLoaded) {
+              _populateConditionLists(state.conditions);
+            } else if (state is ConditionUserLoaded) {
+              setState(() {
+                _userConditions = state.userConditions;
+              });
+            }
+          },
+          builder: (context, state) {
+            // Handle loading state
+            if (state is ConditionLoading && _allConditions.isEmpty) {
+              return const Center(
+                child: CircularProgressIndicator(color: Color(0xFF1B512D)),
+              );
+            }
+
+            return SingleChildScrollView(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  // Search container
+                  Padding(
+                    padding: EdgeInsets.all(16.w),
+                    child: SearchContainer(
+                      controller: _controller,
+                      focusNode: _focusNode,
+                      onAddPressed: _onAddPressed,
+                      accentGreenDark: _accentGreenDark,
+                    ),
+                  ),
+
+                  // Suggestions
+                  if (_showSuggestions)
+                    Padding(
+                      padding: EdgeInsets.symmetric(horizontal: 16.w),
+                      child: SuggestionsList(
+                        visible: _showSuggestions,
+                        suggestions: _suggestions
+                            .map((c) => c.conditionName)
+                            .toList(),
+                        onTapSuggestion: (suggestionName) {
+                          final condition = _suggestions.firstWhere(
+                            (c) => c.conditionName == suggestionName,
+                          );
+                          _applySuggestion(condition);
+                        },
+                        maxHeight: 200.h,
+                      ),
+                    ),
+
+                  // Filter buttons row
+                  Padding(
+                    padding: EdgeInsets.only(left: 36.w, right: 36.w),
+                    child: FilterButtonsRow(
+                      current: _filter,
+                      onChanged: (mode) {
+                        FocusScope.of(context).unfocus();
+                        setState(() => _filter = mode);
+                      },
+                    ),
+                  ),
+
+                  // Loading indicator for operations
+                  if (state is ConditionLoading && _allConditions.isNotEmpty)
+                    Container(
+                      padding: EdgeInsets.all(16.w),
+                      child: const Center(
+                        child: SizedBox(
+                          height: 20,
+                          width: 20,
+                          child: CircularProgressIndicator(
+                            strokeWidth: 2,
+                            color: Color(0xFF1B512D),
+                          ),
+                        ),
+                      ),
+                    ),
+
+                  // User conditions list
+                  ListView.builder(
+                    shrinkWrap: true,
+                    physics: const NeverScrollableScrollPhysics(),
+                    itemCount: _visibleUserConditions.length,
+                    itemBuilder: (context, index) {
+                      final userCondition = _visibleUserConditions[index];
+                      return AddedItemTile(
+                        name: userCondition.userConditionName,
+                        accentGreen: _accentGreen,
+                        onRemove: () =>
+                            _removeUserCondition(userCondition.userConditionId),
+                      );
+                    },
+                  ),
+
+                  // Empty state message
+                  if (_visibleUserConditions.isEmpty &&
+                      _allConditions.isNotEmpty)
+                    Container(
+                      padding: EdgeInsets.all(32.w),
+                      child: Center(
+                        child: Column(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            Icon(
+                              Icons.health_and_safety_outlined,
+                              size: 48.sp,
+                              color: Colors.grey[400],
+                            ),
+                            SizedBox(height: 16.h),
+                            Text(
+                              _filter == FilterMode.all
+                                  ? 'No conditions added yet'
+                                  : 'No ${_filter.name} added yet',
+                              style: TextStyle(
+                                color: Colors.grey[600],
+                                fontSize: 16.sp,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+
+                  // Bottom padding for scroll
+                  SizedBox(height: 100.h),
+                ],
               ),
-
-              // Suggestions
-              SuggestionsList(
-                visible: _showSuggestions,
-                suggestions: _suggestions,
-                onTapSuggestion: _applySuggestion,
-                maxHeight: 200.h,
-              ),
-
-              SizedBox(height: 14.h),
-
-              // Filter buttons row
-              Padding(
-                padding: EdgeInsets.only(left: 10.w, right: 8.w),
-                child: FilterButtonsRow(
-                  current: _filter,
-                  onChanged: (mode) {
-                    FocusScope.of(context).unfocus();
-                    setState(() => _filter = mode);
-                  },
-                ),
-              ),
-
-              SizedBox(height: 12.h),
-
-              // Items list
-              // List inside a scrollable page
-              ListView.builder(
-                shrinkWrap: true,
-                physics: const NeverScrollableScrollPhysics(),
-                itemCount: _visibleItems.length,
-                itemBuilder: (context, index) {
-                  final item = _visibleItems[index];
-                  return AddedItemTile(
-                    name: item.name,
-                    accentGreen: _accentGreen,
-                    onRemove: () => _removeItem(item),
-                  );
-                },
-              ),
-            ],
-          ),
+            );
+          },
         ),
         bottomNavigationBar: const CustomNavBar(currentPage: 'profile'),
       ),
     );
   }
-}
-
-class _AddedItem {
-  final String name;
-  final String type; // Allergy | Disease
-
-  _AddedItem({required this.name, required this.type});
 }

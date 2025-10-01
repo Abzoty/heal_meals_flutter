@@ -21,7 +21,8 @@ class FavoritesPage extends StatelessWidget {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Icon(Icons.bookmark, size: 60.r, color: Color(0xFF1B512D)),
+                  Icon(Icons.bookmark, size: 60.r, color: const Color(0xFFB22B28),
+                  ),
                   SizedBox(width: 8.r),
                   Text(
                     'Favorites',

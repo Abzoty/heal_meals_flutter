@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:heal_meals/features/home/ui/pages/recipe_page.dart'; // import page
+import 'package:heal_meals/features/home/logic/cubit/recipe_cubit.dart';
+import 'package:heal_meals/features/home/ui/pages/recipe_page.dart';
 
 class RecipeCard extends StatelessWidget {
   final String id;
@@ -22,10 +24,14 @@ class RecipeCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
+        final recipeCubit = context.read<RecipeCubit>();
         Navigator.push(
           context,
           MaterialPageRoute(
-            builder: (_) => RecipePage(recipeId: id), // pass id
+            builder: (_) => BlocProvider.value(
+              value: recipeCubit, // reuse the existing cubit
+              child: RecipePage(recipeId: id,),
+            ),
           ),
         );
       },

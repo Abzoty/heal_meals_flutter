@@ -1,8 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:heal_meals/core/di/dependency_injection.dart';
+
 import 'core/routing/routes.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await ScreenUtil.ensureScreenSize();
+  await setupGetIt();
+
   runApp(const MyApp());
 }
 
@@ -19,8 +25,8 @@ class MyApp extends StatelessWidget {
         return MaterialApp(
           title: 'Heal Meals',
           debugShowCheckedModeBanner: false,
-          initialRoute: AppRoutes.home,
-          onGenerateRoute: AppRoutes.generateRoute,
+          initialRoute: AppRoutes.start,
+          onGenerateRoute: AppRoutes.generateRoute, 
         );
       },
     );

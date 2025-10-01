@@ -1,15 +1,17 @@
-import "package:flutter/material.dart";
-import "package:flutter_screenutil/flutter_screenutil.dart";
-import "package:heal_meals/core/routing/routes.dart";
+import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:heal_meals/core/routing/routes.dart';
 
 class StartScreen extends StatelessWidget {
   const StartScreen({super.key});
+
   static const routeName = '/start-screen';
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: Container(
+        // ✅ Correct
         decoration: BoxDecoration(
           gradient: LinearGradient(
             begin: Alignment.topLeft,
@@ -56,7 +58,6 @@ class StartScreen extends StatelessWidget {
                 width: 300.w,
                 child: ElevatedButton(
                   onPressed: () {
-                    // Navigate to the sign-up screen
                     Navigator.pushNamed(context, AppRoutes.signup);
                   },
                   style: ElevatedButton.styleFrom(
@@ -85,4 +86,3 @@ class StartScreen extends StatelessWidget {
     );
   }
 }
-
