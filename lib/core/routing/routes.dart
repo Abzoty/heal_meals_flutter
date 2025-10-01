@@ -72,7 +72,13 @@ class AppRoutes {
         );
 
       case profile:
-        return MaterialPageRoute(builder: (_) => const ProfilePage());
+        return MaterialPageRoute(
+          builder: (_) => BlocProvider(
+            create: (_) => getIt<AuthCubit>(),
+            child: const ProfilePage(),
+          ),
+        );
+
 
       case favorites:
         return MaterialPageRoute(builder: (_) => const FavoritesPage());

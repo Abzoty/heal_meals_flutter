@@ -19,9 +19,9 @@ class SignupPage extends StatelessWidget {
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
   final _confirmPasswordController = TextEditingController();
-  final _roleController = TextEditingController();
+  //final _roleController = TextEditingController();
   final _phoneController = TextEditingController();
-  final _genderController = TextEditingController();
+  final _genderNotifier = ValueNotifier<String?>(null);
   final _dobController = TextEditingController();
   final _addressController = TextEditingController();
 
@@ -32,7 +32,7 @@ class SignupPage extends StatelessWidget {
         email: _emailController.text.trim(),
         password: _passwordController.text,
         role: 'user',
-        gender: _genderController.text.trim(),
+        gender: _genderNotifier.value ?? '',
         dob: _dobController.text.trim(),
         address: _addressController.text.trim(),
         phone: _phoneController.text.trim(),
@@ -63,6 +63,11 @@ class SignupPage extends StatelessWidget {
 
   String? _validateRequired(String? value, String fieldName) {
     if (value == null || value.isEmpty) return '$fieldName is required';
+    return null;
+  }
+
+  String? _validateGender(String? value) {
+    if (value == null || value.isEmpty) return 'Please select a gender';
     return null;
   }
 
@@ -158,22 +163,133 @@ class SignupPage extends StatelessWidget {
                               validator: _validateConfirmPassword,
                             ),
                             BuildTextField(
-                              hintText: "Role",
-                              controller: _roleController,
-                            ),
-                            BuildTextField(
                               hintText: "Phone",
                               controller: _phoneController,
                               keyboardType: TextInputType.phone,
                               validator: (value) =>
                                   _validateRequired(value, 'Phone'),
                             ),
-                            BuildTextField(
-                              hintText: "Gender",
-                              controller: _genderController,
-                              validator: (value) =>
-                                  _validateRequired(value, 'Gender'),
+
+                            // Gender Radio Buttons
+                            ValueListenableBuilder<String?>(
+                              valueListenable: _genderNotifier,
+                              builder: (context, selectedGender, child) {
+                                return FormField<String>(
+                                  validator: (_) => _validateGender(selectedGender),
+                                  builder: (formFieldState) {
+                                    return Column(
+                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                      children: [
+                                        Container(
+                                          width: double.infinity,
+                                          padding: EdgeInsets.all(16.w),
+                                          margin: EdgeInsets.only(bottom: 8.h, top: 8.h),
+                                          decoration: BoxDecoration(
+                                            color: Colors.transparent,
+                                            borderRadius: BorderRadius.circular(12.r),
+                                            border: Border.all(
+                                              color: formFieldState.hasError
+                                                  ? Colors.red
+                                                  : Colors.grey.shade300,
+                                            ),
+                                          ),
+                                          child: Column(
+                                            crossAxisAlignment: CrossAxisAlignment.start,
+                                            children: [
+                                              Text(
+                                                "Gender",
+                                                style: TextStyle(
+                                                  fontSize: 16.sp,
+                                                  fontWeight: FontWeight.w500,
+                                                  color: Colors.grey.shade700,
+                                                ),
+                                              ),
+                                              SizedBox(height: 12.h),
+                                              Row(
+                                                children: [
+                                                  Expanded(
+                                                    child: InkWell(
+                                                      onTap: () {
+                                                        _genderNotifier.value = 'Male';
+                                                        formFieldState.didChange('Male');
+                                                      },
+                                                      child: Row(
+                                                        children: [
+                                                          Radio<String>(
+                                                            value: 'Male',
+                                                            groupValue: selectedGender,
+                                                            onChanged: (value) {
+                                                              _genderNotifier.value = value;
+                                                              formFieldState.didChange(value);
+                                                            },
+                                                            activeColor: Colors.blue,
+                                                          ),
+                                                          Text(
+                                                            'Male',
+                                                            style: TextStyle(
+                                                              fontSize: 16.sp,
+                                                              fontWeight: selectedGender == 'Male'
+                                                                  ? FontWeight.bold
+                                                                  : FontWeight.normal,
+                                                            ),
+                                                          ),
+                                                        ],
+                                                      ),
+                                                    ),
+                                                  ),
+                                                  Expanded(
+                                                    child: InkWell(
+                                                      onTap: () {
+                                                        _genderNotifier.value = 'Female';
+                                                        formFieldState.didChange('Female');
+                                                      },
+                                                      child: Row(
+                                                        children: [
+                                                          Radio<String>(
+                                                            value: 'Female',
+                                                            groupValue: selectedGender,
+                                                            onChanged: (value) {
+                                                              _genderNotifier.value = value;
+                                                              formFieldState.didChange(value);
+                                                            },
+                                                            activeColor: Colors.blue,
+                                                          ),
+                                                          Text(
+                                                            'Female',
+                                                            style: TextStyle(
+                                                              fontSize: 16.sp,
+                                                              fontWeight: selectedGender == 'Female'
+                                                                  ? FontWeight.bold
+                                                                  : FontWeight.normal,
+                                                            ),
+                                                          ),
+                                                        ],
+                                                      ),
+                                                    ),
+                                                  ),
+                                                ],
+                                              ),
+                                            ],
+                                          ),
+                                        ),
+                                        if (formFieldState.hasError)
+                                          Padding(
+                                            padding: EdgeInsets.only(left: 16.w, top: 4.h),
+                                            child: Text(
+                                              formFieldState.errorText!,
+                                              style: TextStyle(
+                                                color: Colors.red,
+                                                fontSize: 12.sp,
+                                              ),
+                                            ),
+                                          ),
+                                      ],
+                                    );
+                                  },
+                                );
+                              },
                             ),
+
                             BuildTextField(
                               hintText: "Address",
                               controller: _addressController,

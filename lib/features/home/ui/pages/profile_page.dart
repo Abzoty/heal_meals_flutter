@@ -1,8 +1,10 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:heal_meals/core/routing/routes.dart';
 import 'package:heal_meals/features/auth/data/models/user_profile_model.dart';
+import 'package:heal_meals/features/auth/logic/cubit/auth_cubit.dart';
 import 'package:heal_meals/features/home/ui/widgets/custom_nav_bar.dart';
 import 'package:heal_meals/features/home/ui/widgets/info_filed.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -178,6 +180,28 @@ class ProfilePage extends StatelessWidget {
                   child: Text(
                     "Health Profile",
                     style: TextStyle(fontSize: 16.sp, color: Colors.white),
+                  ),
+                ),
+              ),
+
+              SizedBox(height: 16.h),
+
+              // 🔴 Logout Text
+              TextButton(
+                onPressed: () {
+                  context.read<AuthCubit>().logout();
+                  Navigator.pushNamedAndRemoveUntil(
+                    context,
+                    AppRoutes.signin,
+                    (route) => false, // Remove all routes
+                  );
+                },
+                child: Text(
+                  "Log Out",
+                  style: TextStyle(
+                    color: Colors.red,
+                    fontSize: 16.sp,
+                    fontWeight: FontWeight.bold,
                   ),
                 ),
               ),

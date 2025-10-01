@@ -60,9 +60,6 @@ class _HealthProfilePageState extends State<HealthProfilePage> {
   void initState() {
     super.initState();
     _controller.addListener(_onTextChanged);
-    // Fetch initial data
-    // context.read<ConditionCubit>().getAllConditions();
-    // context.read<ConditionCubit>().getUserConditions();
   }
 
   void _populateConditionLists(List<ConditionModel> conditions) {
@@ -249,20 +246,22 @@ class _HealthProfilePageState extends State<HealthProfilePage> {
             if (state is ConditionError) {
               _showSnackBar('Error: ${state.message}');
             }
+
+            // ✅ Update state in listener, not in builder
+            if (state is ConditionAllLoaded) {
+              _populateConditionLists(state.conditions);
+            } else if (state is ConditionUserLoaded) {
+              setState(() {
+                _userConditions = state.userConditions;
+              });
+            }
           },
           builder: (context, state) {
-            // Handle different states
+            // Handle loading state
             if (state is ConditionLoading && _allConditions.isEmpty) {
               return const Center(
                 child: CircularProgressIndicator(color: Color(0xFF1B512D)),
               );
-            }
-
-            // Update data when loaded
-            if (state is ConditionAllLoaded) {
-              _populateConditionLists(state.conditions);
-            } else if (state is ConditionUserLoaded) {
-              _userConditions = state.userConditions;
             }
 
             return SingleChildScrollView(
